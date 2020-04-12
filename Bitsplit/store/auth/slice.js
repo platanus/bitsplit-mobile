@@ -8,11 +8,11 @@ const slice = createSlice({
         user: null,
         error: null,
         loading: false,
-        test : 37
+        test : 2
     },
     reducers: {
-        tests(state){
-            state.test +=1 
+        tests(state, action){
+            state.test += action.payload
         },
         login(state){
             state.loading = true

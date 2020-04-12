@@ -7,12 +7,13 @@ function* login(action){
 }
 function* tests(action){
     try{
-        yield put(authActions.tests())
+        yield put(authActions.tests(action.payload))
     } catch (error){
         console.log(error)
     }
-    
 }
+
+
 export default function* loginSaga(){
     yield takeLatest(LOGIN_SUCCES, login)
     yield takeLatest(TEST, tests)

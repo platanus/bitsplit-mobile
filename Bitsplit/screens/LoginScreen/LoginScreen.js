@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, Button } from 'react-native';
+import {TEST} from '../../store/types';
  
 export const LoginScreen = () => {
 
@@ -9,13 +10,13 @@ export const LoginScreen = () => {
   
   const dispatch = useDispatch();
   const test_me = () => {
-    dispatch({type:'TEST'})
+    dispatch({type: TEST, payload: foo})
   }
  
   return (
     <View>
       <Text>Foo is {foo}.</Text>
-      <Button onPress={() => test_me()} title='Increase Foo!' />
+      <Button onPress={() => test_me(foo)} title='Increase Foo!' />
     </View>
   )
 }

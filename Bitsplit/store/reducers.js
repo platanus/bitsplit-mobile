@@ -3,5 +3,6 @@ import  auth  from './auth/slice';
 
 
 export default combineReducers({
-	auth : auth.reducer
+	auth : auth.reducer,
+
 });
