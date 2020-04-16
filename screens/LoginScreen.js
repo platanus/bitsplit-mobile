@@ -9,12 +9,7 @@ const LoginScreen = props => {
       <Text>Login Screen</Text>
 
         <Input
-        placeholder='INPUT WITH ICON'
-        leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-        />
-
-        <Input
-        placeholder='INPUT WITH CUSTOM ICON'
+        placeholder=' Usuario'
         leftIcon={
           <Icon
             name='user'
@@ -25,10 +20,17 @@ const LoginScreen = props => {
         />
 
         <Input
-        placeholder='INPUT WITH ERROR MESSAGE'
-        errorStyle={{ color: 'red' }}
-        errorMessage='ENTER A VALID ERROR HERE'
+        placeholder=' PIN'
+        leftIcon={
+          <Icon
+            name='user'
+            size={24}
+            color='black'
+          />
+        }
         />
+
+ 
     </View>
   );
 };
