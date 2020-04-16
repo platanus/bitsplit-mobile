@@ -7,7 +7,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 const MenuNavigator = createStackNavigator({
-    Welcome: WelcomeScreen,
+    BitSplit: WelcomeScreen,
     Login:  LoginScreen
 });
 

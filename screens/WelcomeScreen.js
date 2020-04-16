@@ -8,37 +8,15 @@ const WelcomeScreen = props => {
   return(
     <View style={style.screen}>
       <Text>Bienvenido a BitSplit</Text>
-        <Input
-        placeholder='BASIC INPUT'
-        />
-
-        <Input
-        placeholder='INPUT WITH ICON'
-        leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-        />
-
-        <Input
-        placeholder='INPUT WITH CUSTOM ICON'
-        leftIcon={
-          <Icon
-            name='user'
-            size={24}
-            color='black'
-          />
-        }
-        />
-
-        <Input
-        placeholder='INPUT WITH ERROR MESSAGE'
-        errorStyle={{ color: 'red' }}
-        errorMessage='ENTER A VALID ERROR HERE'
-        />
+      <Button title="Login" onPress={() => {
+        props.navigation.navigate({routeName: 'Login'});
+      }}></Button>
 
     </View>
   );
 };
 
-// STYLE O STYLESSS?
+
 const style = StyleSheet.create({  
   screen: {
     flex: 1,
