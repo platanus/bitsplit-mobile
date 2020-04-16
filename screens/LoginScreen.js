@@ -10,7 +10,7 @@ const LoginScreen = props => {
 };
 
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
