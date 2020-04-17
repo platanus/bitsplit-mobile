@@ -3,14 +3,12 @@ import { View, Text, StyleSheet, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import { SocialIcon } from 'react-native-elements';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 
 
 const WelcomeScreen = props => {
   return(
-
-    
     <View style={style.screen}>
 
       <SocialIcon
@@ -20,7 +18,6 @@ const WelcomeScreen = props => {
         }}
         type='medium'
       />
-
     </View>
   );
 };
