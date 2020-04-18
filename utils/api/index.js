@@ -63,4 +63,5 @@ const getCurrentUserApi = payload => {
   )
 }
 
-export { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi }
+const api = { loginApi, logoutApi, signUpApi, budaSyncApi, getCurrentUserApi };
+export default api;
