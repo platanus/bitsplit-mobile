@@ -20,10 +20,11 @@ const logoutApi = payload => {
     }, 1000)
   })
 }
+
 const signUpApi = payload => {
     return axios
     .post(
-      '/api/v1/users/',
+      url+'/api/v1/users/',
       {
         email: payload.email,
         password: payload.password,

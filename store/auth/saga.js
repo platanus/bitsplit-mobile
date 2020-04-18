@@ -1,8 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {actions as authActions} from './slice';
 import {LOGIN_REQUEST, REGISTER_REQUEST} from '../types';
-import {api} from '../../utils/api';
+import api from '../../utils/api';
 
+console.log(api)
 function* login_request(action){
     console.log('LOGIN',action)
     try{
