@@ -3,11 +3,8 @@ import {actions as authActions} from './slice';
 import {LOGIN_REQUEST, REGISTER_REQUEST} from '../types';
 import api from '../../utils/api';
 
-console.log(api)
 function* login_request(action){
-    console.log('LOGIN',action)
     try{
-        //const attributes = null
         yield put(authActions.login())
         const {data: {data: {attributes}}} = yield call(api.loginApi, action.payload)
         if(attributes){
