@@ -9,13 +9,13 @@ const LoginScreen = props => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch();
-  const userToken = useSelector( state => state.auth.token )
+  const {token,error,loading} = useSelector( state => state.auth )
   const handleLogin = () => {
     dispatch({type: LOGIN_REQUEST, payload:{email,password}})
   };
-  
+
   useEffect(()=>{
-    if(userToken){
+    if(token){
       props.navigation.navigate({routeName: 'Home'});
     }
   })
@@ -24,7 +24,7 @@ const LoginScreen = props => {
     <View style={style.screen}>
       <ScrollView>
         <Text>Login Screen</Text>
-
+        <Text>{error}</Text>
           <Input 
           id ="email" 
           label="E-mail"

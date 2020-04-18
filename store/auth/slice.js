@@ -8,7 +8,6 @@ const slice = createSlice({
         user: null,
         error: null,
         loading: false,
-        test : 2
     },
     reducers: {
         tests(state, action){
