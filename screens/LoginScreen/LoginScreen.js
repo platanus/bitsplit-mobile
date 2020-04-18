@@ -1,58 +1,24 @@
-import React, {useState, useReducer, useCallback} from 'react';
+import React, {useState, useEffect,useReducer, useCallback} from 'react';
 import { View, Text, StyleSheet, Button, KeyboardAvoidingView, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {LOGIN_REQUEST} from '../../store/types';
-//import * as authActions from '../../store/actions/auth';
-
-
-// const formReducer = (state, action) => {
-//   if (action.type === FORM_INPUT_UPDATE){
-//     const updatedValues = {
-//       ... state.inputValues,
-//       [action.input]: action.value
-//     };
-//     const updateValidities = {
-//       ...state.inputValidities,
-//       [action.input]: action.isValid
-//     };
-//     let updateFormIsvalid = true;
-//     for (const key in updatedValities) {
-//       updatedFormIsValid = updatedFormIsValid && updateValidities[key];
-//     }
-//     return{
-//       formIsValid:updatedFormisVaid,
-//       inputValidities: updatedValities,
-//       inputValues: updatedValues
-      
-//     };
-//   }
-// return state;
-// };
 
 const LoginScreen = props => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch();
-  const test_me = () => {
+  const userToken = useSelector( state => state.auth.token )
+  const handleLogin = () => {
     dispatch({type: LOGIN_REQUEST, payload:{email,password}})
   };
-
   
-
-  // const authHandler = () => {
-  //   action = authActions.login(
-  //     formState.inputValues.email, 
-  //     formState.inputValues.password 
-  //   );
-  //   action = {type: LOGIN_REQUEST, payload:{email:formState.inputValues.email,password:formState.inputValues.password}}
-  //   dispatch(action);
-  // };
-
-
-
-  
+  useEffect(()=>{
+    if(userToken){
+      props.navigation.navigate({routeName: 'Home'});
+    }
+  })
 
   return(
     <View style={style.screen}>
@@ -102,8 +68,7 @@ const LoginScreen = props => {
           <Button
             title="Login"
             type="solid"
-            onPress ={()=> test_me()}
-            //onPress = {authHandler}
+            onPress ={()=> handleLogin()}
 
           />
           <Button

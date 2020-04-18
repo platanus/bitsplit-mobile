@@ -20,7 +20,8 @@ const slice = createSlice({
         loginSucces(state, action){
             console.log('reducer', action)
             state.loading = false;
-            state.token = action.payload;
+            state.token = action.payload.authentication_token;
+            state.user = action.payload
             console.log('state', state)
         },
         loginRejected(state, action){

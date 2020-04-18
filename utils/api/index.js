@@ -1,8 +1,8 @@
 import axios from 'axios'
-
+const url = 'https://pl-bitsplit-staging.herokuapp.com'
 const loginApi = payload => {
   return axios.post(
-    'https://pl-bitsplit-staging.herokuapp.com/api/v1/sessions/',
+    url+'/api/v1/sessions/',
     {
       email: payload.email,
       password: payload.password
@@ -53,7 +53,7 @@ const budaSyncApi = payload => {
 }
 const getCurrentUserApi = payload => {
   return axios.get(
-    '/api/v1/users/',
+    url+'/api/v1/users/',
     {
       headers: { 'Content-Type': 'application/json',
                  'X-User-Email': payload.email,

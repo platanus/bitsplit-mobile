@@ -7,8 +7,8 @@ function* login_request(action){
     console.log('LOGIN',action)
     try{
         const {data} = yield call(loginApi, action.payload)
-        console.log('login saga result', data)
-        yield put(authActions.loginSucces(data.data.attributes.authentication_token))
+        console.log('login API result in Saga\n', data)
+        yield put(authActions.loginSucces(data.data.attributes))
     } catch(err){
         console.log('Login Error', err)
     }
