@@ -1,23 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
-  name: 'auth',
+  name: 'buda',
   initialState: {
-    token: null,
-    user: null,
+    apiKey: null,
     error: null,
     loading: false,
   },
   reducers: {
-    login(state) {
+    confirmKeys(state) {
       state.loading = true;
     },
-    loginSucces(state, action) {
+    confirmSucces(state, action) {
       state.loading = false;
-      state.token = action.payload.authentication_token;
-      state.user = action.payload;
+      state.apiKey = action.payload;
     },
-    loginRejected(state, action) {
+    confirmRejected(state, action) {
       state.loading = false;
       state.error = action.payload;
     },

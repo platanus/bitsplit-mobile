@@ -1,28 +1,5 @@
-import axios from 'axios';
+import authApi from './auth';
+import budaApi from './buda';
 
-const url = 'https://pl-bitsplit-staging.herokuapp.com';
-function loginApi(payload) {
-  return axios.post(
-    `${url}/api/v1/sessions/`,
-    {
-      email: payload.email,
-      password: payload.password,
-    },
-    {
-      headers: { 'Content-Type': 'application/json' },
-    },
-  );
-}
-
-function signUpApi(payload) {
-  return axios.post(
-    `${url}/api/v1/users/`,
-    { ...payload },
-    {
-      headers: { 'Content-Type': 'application/json' },
-    },
-  );
-}
-
-const api = { loginApi, signUpApi };
+const api = { ...authApi, ...budaApi };
 export default api;

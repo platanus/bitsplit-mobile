@@ -34,7 +34,8 @@ function LoginScreen(props) {
 
   useEffect(() => {
     if (token) {
-      props.navigation.navigate({ routeName: 'Home' });
+      // Home
+      props.navigation.navigate({ routeName: 'BudaAuth' });
     }
   });
   function switchSignupRegister() {
