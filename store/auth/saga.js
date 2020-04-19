@@ -6,9 +6,7 @@ import api from '../../utils/api';
 function *loginRequest(action) {
   try {
     yield put(authActions.login());
-    console.log('login');
     const { data: { data: { attributes } } } = yield call(api.loginApi, action.payload);
-    console.log(attributes);
     if (attributes) {
       yield put(authActions.loginSucces(attributes));
     } else {
@@ -22,9 +20,7 @@ function *loginRequest(action) {
 function *register(action) {
   try {
     yield put(authActions.login());
-    console.log('register', action.payload);
     const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
-    console.log(attributes);
     if (attributes) {
       yield put(authActions.loginSucces(attributes));
     } else {
