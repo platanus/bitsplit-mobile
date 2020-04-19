@@ -17,7 +17,7 @@ function WelcomeScreen(props) {
       <SocialIcon
         title='Sign In With Buda'
         button onPress={() => {
-        props.navigation.navigate({ routeName: 'Autentificacion' });
+          props.navigation.navigate({ routeName: 'Autentificacion' });
         }}
         type='medium'
       />

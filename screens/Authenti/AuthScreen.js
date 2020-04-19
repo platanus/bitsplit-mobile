@@ -1,8 +1,8 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-//import { LinearGradient } from 'expo-linear-gradient';
+// import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
@@ -16,52 +16,49 @@ const style = StyleSheet.create({
   },
 });
 
-const AuthScreen = props => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [dataError, setError] = useState();
+function AuthScreen(props) {
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [dataError, setError] = useState();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // eslint-disable-next-line camelcase
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
-  //const [switchFlag, setFlag] = useState(true);
+  const [isSignup, setIsSignup] = useState(false);
+  // const [switchFlag, setFlag] = useState(true);
   const dispatch = useDispatch();
   // we can add loading for submits
   const { token, error } = useSelector(state => state.auth);
 
-    
-    // Para que es useEffect?
-    // useEffect(() => {
-    //     if (error2) {
-    //         Alert.alert('Un error se ha presentado', error2, [{text: 'Okay'}]);
-    //     }
+  // Para que es useEffect?
+  // useEffect(() => {
+  //     if (error2) {
+  //         Alert.alert('Un error se ha presentado', error2, [{text: 'Okay'}]);
+  //     }
 
-    // }, [error2]);
+  // }, [error2]);
 
-  const authHandler =  () => {
-    if (!isLogin){
-        //setError(null);
-        setIsLoading(true);
-        // try {
-        dispatch({ type: REGISTER_REQUEST, payload: { email, password, 'password_confirmation': passwordConfirmation } });
-        // } catch (err) {
-        //     setError(err.errorMessage)
-        // }
-        setIsLoading(false);
+  function authHandler() {
+    if (isSignup) {
+      // setError(null);
+      // setIsLoading(true);
+      // try {
+      dispatch({ type: REGISTER_REQUEST, payload: { email, password, 'password_confirmation': passwordConfirmation } });
+      // } catch (err) {
+      //     setError(err.errorMessage)
+      // }
+      // setIsLoading(false);
+    } else {
+      // setError(null);
+      // setIsLoading(true);
+      // try {
+      dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
+      // props.navigation.navigate({ routeName: 'Home' });
+      // } catch (err) {
+      //     setError(err.errorMessage)
+      // }
+      // setIsLoading(false);
     }
-    else{
-        setError(null);
-        setIsLoading(true);
-        // try {
-        dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
-        // props.navigation.navigate({ routeName: 'Home' });
-        // } catch (err) {
-        //     setError(err.errorMessage)
-        // }
-        setIsLoading(false);
-    }
-
-}
+  }
 
   useEffect(() => {
     if (token) {
@@ -70,7 +67,7 @@ const AuthScreen = props => {
   });
 
   function switchSignupRegister() {
-    if (isLogin === true) {
+    if (isSignup === true) {
       return (
         <View>
           <Button
@@ -85,14 +82,14 @@ const AuthScreen = props => {
               colors: ['red', 'pink'],
               start: { x: 0, y: 0.5 },
               end: { x: 1, y: 0.5 },
-            }} 
+            }}
           /> */}
           <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
           <Text>New to Bitsplit? Go ahead an register!</Text>
           <Button
             title="Register"
             type="outline"
-            onPress ={() => setIsLogin(false)}
+            onPress ={() => setIsSignup(false)}
           />
         </View>
       );
@@ -131,7 +128,7 @@ const AuthScreen = props => {
         <Button
           title="Login"
           type="outline"
-          onPress ={() => setIsLogin(true)}
+          onPress ={() => setIsSignup(true)}
         />
       </View>
 
@@ -142,7 +139,7 @@ const AuthScreen = props => {
     <View style={style.screen}>
       <ScrollView style={{ flex: 1 }}>
 
-        <Text h2>{isLogin ? 'Login' : 'Register'}</Text>
+        <Text h2>{isSignup ? 'Login' : 'Register'}</Text>
 
         <Text h4>{error}</Text>
         <Input

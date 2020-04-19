@@ -7,17 +7,15 @@ import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import AuthScreen from '../screens/Authenti/AuthScreen';
 
-
-
 const AuthNavigator = createStackNavigator({
   Autentificacion: AuthScreen,
 });
 
 const MenuNavigator = createSwitchNavigator({
   BitSplit: WelcomeScreen,
-  Autentificacion:  AuthNavigator,
-  Home: HomeScreen 
-  
+  Autentificacion: AuthNavigator,
+  Home: HomeScreen,
+
 });
 
 export default createAppContainer(MenuNavigator);

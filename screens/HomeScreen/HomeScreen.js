@@ -12,19 +12,19 @@ const style = StyleSheet.create({
   saldoText: {
     fontSize: 30,
     padding: 20,
-  }
+  },
 });
 
 function HomeScreen() {
   const email = useSelector(state => state.auth.user.email);
-  const saldo = "70.000";
+  const saldo = 70.000;
 
   return (
 
     <View style={style.screen}>
 
-    <Avatar
-      size="large"
+      <Avatar
+        size="large"
         rounded
         source={{
           uri:
@@ -35,10 +35,6 @@ function HomeScreen() {
       <Text>{`Hola ${email}!`}</Text>
 
       <Text style={style.saldoText}>{`Saldo ${saldo} `}</Text>
-
-
-
-
 
     </View>
 
