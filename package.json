@@ -15,7 +15,7 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
-    "expo": "^37.0.0",
+    "expo": "^37.0.7",
     "expo-linear-gradient": "~8.1.0",
     "native": "^0.3.3",
     "react": "16.9.0",
