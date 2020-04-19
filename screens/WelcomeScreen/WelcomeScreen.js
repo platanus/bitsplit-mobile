@@ -1,42 +1,36 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import Colors from '../../constants/Colors';
 
+const style = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
 
+  },
+});
 
-const WelcomeScreen = props => {
-  return(
+function WelcomeScreen(props) {
+  return (
     <View style={style.screen}>
-
       <SocialIcon
         title='Sign In With Buda'
         button onPress={() => {
-          props.navigation.navigate({routeName: 'Login'});
+          props.navigation.navigate({ routeName: 'Login' });
         }}
         type='medium'
       />
     </View>
   );
-};
-
+}
 
 WelcomeScreen.navigationOptions = {
   headerTitle: 'BitSplit',
   headerStyle: {
-    backgroundColor: Colors.primaryColor
+    backgroundColor: Colors.primaryColor,
   },
-  headerTintColor: 'white'
-}
-
-const style = StyleSheet.create({  
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-
-  }
-});
+  headerTintColor: 'white',
+};
 
 export default WelcomeScreen;
