@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
+import Colors from '../../constants/Colors';
 
 const style = StyleSheet.create({
   screen: {
@@ -53,6 +54,7 @@ const AuthScreen = props => {
         setIsLoading(true);
         // try {
         dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
+        // props.navigation.navigate({ routeName: 'Home' });
         // } catch (err) {
         //     setError(err.errorMessage)
         // }
@@ -66,6 +68,7 @@ const AuthScreen = props => {
       props.navigation.navigate({ routeName: 'Home' });
     }
   });
+
   function switchSignupRegister() {
     if (isLogin === true) {
       return (
@@ -187,5 +190,13 @@ const AuthScreen = props => {
     </View>
   );
 }
+
+AuthScreen.navigationOptions = {
+  headerTitle: 'BitSplit',
+  headerStyle: {
+    backgroundColor: Colors.primaryColor,
+  },
+  headerTintColor: 'white',
+};
 
 export default AuthScreen;

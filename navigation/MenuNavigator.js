@@ -13,10 +13,11 @@ const AuthNavigator = createStackNavigator({
   Autentificacion: AuthScreen,
 });
 
-const MenuNavigator = createStackNavigator({
+const MenuNavigator = createSwitchNavigator({
   BitSplit: WelcomeScreen,
-  Home: HomeScreen,
-  Autentificacion: AuthNavigator
+  Autentificacion:  AuthNavigator,
+  Home: HomeScreen 
+  
 });
 
 export default createAppContainer(MenuNavigator);
