@@ -1,28 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'react-native-elements';
-
-const style = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  saldoText: {
-    fontSize: 30,
-    padding: 20,
-  },
-});
+import { styles, saldoText } from '../../components/styles';
 
 function HomeScreen() {
   const email = useSelector(state => state.auth.user.email);
-  const saldo = 70.000;
+  const saldo = 70000;
 
   return (
-
-    <View style={style.screen}>
-
+    <View style={styles.screen}>
       <Avatar
         size="large"
         rounded
@@ -31,10 +18,9 @@ function HomeScreen() {
             'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
         }}
       />
-
       <Text>{`Hola ${email}!`}</Text>
 
-      <Text style={style.saldoText}>{`Saldo ${saldo} `}</Text>
+      <Text style={saldoText}>{`Saldo ${saldo} `}</Text>
 
     </View>
 

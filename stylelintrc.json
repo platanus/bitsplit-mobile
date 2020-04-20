@@ -1,5 +1,7 @@
 {
+  "plugins": ["stylelint-react-native"],
   "rules": {
+    "react-native/css-property-no-unknown": true,
     "declaration-bang-space-before": "always",
     "declaration-bang-space-after": "never",
     "declaration-property-value-blacklist": {

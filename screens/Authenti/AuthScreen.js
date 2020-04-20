@@ -1,62 +1,31 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
 import Colors from '../../constants/Colors';
-
-const style = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import { styles } from '../../components/styles';
 
 function AuthScreen(props) {
   // const [isLoading, setIsLoading] = useState(false);
   // const [dataError, setError] = useState();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // eslint-disable-next-line camelcase
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   // const [switchFlag, setFlag] = useState(true);
   const dispatch = useDispatch();
   // we can add loading for submits
-  const { token, error } = useSelector(state => state.auth);
-
-  // Para que es useEffect?
-  // useEffect(() => {
-  //     if (error2) {
-  //         Alert.alert('Un error se ha presentado', error2, [{text: 'Okay'}]);
-  //     }
-
-  // }, [error2]);
+  const { token, error, loading } = useSelector(state => state.auth);
 
   function authHandler() {
     if (isSignup) {
-      // setError(null);
-      // setIsLoading(true);
-      // try {
       dispatch({ type: REGISTER_REQUEST, payload: { email, password, 'password_confirmation': passwordConfirmation } });
-      // } catch (err) {
-      //     setError(err.errorMessage)
-      // }
-      // setIsLoading(false);
     } else {
-      // setError(null);
-      // setIsLoading(true);
-      // try {
       dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
-      // props.navigation.navigate({ routeName: 'Home' });
-      // } catch (err) {
-      //     setError(err.errorMessage)
-      // }
-      // setIsLoading(false);
+      console.log('is async?');
     }
   }
 
@@ -67,29 +36,21 @@ function AuthScreen(props) {
   });
 
   function switchSignupRegister() {
-    if (isSignup === true) {
+    if (isSignup === false) {
       return (
         <View>
           <Button
             title="Login"
             type="solid"
             onPress ={() => authHandler()}
+            loading = {loading}
           />
-          {/* <Button
-            title="Cool Gradient Button"
-            ViewComponent={LinearGradient} // Don't forget this!
-            linearGradientProps={{
-              colors: ['red', 'pink'],
-              start: { x: 0, y: 0.5 },
-              end: { x: 1, y: 0.5 },
-            }}
-          /> */}
           <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
           <Text>New to Bitsplit? Go ahead an register!</Text>
           <Button
             title="Register"
             type="outline"
-            onPress ={() => setIsSignup(false)}
+            onPress ={() => setIsSignup(true)}
           />
         </View>
       );
@@ -121,6 +82,7 @@ function AuthScreen(props) {
           title="Register"
           type="solid"
           onPress ={() => authHandler()}
+          loading ={loading}
 
         />
         <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
@@ -128,7 +90,7 @@ function AuthScreen(props) {
         <Button
           title="Login"
           type="outline"
-          onPress ={() => setIsSignup(true)}
+          onPress ={() => setIsSignup(false)}
         />
       </View>
 
@@ -136,10 +98,10 @@ function AuthScreen(props) {
   }
 
   return (
-    <View style={style.screen}>
-      <ScrollView style={{ flex: 1 }}>
+    <View style={styles.screen}>
+      <ScrollView>
 
-        <Text h2>{isSignup ? 'Login' : 'Register'}</Text>
+        <Text h2>{isSignup ? 'Register' : 'Login' }</Text>
 
         <Text h4>{error}</Text>
         <Input
