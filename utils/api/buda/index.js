@@ -1,9 +1,17 @@
+import axios from 'axios';
 
-function checkUserKeys(payload) {
-  console.log('API BUDA', payload);
-
-  return payload;
+const url = 'https://pl-bitsplit-staging.herokuapp.com';
+function budaBalance(payload) {
+  return axios.get(
+    `${url}/api/v1/balances`,
+    {
+      headers: { 'Content-Type': 'application/json',
+        'X-User-Email': payload.email,
+        'X-User-Token': payload.token,
+      },
+    },
+  );
 }
 
-const budaApi = { checkUserKeys };
+const budaApi = { budaBalance };
 export default budaApi;

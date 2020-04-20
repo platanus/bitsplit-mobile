@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text } from 'react-native-elements';
@@ -15,7 +15,7 @@ const style = StyleSheet.create({
 });
 
 function BudaAuthScreen(props) {
-  const { error, loading } = useSelector(state => state.buda);
+  const { error, loading, balance } = useSelector(state => state.buda);
   const [apiKey, setApiKey] = useState('');
   const [apiSecret, setApiSecret] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +23,12 @@ function BudaAuthScreen(props) {
   function handleBudaAuth() {
     dispatch({ type: BUDA_AUTH_REQUEST, payload: { apiKey, apiSecret, password } });
   }
+
+  useEffect(() => {
+    if (balance !== null) {
+      props.navigation.navigate({ routeName: 'Home' });
+    }
+  });
 
   return (
     <View style={style.screen}>
