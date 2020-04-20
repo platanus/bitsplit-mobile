@@ -23,18 +23,6 @@ const slice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    syncBuda(state) {
-      state.loading = true;
-    },
-    syncBudaSuccess(state, action) {
-      state.loading = false;
-      state.apiKey = action.payload.api_key;
-      state.user = action.payload;
-    },
-    syncBudaRejected(state, action) {
-      state.loading = false;
-      state.error = action.payload;
-    },
   },
 
 });

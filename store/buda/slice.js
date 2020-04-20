@@ -8,14 +8,14 @@ const slice = createSlice({
     loading: false,
   },
   reducers: {
-    confirmKeys(state) {
+    syncBuda(state) {
       state.loading = true;
     },
-    confirmSuccess(state, action) {
+    syncBudaSuccess(state, action) {
       state.loading = false;
-      state.apiKey = action.payload;
+      state.apiKey = action.payload.api_key;
     },
-    confirmRejected(state, action) {
+    syncBudaRejected(state, action) {
       state.loading = false;
       state.error = action.payload;
     },
