@@ -1,21 +1,21 @@
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 // import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
-import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 
+import AuthScreen from '../screens/Authenti/AuthScreen';
 
-const LoginNavigator = createStackNavigator({
-  Login: LoginScreen,
+const AuthNavigator = createStackNavigator({
+  Autentificacion: AuthScreen,
 });
 
-const MenuNavigator = createStackNavigator({
+const MenuNavigator = createSwitchNavigator({
   BitSplit: WelcomeScreen,
-  Login: LoginNavigator,
+  Autentificacion: AuthNavigator,
   Home: HomeScreen,
   BudaAuth: BudaAuthScreen,
 });

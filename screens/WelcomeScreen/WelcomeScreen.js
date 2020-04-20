@@ -1,23 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import Colors from '../../constants/Colors';
-
-const style = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-
-  },
-});
+import { styles } from '../../components/styles';
 
 function WelcomeScreen(props) {
   return (
-    <View style={style.screen}>
+    <View style={styles.screen}>
       <SocialIcon
         title='Sign In With Buda'
         button onPress={() => {
-          props.navigation.navigate({ routeName: 'Login' });
+          props.navigation.navigate({ routeName: 'Autentificacion' });
         }}
         type='medium'
       />

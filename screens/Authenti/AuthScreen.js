@@ -1,35 +1,28 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
+import Colors from '../../constants/Colors';
+import { styles } from '../../components/styles';
 
-const style = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-function LoginScreen(props) {
+function AuthScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // eslint-disable-next-line camelcase
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [switchFlag, setFlag] = useState(true);
+  const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
-  // we can add loading for submits
-  const { token, error } = useSelector(state => state.auth);
+  const { token, error, loading } = useSelector(state => state.auth);
 
-  function handleLogin() {
-    dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
-  }
-  function handleRegister() {
-    dispatch({ type: REGISTER_REQUEST, payload: { email, password, 'password_confirmation': passwordConfirmation } });
+  function authHandler() {
+    if (isSignup) {
+      dispatch({ type: REGISTER_REQUEST, payload: { email, password, 'password_confirmation': passwordConfirmation } });
+    } else {
+      dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
+      console.log('is async?');
+    }
   }
 
   useEffect(() => {
@@ -38,30 +31,23 @@ function LoginScreen(props) {
       props.navigation.navigate({ routeName: 'BudaAuth' });
     }
   });
+
   function switchSignupRegister() {
-    if (switchFlag === true) {
+    if (isSignup === false) {
       return (
         <View>
           <Button
             title="Login"
             type="solid"
-            onPress ={() => handleLogin()}
-          />
-          <Button
-            title="Cool Gradient Button"
-            ViewComponent={LinearGradient} // Don't forget this!
-            linearGradientProps={{
-              colors: ['red', 'pink'],
-              start: { x: 0, y: 0.5 },
-              end: { x: 1, y: 0.5 },
-            }}
+            onPress ={() => authHandler()}
+            loading = {loading}
           />
           <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
           <Text>New to Bitsplit? Go ahead an register!</Text>
           <Button
             title="Register"
             type="outline"
-            onPress ={() => setFlag(false)}
+            onPress ={() => setIsSignup(true)}
           />
         </View>
       );
@@ -83,7 +69,7 @@ function LoginScreen(props) {
           placeholder=' password'
           leftIcon={
             <Icon
-              name='user'
+              name='lock'
               size={24}
               color='black'
             />
@@ -92,7 +78,8 @@ function LoginScreen(props) {
         <Button
           title="Register"
           type="solid"
-          onPress ={() => handleRegister()}
+          onPress ={() => authHandler()}
+          loading ={loading}
 
         />
         <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
@@ -100,7 +87,7 @@ function LoginScreen(props) {
         <Button
           title="Login"
           type="outline"
-          onPress ={() => setFlag(true)}
+          onPress ={() => setIsSignup(false)}
         />
       </View>
 
@@ -108,10 +95,10 @@ function LoginScreen(props) {
   }
 
   return (
-    <View style={style.screen}>
-      <ScrollView style={{ flex: 1 }}>
+    <View style={styles.screen}>
+      <ScrollView>
 
-        <Text h2>{switchFlag ? 'Login' : 'Register'}</Text>
+        <Text h2>{isSignup ? 'Register' : 'Login' }</Text>
 
         <Text h4>{error}</Text>
         <Input
@@ -148,7 +135,7 @@ function LoginScreen(props) {
           placeholder=' password'
           leftIcon={
             <Icon
-              name='user'
+              name='lock'
               size={24}
               color='black'
             />
@@ -160,4 +147,12 @@ function LoginScreen(props) {
   );
 }
 
-export default LoginScreen;
+AuthScreen.navigationOptions = {
+  headerTitle: 'BitSplit',
+  headerStyle: {
+    backgroundColor: Colors.primaryColor,
+  },
+  headerTintColor: 'white',
+};
+
+export default AuthScreen;
