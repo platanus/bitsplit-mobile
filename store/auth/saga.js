@@ -8,7 +8,7 @@ function *loginRequest(action) {
     yield put(authActions.login());
     const { data: { data: { attributes } } } = yield call(api.loginApi, action.payload);
     if (attributes) {
-      yield put(authActions.loginSucces(attributes));
+      yield put(authActions.loginSuccess(attributes));
     } else {
       yield put(authActions.loginRejected('Usuario y contraseña no coinciden'));
     }
@@ -22,7 +22,7 @@ function *register(action) {
     yield put(authActions.login());
     const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
     if (attributes) {
-      yield put(authActions.loginSucces(attributes));
+      yield put(authActions.loginSuccess(attributes));
     } else {
       yield put(authActions.loginRejected('Error registrando'));
     }

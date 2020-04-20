@@ -8,12 +8,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center ',
   },
-});
-const test = StyleSheet.create({
   text: {
-    colr: 'blue',
+    _colr: 'blue',
   },
 });
+
 // WelcomeScreen
 // LoginScreen
 // HomeScreen

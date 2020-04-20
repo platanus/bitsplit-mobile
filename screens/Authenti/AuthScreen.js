@@ -9,15 +9,11 @@ import Colors from '../../constants/Colors';
 import { styles } from '../../components/styles';
 
 function AuthScreen(props) {
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [dataError, setError] = useState();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [isSignup, setIsSignup] = useState(false);
-  // const [switchFlag, setFlag] = useState(true);
   const dispatch = useDispatch();
-  // we can add loading for submits
   const { token, error, loading } = useSelector(state => state.auth);
 
   function authHandler() {
