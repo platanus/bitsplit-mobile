@@ -1,10 +1,5 @@
 
-export const TEST = 'TEST';
-
+// AUTH MIDDLEWARES
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCES = 'LOGIN_SUCCES';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-
 export const BUDA_AUTH_REQUEST = 'BUDA_AUTH_REQUEST';

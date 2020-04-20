@@ -8,7 +8,7 @@ function *confirmKeysRequest(action) {
     yield put(budaActions.confirmKeys());
     const all = yield call(api.checkUserKeys, action.payload);
     console.log('BUDA API RESULT', all);
-    yield put(api.confirmSucces(action.payload.apiKey));
+    yield put(api.confirmSuccess(action.payload.apiKey));
   } catch (err) {
     yield put(budaActions.confirmRejected(err.toString()));
   }

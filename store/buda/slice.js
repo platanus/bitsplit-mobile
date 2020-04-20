@@ -11,7 +11,7 @@ const slice = createSlice({
     confirmKeys(state) {
       state.loading = true;
     },
-    confirmSucces(state, action) {
+    confirmSuccess(state, action) {
       state.loading = false;
       state.apiKey = action.payload;
     },

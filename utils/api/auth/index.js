@@ -24,5 +24,22 @@ function signUpApi(payload) {
   );
 }
 
-const authApi = { loginApi, signUpApi };
+function budaSyncApi(payload) {
+  return axios.patch(
+    `${url}/api/v1/users/`,
+    {
+      'password': payload.password,
+      'api_key': payload.apiKey,
+      'api_secret': payload.apiSecret,
+    },
+    {
+      headers: { 'Content-Type': 'application/json',
+        'X-User-Email': payload.email,
+        'X-User-Token': payload.token,
+      },
+    },
+  );
+}
+
+const authApi = { loginApi, signUpApi, budaSyncApi };
 export default authApi;

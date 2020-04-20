@@ -15,7 +15,7 @@ const style = StyleSheet.create({
 });
 
 function BudaAuthScreen(props) {
-  const { error, loading } = useSelector(state => state.buda);
+  const { error, loading } = useSelector(state => state.auth);
   const [apiKey, setApiKey] = useState('');
   const [apiSecret, setApiSecret] = useState('');
   const [password, setPassword] = useState('');
@@ -35,6 +35,7 @@ function BudaAuthScreen(props) {
           id ="API_KEY"
           label="API KEY"
           required
+          secureTextEntry
           autoCapitalize="none"
           value={apiKey}
           onChangeText={text => setApiKey(text)}
@@ -51,6 +52,7 @@ function BudaAuthScreen(props) {
           id ="API_SECRET"
           label="API SECRET"
           required
+          secureTextEntry
           autoCapitalize="none"
           value={apiSecret}
           onChangeText={text => setApiSecret(text)}
