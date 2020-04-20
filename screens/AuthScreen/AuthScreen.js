@@ -28,7 +28,7 @@ function AuthScreen(props) {
   useEffect(() => {
     if (token) {
       // Home
-      props.navigation.navigate({ routeName: 'BudaAuth' });
+      props.navigation.navigate({ routeName: 'Home' });
     }
   });
 

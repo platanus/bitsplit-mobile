@@ -15,7 +15,7 @@ const style = StyleSheet.create({
 });
 
 function BudaAuthScreen(props) {
-  const { error, loading } = useSelector(state => state.auth);
+  const { error, loading } = useSelector(state => state.buda);
   const [apiKey, setApiKey] = useState('');
   const [apiSecret, setApiSecret] = useState('');
   const [password, setPassword] = useState('');

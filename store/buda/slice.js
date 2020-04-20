@@ -6,6 +6,7 @@ const slice = createSlice({
     apiKey: null,
     error: null,
     loading: false,
+    balance: null,
   },
   reducers: {
     syncBuda(state) {
@@ -13,11 +14,15 @@ const slice = createSlice({
     },
     syncBudaSuccess(state, action) {
       state.loading = false;
-      state.apiKey = action.payload.api_key;
+      state.apiKey = action.payload;
     },
     syncBudaRejected(state, action) {
       state.loading = false;
       state.error = action.payload;
+    },
+    budaBalance(state, action) {
+      state.loading = false;
+      state.balance = action.payload;
     },
   },
 

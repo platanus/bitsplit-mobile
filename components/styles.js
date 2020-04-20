@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-// Layaout
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -9,10 +7,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-// WelcomeScreen
-// LoginScreen
-// HomeScreen
 
 const saldoText = StyleSheet.create({
   fontSize: 30,

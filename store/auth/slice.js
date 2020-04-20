@@ -6,7 +6,6 @@ const slice = createSlice({
     token: null,
     user: null,
     error: null,
-    apiKey: null,
     loading: false,
   },
   reducers: {

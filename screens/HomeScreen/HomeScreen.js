@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import { styles, saldoText } from '../../components/styles';
 
-function HomeScreen() {
-  const email = useSelector(state => state.auth.user.email);
+function HomeScreen(props) {
+  const { auth: { user: { email } }, buda: { apiKey } } = useSelector(state => state);
   const saldo = 70000;
+
+  useEffect(() => {
+    if (!apiKey) {
+      props.navigation.navigate({ routeName: 'BudaAuth' });
+    }
+  });
 
   return (
     <View style={styles.screen}>

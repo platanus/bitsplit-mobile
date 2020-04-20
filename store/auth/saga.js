@@ -7,7 +7,6 @@ function *loginRequest(action) {
   try {
     yield put(authActions.login());
     const { data: { data: { attributes } } } = yield call(api.loginApi, action.payload);
-    console.log('Login\n', attributes);
     if (attributes) {
       yield put(authActions.loginSuccess(attributes));
     } else {
