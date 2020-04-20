@@ -5,7 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import AuthScreen from '../screens/Authenti/AuthScreen';
+import AuthScreen from '../screens/AuthScreen/AuthScreen';
 
 const AuthNavigator = createStackNavigator({
   Autentificacion: AuthScreen,
