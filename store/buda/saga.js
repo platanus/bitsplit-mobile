@@ -18,8 +18,6 @@ function *syncBudaRequest(action) {
       yield put(budaActions.syncBudaSuccess(api_key));
       yield put(budaActions.budaBalance(balance));
     }
-
-    // put balance
   } catch (err) {
     console.log('ERROR', Object.keys(err), err.response);
     yield put(budaActions.syncBudaRejected(err.toString()));
