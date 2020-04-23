@@ -2,10 +2,10 @@ import Constants from 'expo-constants';
 
 const ENV = {
   staging: {
-    apiUrl: 'https://pl-bitsplit-staging.herokuapp.com',
+    url: 'https://pl-bitsplit-staging.herokuapp.com',
   },
   prod: {
-    apiUrl: 'https://pl-bitsplit-production.herokuapp.com/',
+    url: 'https://pl-bitsplit-production.herokuapp.com/',
   },
 };
 

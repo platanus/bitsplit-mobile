@@ -17,7 +17,7 @@ function *syncBudaRequest(action) {
       yield put(budaActions.syncBudaSuccess(api_key));
     }
   } catch (err) {
-    yield put(budaActions.syncBudaRejected(err.toString()));
+    yield put(budaActions.syncBudaRejected('tus credenciales son invalidas'));
   }
 }
 

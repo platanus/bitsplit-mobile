@@ -34,7 +34,7 @@ function BudaAuthScreen(props) {
     <View style={style.screen}>
       <ScrollView style={{ flex: 1 }}>
 
-        <Text h2>{'Authentificate Buda'}</Text>
+        <Text h2>{'Autentificación Buda'}</Text>
 
         <Text h4>{ error }</Text>
         <Input
