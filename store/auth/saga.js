@@ -13,7 +13,11 @@ function *loginRequest(action) {
       yield put(authActions.loginRejected('Usuario y contraseña no coinciden'));
     }
   } catch (err) {
-    yield put(authActions.loginRejected(err.toString()));
+    if (err.response.status.toString() === '500') {
+      yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
+    } else {
+      yield put(authActions.loginRejected('Tus credenciales son invalidas'));
+    }
   }
 }
 
@@ -27,7 +31,11 @@ function *register(action) {
       yield put(authActions.loginRejected('Error registrando'));
     }
   } catch (err) {
-    yield put(authActions.loginRejected(err.toString()));
+    if (err.response.status.toString() === '500') {
+      yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
+    } else {
+      yield put(authActions.loginRejected('Error registrando, revisa tus credenciales'));
+    }
   }
 }
 
