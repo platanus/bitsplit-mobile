@@ -1,0 +1,73 @@
+Arguments: 
+  /usr/local/Cellar/node/13.13.0_1/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add network-timeout 100000
+
+PATH: 
+  /Users/diegosilva/.rvm/gems/ruby-2.5.1/bin:/Users/diegosilva/.rvm/gems/ruby-2.5.1@global/bin:/Users/diegosilva/.rvm/rubies/ruby-2.5.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/diegosilva/.rvm/gems/ruby-2.5.1/bin:/Users/diegosilva/.rvm/gems/ruby-2.5.1@global/bin:/Users/diegosilva/.rvm/rubies/ruby-2.5.1/bin:/Users/diegosilva/.dotnet/tools:/Users/diegosilva/.rvm/bin:/Users/diegosilva/.dotnet/tools:/Users/diegosilva/.rvm/bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  13.13.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/network-timeout: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141720:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141642:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1201:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+
+npm manifest: 
+  {
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "eject": "expo eject"
+    },
+    "dependencies": {
+      "@react-native-community/masked-view": "0.1.6",
+      "@reduxjs/toolkit": "^1.3.4",
+      "axios": "^0.19.2",
+      "expo": "^37.0.0",
+      "expo-linear-gradient": "~8.1.0",
+      "native": "^0.3.3",
+      "react": "16.9.0",
+      "react-dom": "16.9.0",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
+      "react-native-elements": "^1.2.7",
+      "react-native-gesture-handler": "~1.6.0",
+      "react-native-linear-gradient": "^2.5.6",
+      "react-native-reanimated": "~1.7.0",
+      "react-native-safe-area-context": "0.7.3",
+      "react-native-screens": "~2.2.0",
+      "react-native-web": "^0.11.7",
+      "react-navigation": "^4.3.7",
+      "react-navigation-stack": "^2.3.11",
+      "react-redux": "^7.2.0",
+      "redux": "^4.0.5",
+      "redux-saga": "^1.1.3"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.8.6",
+      "babel-preset-expo": "^8.1.0"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
