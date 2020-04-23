@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
-import Colors from '../../constants/Colors';
-import { styles } from '../../components/styles';
+import styles from './styles';
+import colors from '../../styles/colors';
 
 function AuthScreen(props) {
   const [email, setEmail] = useState('');
@@ -21,7 +21,6 @@ function AuthScreen(props) {
       dispatch({ type: REGISTER_REQUEST, payload: { email, password, 'password_confirmation': passwordConfirmation } });
     } else {
       dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
-      console.log('is async?');
     }
   }
 
@@ -29,69 +28,7 @@ function AuthScreen(props) {
     if (token) {
       props.navigation.navigate({ routeName: 'Home' });
     }
-  });
-
-  function switchSignupRegister() {
-    if (isSignup === false) {
-      return (
-        <View>
-          <Button
-            title="Login"
-            type="solid"
-            onPress ={() => authHandler()}
-            loading = {loading}
-          />
-          <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
-          <Text>New to Bitsplit? Go ahead an register!</Text>
-          <Button
-            title="Register"
-            type="outline"
-            onPress ={() => setIsSignup(true)}
-          />
-        </View>
-      );
-    }
-
-    return (
-      <View>
-        <Input
-          id ="passwordConfirmation"
-          label="Confirm Password"
-          keyboardType="default"
-          secureTextEntry
-          required
-          minLength={5}
-          autoCapitalize="none"
-          errorMessage="Ingrese un contrasena valida"
-          value={passwordConfirmation}
-          onChangeText={(text) => setPasswordConfirmation(text)}
-          placeholder=' password'
-          leftIcon={
-            <Icon
-              name='lock'
-              size={24}
-              color='black'
-            />
-          }
-        />
-        <Button
-          title="Register"
-          type="solid"
-          onPress ={() => authHandler()}
-          loading ={loading}
-
-        />
-        <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
-        <Text>Already have an account?</Text>
-        <Button
-          title="Login"
-          type="outline"
-          onPress ={() => setIsSignup(false)}
-        />
-      </View>
-
-    );
-  }
+  }, [token, props]);
 
   return (
     <View style={styles.screen}>
@@ -107,7 +44,6 @@ function AuthScreen(props) {
           required
           email
           autoCapitalize="none"
-          errorMessage="Ingrese un email valido"
           value={email}
           onChangeText={text => setEmail(text)}
           placeholder=' Usuario'
@@ -128,7 +64,6 @@ function AuthScreen(props) {
           required
           minLength={5}
           autoCapitalize="none"
-          errorMessage="Ingrese un contrasena valida"
           value={password}
           onChangeText={(text) => setPassword(text)}
           placeholder=' password'
@@ -140,7 +75,41 @@ function AuthScreen(props) {
             />
           }
         />
-        {switchSignupRegister()}
+        { isSignup && <Input
+          id ="passwordConfirmation"
+          label="Confirm Password"
+          keyboardType="default"
+          secureTextEntry
+          required
+          minLength={5}
+          autoCapitalize="none"
+          value={passwordConfirmation}
+          onChangeText={(text) => setPasswordConfirmation(text)}
+          placeholder=' password'
+          leftIcon={
+            <Icon
+              name='lock'
+              size={24}
+              color='black'
+            />
+          }
+        />
+        }
+        <Button
+          title={isSignup ? 'Register' : 'Login'}
+          type="solid"
+          onPress ={() => authHandler()}
+          loading ={loading}
+
+        />
+        <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }}/>
+        <Text>{ isSignup ? 'New to Bitsplit?\nGo ahead and register!' : 'Already have an account?' }</Text>
+        <Button
+          title={isSignup ? 'Login' : 'Register'}
+          type="outline"
+          onPress ={() => setIsSignup(!isSignup)}
+        />
+
       </ScrollView>
     </View>
   );
@@ -149,7 +118,7 @@ function AuthScreen(props) {
 AuthScreen.navigationOptions = {
   headerTitle: 'BitSplit',
   headerStyle: {
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: colors.purple,
   },
   headerTintColor: 'white',
 };

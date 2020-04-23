@@ -1,9 +1,9 @@
 import axios from 'axios';
+import env from '../../../env';
 
-const url = 'https://pl-bitsplit-staging.herokuapp.com';
 function budaBalance(payload) {
   return axios.get(
-    `${url}/api/v1/balances`,
+    `${env.url}/api/v1/balances`,
     {
       headers: { 'Content-Type': 'application/json',
         'X-User-Email': payload.email,

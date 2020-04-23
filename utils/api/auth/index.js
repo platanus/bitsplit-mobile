@@ -1,9 +1,9 @@
 import axios from 'axios';
+import env from '../../../env';
 
-const url = 'https://pl-bitsplit-staging.herokuapp.com';
 function loginApi(payload) {
   return axios.post(
-    `${url}/api/v1/sessions/`,
+    `${env.url}/api/v1/sessions/`,
     {
       email: payload.email,
       password: payload.password,
@@ -16,7 +16,7 @@ function loginApi(payload) {
 
 function signUpApi(payload) {
   return axios.post(
-    `${url}/api/v1/users/`,
+    `${env.url}/api/v1/users/`,
     { ...payload },
     {
       headers: { 'Content-Type': 'application/json' },
@@ -26,7 +26,7 @@ function signUpApi(payload) {
 
 function budaSyncApi(payload) {
   return axios.patch(
-    `${url}/api/v1/users/`,
+    `${env.url}/api/v1/users/`,
     {
       'password': payload.password,
       'api_key': payload.apiKey,
