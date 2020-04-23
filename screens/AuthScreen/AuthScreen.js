@@ -6,7 +6,7 @@ import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
 import Colors from '../../constants/Colors';
-import { styles } from '../../components/styles';
+import styles from './styles';
 
 function AuthScreen(props) {
   const [email, setEmail] = useState('');

@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import Colors from '../../constants/Colors';
-import { styles } from '../../components/styles';
+import styles from './styles';
 
 function WelcomeScreen(props) {
   return (
