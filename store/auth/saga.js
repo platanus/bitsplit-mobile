@@ -1,14 +1,22 @@
+/* eslint-disable max-statements */
+/* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
+import { actions as budaActions } from '../buda/slice';
+import { getBudaBalance } from '../buda/saga';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../types';
 import api from '../../utils/api';
 
 function *loginRequest(action) {
   try {
     yield put(authActions.login());
-    const { data: { data: { attributes } } } = yield call(api.loginApi, action.payload);
+    const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.loginApi, action.payload);
     if (attributes) {
       yield put(authActions.loginSuccess(attributes));
+      if (api_key) {
+        yield *getBudaBalance();
+        yield put(budaActions.setBudaKey(api_key));
+      }
     } else {
       yield put(authActions.loginRejected('Usuario y contraseña no coinciden'));
     }

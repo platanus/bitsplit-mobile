@@ -43,8 +43,8 @@ function BudaAuthScreen(props) {
           required
           secureTextEntry
           autoCapitalize="none"
-          value={apiKey}
-          onChangeText={text => setApiKey(text)}
+          value={ apiKey }
+          onChangeText={ text => setApiKey(text) }
           placeholder='buda api key'
           leftIcon={
             <Icon

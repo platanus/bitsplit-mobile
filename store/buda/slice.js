@@ -12,7 +12,7 @@ const slice = createSlice({
     syncBuda(state) {
       state.loading = true;
     },
-    syncBudaSuccess(state, action) {
+    setBudaKey(state, action) {
       state.loading = false;
       state.apiKey = action.payload;
     },
