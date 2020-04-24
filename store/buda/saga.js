@@ -1,6 +1,6 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as budaActions } from './slice';
-import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE } from '../types';
+import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT } from '../types';
 import api from '../../utils/api';
 
 function *syncBudaRequest(action) {
@@ -37,7 +37,30 @@ export function *getBudaBalance() {
   }
 }
 
+function *getBudaQuotation(action) {
+  try {
+    const { token, user: { email } } = yield select(state => state.auth);
+    const { data: { data: { quotation } } } = yield call(api.budaGetQuotationApi, { token, email, amount: action.payload });
+    console.log(quotation);
+    yield put(budaActions.setQuotations(quotation));
+  } catch (err) {
+    console.log('ERR', err.response);
+  }
+}
+
+function *postBudaPayment(action) {
+  try {
+    const { token, user: { email } } = yield select(state => state.auth);
+    const { data: { data: { attributes } } } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
+    console.log('api payment saga', attributes);
+  } catch (err) {
+    console.log('ERR', err.response);
+  }
+}
+
 export default function *loginSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
+  yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
+  yield takeLatest(BUDA_PAYMENT, postBudaPayment);
 }

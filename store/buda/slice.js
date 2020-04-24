@@ -7,6 +7,7 @@ const slice = createSlice({
     error: null,
     loading: false,
     balance: null,
+    quotation: null,
   },
   reducers: {
     syncBuda(state) {
@@ -23,6 +24,9 @@ const slice = createSlice({
     budaBalance(state, action) {
       state.loading = false;
       state.balance = action.payload;
+    },
+    setQuotations(state, action) {
+      state.quotation = action.payload;
     },
   },
 

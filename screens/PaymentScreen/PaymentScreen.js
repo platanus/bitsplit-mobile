@@ -1,105 +1,92 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_AUTH_REQUEST } from '../../store/types';
-
-const style = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
+import style from './styles';
+import { eventChannel } from 'redux-saga';
 
 function PaymentScreen(props) {
-  const { error, loading, balance } = useSelector(state => state.buda);
-  const [apiKey, setApiKey] = useState('');
-  const [apiSecret, setApiSecret] = useState('');
-  const [password, setPassword] = useState('');
+  const { error, loading, quotation } = useSelector(state => state.buda);
+  const [receptor, setReceptor] = useState('');
+  const [transferAmount, setTransferAmount] = useState('');
+  const minTrxAmount = 100;
   const dispatch = useDispatch();
-  function handleBudaAuth() {
-    dispatch({ type: BUDA_AUTH_REQUEST, payload: { apiKey, apiSecret, password } });
+  const totalClp = quotation ? quotation.amount_clp[0] : '0';
+  const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
+  const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
+  const fee = evalFee && evalFee > 0 ? evalFee : '0';
+
+  function handleBudaQuotation(amount) {
+    console.log('react view', transferAmount, amount);
+    dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
 
-  useEffect(() => {
-    if (balance !== null) {
-      props.navigation.navigate({ routeName: 'Home' });
-    }
-  });
+  function handleBudaPayment() {
+    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: quotation.amount_btc[0], receptor } });
+  }
 
   return (
     <View style={style.screen}>
       <ScrollView style={{ flex: 1 }}>
 
-        <Text h2>{'Autentificación Buda'}</Text>
+        <Text h2>{'Transferencia'}</Text>
 
         <Text h4>{ error }</Text>
         <Input
-          id ="API_KEY"
-          label="API KEY"
-          required
-          secureTextEntry
+          id ="receptor"
+          label="Receptor"
           autoCapitalize="none"
-          value={ apiKey }
-          onChangeText={ text => setApiKey(text) }
-          placeholder='buda api key'
+          value={ receptor }
+          onChangeText={ text => setReceptor(text) }
+          placeholder='receptor email'
           leftIcon={
             <Icon
-              name='key'
+              name='user'
               size={24}
               color='black'
             />
           }
         />
         <Input
-          id ="API_SECRET"
-          label="API SECRET"
-          required
-          secureTextEntry
+          id ="transferAmount"
+          label="Monto a transferir"
           autoCapitalize="none"
-          value={apiSecret}
-          onChangeText={text => setApiSecret(text)}
-          placeholder='buda api secret'
+          value={transferAmount}
+          onChangeText={text => {
+            setTransferAmount(text);
+            // dont use text. callbacks
+            if (parseInt(text, 10) > minTrxAmount) {
+              handleBudaQuotation(text);
+            }
+          }}
+          placeholder='Monto de llegada en CLP'
           leftIcon={
             <Icon
-              name='user-secret'
+              name='user'
               size={24}
               color='black'
             />
           }
+        />
+        <View>
+
+          <Text>Monto total CPL: ${totalClp}</Text>
+          <Text>Monto total Bitcoins: ${totalBitcoins}</Text>
+          <Text>Costo por servicio: ${ fee }</Text>
+        </View>
+
+        <Button
+          title='Pagar'
+          type="solid"
+          onPress ={() => handleBudaPayment()}
         />
 
-        <Input
-          id ="password"
-          label="Bitsplit Password"
-          keyboardType="default"
-          secureTextEntry
-          required
-          minLength={5}
-          autoCapitalize="none"
-          errorMessage="Ingrese un contrasena valida"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          placeholder='password'
-          leftIcon={
-            <Icon
-              name='lock'
-              size={24}
-              color='black'
-            />
-          }
-        />
-        <Button
-          title="send"
-          type="solid"
-          onPress ={() => handleBudaAuth()}
-          loading ={loading}
-        />
       </ScrollView>
     </View>
+
   );
 }
 

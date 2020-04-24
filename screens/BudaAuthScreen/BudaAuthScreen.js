@@ -1,18 +1,11 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_AUTH_REQUEST } from '../../store/types';
-
-const style = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import style from './styles';
 
 function BudaAuthScreen(props) {
   const { error, loading, balance } = useSelector(state => state.buda);
@@ -28,7 +21,7 @@ function BudaAuthScreen(props) {
     if (balance !== null) {
       props.navigation.navigate({ routeName: 'Home' });
     }
-  });
+  }, [balance, props]);
 
   return (
     <View style={style.screen}>

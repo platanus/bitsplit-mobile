@@ -21,7 +21,14 @@ function HomeScreen(props) {
       <Text>{`Hola ${email}!`}</Text>
 
       {apiKey ?
-        <Text style={styles.saldoText}>{`Saldo \n${balance.BTC.amount} BTC\n${balance.CLP.amount} CLP `}</Text> :
+        <View>
+          <Text style={styles.saldoText}>{`Saldo \n${balance.BTC.amount} BTC\n${balance.CLP.amount} CLP `}</Text>
+          <Button
+            title= 'Generar Pago'
+            type="solid"
+            onPress ={() => props.navigation.navigate({ routeName: 'Payment' })}
+          />
+        </View> :
         <View>
           <Text style={styles.saldoText}>{'Debes sincronizar con Buda'}</Text>
           <Button
