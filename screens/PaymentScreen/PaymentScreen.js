@@ -1,15 +1,14 @@
 /* eslint-disable max-statements */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import style from './styles';
-import { eventChannel } from 'redux-saga';
 
-function PaymentScreen(props) {
-  const { error, loading, quotation } = useSelector(state => state.buda);
+function PaymentScreen() {
+  const { error, quotation } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
   const minTrxAmount = 100;
@@ -25,7 +24,7 @@ function PaymentScreen(props) {
   }
 
   function handleBudaPayment() {
-    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: quotation.amount_btc[0], receptor } });
+    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor } });
   }
 
   return (
