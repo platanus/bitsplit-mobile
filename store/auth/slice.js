@@ -1,6 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AsyncStorage } from 'react-native';
 
+function saveDataToStorage(token, user) {
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({
+      token,
+      user,
+    }),
+  );
+}
+
 const slice = createSlice({
   name: 'auth',
   initialState: {
@@ -27,16 +37,6 @@ const slice = createSlice({
   },
 
 });
-
-const saveDataToStorage = (token, user) => {
-  AsyncStorage.setItem(
-    'userData',
-    JSON.stringify({
-      token,
-      user,
-    }),
-  );
-};
 
 export default slice;
 
