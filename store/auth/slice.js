@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AsyncStorage } from 'react-native';
 
 const slice = createSlice({
   name: 'auth',
@@ -17,7 +16,6 @@ const slice = createSlice({
       state.loading = false;
       state.token = action.payload.authentication_token;
       state.user = action.payload;
-      saveDataToStorage(state.token, state.user);
       if (action.payload.api_key) state.apiKey = action.payload.api_key;
     },
     loginRejected(state, action) {
@@ -27,16 +25,6 @@ const slice = createSlice({
   },
 
 });
-
-const saveDataToStorage = (token, user) => {
-  AsyncStorage.setItem(
-    'userData',
-    JSON.stringify({
-      token,
-      user,
-    }),
-  );
-};
 
 export default slice;
 
