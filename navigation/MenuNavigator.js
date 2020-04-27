@@ -17,7 +17,7 @@ const HomeNavigator = createStackNavigator({
 });
 
 const MenuNavigator = createSwitchNavigator({
-  Startup: StartupScreen,
+// Startup: StartupScreen,
   Authentication: AuthNavigator,
   Home: HomeNavigator,
 });

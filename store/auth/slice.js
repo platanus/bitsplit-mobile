@@ -27,7 +27,7 @@ const slice = createSlice({
       state.loading = false;
       state.token = action.payload.authentication_token;
       state.user = action.payload;
-      saveDataToStorage(state.token, state.user);
+      // saveDataToStorage(state.token, state.user);
       if (action.payload.api_key) state.apiKey = action.payload.api_key;
     },
     loginRejected(state, action) {
