@@ -2,6 +2,9 @@
 
 _Mobile Grupo 1 Proyecto de Especialidad 2020-1_
 
+Recordar: expo publish --release -channel production
+
+
 ## Comenzando 🚀
 
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._

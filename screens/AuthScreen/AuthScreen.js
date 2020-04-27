@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Divider, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
-import Colors from '../../constants/Colors';
 import styles from './styles';
+import colors from '../../styles/colors';
 
 function AuthScreen(props) {
   const [email, setEmail] = useState('');
@@ -118,7 +118,7 @@ function AuthScreen(props) {
 AuthScreen.navigationOptions = {
   headerTitle: 'BitSplit',
   headerStyle: {
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: colors.purple,
   },
   headerTintColor: 'white',
 };

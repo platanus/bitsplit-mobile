@@ -1,26 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
-  name: 'auth',
+  name: 'buda',
   initialState: {
-    token: null,
-    user: null,
+    apiKey: null,
     error: null,
     loading: false,
+    balance: null,
   },
   reducers: {
-    login(state) {
+    syncBuda(state) {
       state.loading = true;
     },
-    loginSuccess(state, action) {
+    setBudaKey(state, action) {
       state.loading = false;
-      state.token = action.payload.authentication_token;
-      state.user = action.payload;
-      if (action.payload.api_key) state.apiKey = action.payload.api_key;
+      state.apiKey = action.payload;
     },
-    loginRejected(state, action) {
+    syncBudaRejected(state, action) {
       state.loading = false;
       state.error = action.payload;
+    },
+    budaBalance(state, action) {
+      state.loading = false;
+      state.balance = action.payload;
     },
   },
 
