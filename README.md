@@ -4,6 +4,8 @@ _Mobile Grupo 1 Proyecto de Especialidad 2020-1_
 
 Recordar: expo publish --release -channel production
 
+Prueba la app: https://expo.io/@dspunk/Bitsplit
+
 
 ## Comenzando 🚀
 

@@ -17,6 +17,9 @@ function PaymentScreen() {
   const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
   const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
+  const transactionCompleted = attributes ? atributes.completed : 'Transaccion no completada';
+
+  
 
   function handleBudaQuotation(amount) {
     console.log('react view', transferAmount, amount);
@@ -82,6 +85,10 @@ function PaymentScreen() {
           type="solid"
           onPress ={() => handleBudaPayment()}
         />
+
+        <View>
+        <Text>`Transaccion: ${transactionCompleted}`</Text>
+        </View>
 
       </ScrollView>
     </View>
