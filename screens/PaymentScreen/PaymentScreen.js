@@ -19,15 +19,18 @@ function PaymentScreen() {
   const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
   const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
+  const exito = lastPayment ? lastPayment.completed : false;
 
   function handleBudaQuotation(amount) {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
 
   function handleBudaPayment() {
-    setIsVisible(!isVisible);
     dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor } });
-    // setisvisible if lastpayment.completed is true
+    console.log('EXITO?', exito);
+    if (exito) {
+      setIsVisible(!isVisible);
+    }
   }
 
   return (
@@ -89,11 +92,15 @@ function PaymentScreen() {
           type="solid"
           onPress ={() => handleBudaPayment()}
           loading ={loading}
-          disabled={parseInt(transferAmount, 10) > minTrxAmount}
+          disabled={parseInt(transferAmount, 10) < minTrxAmount}
         />
 
-        { isVisible && <Overlay>
-          <Text>Hello from Overlay!</Text>
+        { isVisible && <Overlay
+          windowBackgroundColor="rgba(255, 255, 255, .5)"
+          overlayBackgroundColor="green"
+          width="auto"
+          height="auto">
+          <Text>Transferencia Exitosa!</Text>
         </Overlay>
         }
 
