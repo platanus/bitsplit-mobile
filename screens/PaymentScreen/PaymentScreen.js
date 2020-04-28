@@ -28,8 +28,8 @@ function PaymentScreen() {
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ ...styles.screen, borderWidth: 1 }}>
+    <ScrollView>
+      <View style={styles.screen}>
 
         <Text h2>{'Transferencia'}</Text>
 
@@ -71,10 +71,11 @@ function PaymentScreen() {
         />
         {
           parseInt(transferAmount, 10) >= minTrxAmount ?
-            <View>
-              <Text h4>Monto total CPL: ${totalClp}</Text>
-              <Text h4 >Monto total Bitcoins: ${totalBitcoins}</Text>
-              <Text h4>Costo por servicio: ${ fee }</Text>
+            <View style={styles.quotationContainer}>
+              <Text h4>Cotizacion</Text>
+              <Text >Monto total CPL: ${totalClp}</Text>
+              <Text >Monto total BTC: ${totalBitcoins}</Text>
+              <Text>Costo por servicio: ${ fee }</Text>
             </View> :
             <Text h4>La transferencia minima es $100 CLP</Text>
         }

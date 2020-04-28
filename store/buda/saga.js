@@ -48,7 +48,6 @@ function *getBudaQuotation(action) {
     yield put(budaActions.setQuotations(quotation));
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));
-    console.log('ERR', err.response);
   }
   yield put(budaActions.finish());
 }

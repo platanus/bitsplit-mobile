@@ -3,7 +3,6 @@ import { store } from '../../store';
 
 const authedAxios = axios.create();
 if (store) {
-  console.log(Object.keys(store));
   const state = store;
   authedAxios.interceptors.request.use(
     config => {

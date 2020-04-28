@@ -31,7 +31,7 @@ function AuthScreen(props) {
   }, [token, props]);
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.inputContainer}>
       <ScrollView>
 
         <Text h2>{isSignup ? 'Register' : 'Login' }</Text>
