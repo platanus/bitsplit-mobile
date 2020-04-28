@@ -59,6 +59,7 @@ function *postBudaPayment(action) {
     const { data: { data: { error, attributes } } } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
     if (attributes) {
       yield put(budaActions.setLastPayment(attributes));
+      action.callback();
     } else if (error) {
       yield put(budaActions.syncBudaRejected(error));
     }
@@ -68,14 +69,9 @@ function *postBudaPayment(action) {
   yield put(budaActions.finish());
 }
 
-function *unmountLastPayment() {
-  yield put(budaActions.unmountLastPayment());
-}
-
 export default function *loginSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
   yield takeLatest(BUDA_PAYMENT, postBudaPayment);
-  yield takeLatest(BUDA_UNMOUNT_LAST_PAYMENT, unmountLastPayment);
 }

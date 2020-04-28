@@ -4,13 +4,14 @@ import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_QUOTATION, BUDA_PAYMENT, BUDA_UNMOUNT_LAST_PAYMENT } from '../../store/types';
+import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import styles from './styles';
 
 function PaymentScreen() {
   const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
+  const [overlayDisplay, setOverlayDisplay] = useState(false);
   const dispatch = useDispatch();
 
   const minTrxAmount = 100;
@@ -24,7 +25,7 @@ function PaymentScreen() {
   }
 
   function handleBudaPayment() {
-    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor } });
+    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor }, callback: () => setOverlayDisplay(true) });
   }
 
   return (
@@ -69,16 +70,18 @@ function PaymentScreen() {
             />
           }
         />
-        {
-          parseInt(transferAmount, 10) >= minTrxAmount ?
-            <View style={styles.quotationContainer}>
-              <Text h4>Cotizacion</Text>
-              <Text >Monto total CPL: ${totalClp}</Text>
-              <Text >Monto total BTC: ${totalBitcoins}</Text>
-              <Text>Costo por servicio: ${ fee }</Text>
-            </View> :
-            <Text h4>La transferencia minima es $100 CLP</Text>
-        }
+        <View style={styles.quotationContainer}>
+          {
+            parseInt(transferAmount, 10) >= minTrxAmount ?
+              <View >
+                <Text h4>Cotizacion</Text>
+                <Text >Monto total CPL: ${totalClp}</Text>
+                <Text >Monto total BTC: ${totalBitcoins}</Text>
+                <Text>Costo por servicio: ${ fee }</Text>
+              </View> :
+              <Text h4>La transferencia minima es $100 CLP</Text>
+          }
+        </View>
 
         <Button
           title='Pagar'
@@ -87,25 +90,25 @@ function PaymentScreen() {
           loading ={loading}
           disabled={! parseInt(transferAmount, 10) || (parseInt(transferAmount, 10) <= minTrxAmount)}
         />
-
-        { lastPayment &&
-          <Overlay
-            isVisible={!!lastPayment}
-            windowBackgroundColor="rgba(255, 255, 255, .5)"
-            onBackdropPress={() => { dispatch({ type: BUDA_UNMOUNT_LAST_PAYMENT }); }}
-          >
-            <View style={styles.screen}>
-              <Text h3>Succesful Payment</Text>
-              <Text h4>{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-              <Text h4>Receptor {lastPayment.receiver_email} </Text>
-              <Button
-                title='Listo'
-                type="solid"
-                onPress ={() => { dispatch({ type: BUDA_UNMOUNT_LAST_PAYMENT }); }}
-              />
-            </View>
-
-          </Overlay>
+        {
+          lastPayment &&
+        <Overlay
+          isVisible={overlayDisplay}
+          overlayStyle={styles.overlayContainer}
+          windowBackgroundColor="rgba(255, 255, 255, .5)"
+          onBackdropPress={() => setOverlayDisplay(false)}
+        >
+          <View style={styles.screen}>
+            <Text h4>Pago Exitoso</Text>
+            <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+            <Text h5>{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+            <Button
+              title='Listo'
+              type="solid"
+              onPress ={() => setOverlayDisplay(false) }
+            />
+          </View>
+        </Overlay>
         }
 
       </View>

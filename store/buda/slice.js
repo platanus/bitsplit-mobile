@@ -32,9 +32,6 @@ const slice = createSlice({
     setLastPayment(state, action) {
       state.lastPayment = action.payload;
     },
-    unmountLastPayment(state) {
-      state.lastPayment = null;
-    },
   },
 
 });
