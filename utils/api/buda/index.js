@@ -2,8 +2,6 @@ import axios from 'axios';
 import env from '../../../env';
 
 function budaBalance(payload) {
-  console.log('test');
-
   return axios.get(`${env.url}/api/v1/balances`,
     {
       headers: { 'Content-Type': 'application/json',
