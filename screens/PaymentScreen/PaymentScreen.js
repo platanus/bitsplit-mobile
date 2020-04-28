@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text } from 'react-native-elements';
+import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import style from './styles';
@@ -10,7 +10,7 @@ import style from './styles';
 function PaymentScreen() {
   const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
-  const [isVisible, setIsVisible] = useState('');
+  const [isVisible, setIsVisible] = useState(true);
   const [transferAmount, setTransferAmount] = useState('');
   const dispatch = useDispatch();
 
@@ -19,7 +19,6 @@ function PaymentScreen() {
   const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
   const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
-  const transactionCompleted = attributes ? attributes.completed : false;
 
   function handleBudaQuotation(amount) {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
@@ -61,7 +60,6 @@ function PaymentScreen() {
             // dont use text. callbacks
             if (parseInt(text, 10) > minTrxAmount) {
               handleBudaQuotation(text);
-            } else {
             }
           }}
           placeholder='Monto de llegada en CLP'
@@ -88,12 +86,16 @@ function PaymentScreen() {
           title='Pagar'
           type="solid"
           onPress ={() => handleBudaPayment()}
+          onBackdropPress={() => this.setState({ isVisible: true })}
           loading ={loading}
           disabled={parseInt(transferAmount, 10) > minTrxAmount}
         />
-        <Overlay isVisible={isVisible}>
+
+        { isVisible && <Overlay>
           <Text>Hello from Overlay!</Text>
-        </Overlay>;
+        </Overlay>
+        }
+
       </ScrollView>
     </View>
 

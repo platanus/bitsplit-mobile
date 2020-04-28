@@ -45,7 +45,6 @@ function *getBudaQuotation(action) {
   try {
     const { token, user: { email } } = yield select(state => state.auth);
     const { data: { data: { quotation } } } = yield call(api.budaGetQuotationApi, { token, email, amount: action.payload });
-    console.log(quotation);
     yield put(budaActions.setQuotations(quotation));
   } catch (err) {
     console.log('ERR', err.response);
@@ -58,7 +57,6 @@ function *postBudaPayment(action) {
   try {
     const { token, user: { email } } = yield select(state => state.auth);
     const { data: { data: { attributes } } } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
-    console.log('api payment saga', attributes);
     if (attributes) yield put(budaActions.setLastPayment(attributes));
   } catch (err) {
     console.log('ERR', err.response);
