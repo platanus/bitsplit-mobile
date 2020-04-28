@@ -1,11 +1,18 @@
 import axios from 'axios';
-import authedAxios from '../authedAxios';
 import env from '../../../env';
 
 function budaBalance(payload) {
   console.log('test');
 
-  return authedAxios.get(`${env.url}/api/v1/balances`);
+  return axios.get(`${env.url}/api/v1/balances`,
+    {
+      headers: { 'Content-Type': 'application/json',
+        'X-User-Email': payload.email,
+        'X-User-Token': payload.token,
+      },
+
+    },
+  );
 }
 
 function budaGetQuotationApi(payload) {

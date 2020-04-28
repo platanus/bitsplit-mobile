@@ -10,19 +10,19 @@ const slice = createSlice({
     quotation: null,
   },
   reducers: {
-    syncBuda(state) {
+    start(state) {
       state.loading = true;
     },
-    setBudaKey(state, action) {
+    finish(state) {
       state.loading = false;
+    },
+    setBudaKey(state, action) {
       state.apiKey = action.payload;
     },
     syncBudaRejected(state, action) {
-      state.loading = false;
       state.error = action.payload;
     },
     budaBalance(state, action) {
-      state.loading = false;
       state.balance = action.payload;
     },
     setQuotations(state, action) {

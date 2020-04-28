@@ -8,7 +8,7 @@ import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import style from './styles';
 
 function PaymentScreen() {
-  const { error, quotation } = useSelector(state => state.buda);
+  const { error, quotation, attributes, loading } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
   const minTrxAmount = 100;
@@ -17,9 +17,7 @@ function PaymentScreen() {
   const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
   const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
-  const transactionCompleted = attributes ? atributes.completed : 'Transaccion no completada';
-
-  
+  const transactionCompleted = attributes ? attributes.completed : false;
 
   function handleBudaQuotation(amount) {
     console.log('react view', transferAmount, amount);
@@ -84,12 +82,11 @@ function PaymentScreen() {
           title='Pagar'
           type="solid"
           onPress ={() => handleBudaPayment()}
+          loading ={loading}
         />
-
-        <View>
-        <Text>`Transaccion: ${transactionCompleted}`</Text>
-        </View>
-
+        {
+          transactionCompleted && <Text>Transaccion completada con exito</Text>
+        }
       </ScrollView>
     </View>
 
