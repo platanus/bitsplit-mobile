@@ -11,3 +11,4 @@ export const BUDA_GET_BALANCE = 'BUDA_GET_BALANCE';
 
 export const BUDA_PAYMENT = 'BUDA_PAYMENT';
 export const BUDA_QUOTATION = 'BUDA_QUOTATION';
+

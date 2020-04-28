@@ -8,6 +8,7 @@ const slice = createSlice({
     loading: false,
     balance: null,
     quotation: null,
+    lastPayment: null,
   },
   reducers: {
     start(state) {
@@ -27,6 +28,12 @@ const slice = createSlice({
     },
     setQuotations(state, action) {
       state.quotation = action.payload;
+    },
+    setLastPayment(state, action) {
+      state.lastPayment = action.payload;
+    },
+    unmountLastPayment(state) {
+      state.lastPayment = null;
     },
   },
 

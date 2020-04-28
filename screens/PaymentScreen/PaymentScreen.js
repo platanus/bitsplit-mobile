@@ -8,11 +8,13 @@ import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import style from './styles';
 
 function PaymentScreen() {
-  const { error, quotation, attributes, loading } = useSelector(state => state.buda);
+  const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
+  const [isVisible, setIsVisible] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
-  const minTrxAmount = 100;
   const dispatch = useDispatch();
+
+  const minTrxAmount = 100;
   const totalClp = quotation ? quotation.amount_clp[0] : '0';
   const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
   const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
@@ -20,7 +22,6 @@ function PaymentScreen() {
   const transactionCompleted = attributes ? attributes.completed : false;
 
   function handleBudaQuotation(amount) {
-    console.log('react view', transferAmount, amount);
     dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
 
@@ -60,6 +61,7 @@ function PaymentScreen() {
             // dont use text. callbacks
             if (parseInt(text, 10) > minTrxAmount) {
               handleBudaQuotation(text);
+            } else {
             }
           }}
           placeholder='Monto de llegada en CLP'
@@ -71,22 +73,27 @@ function PaymentScreen() {
             />
           }
         />
-        <View>
 
-          <Text>Monto total CPL: ${totalClp}</Text>
-          <Text>Monto total Bitcoins: ${totalBitcoins}</Text>
-          <Text>Costo por servicio: ${ fee }</Text>
-        </View>
+        {
+          parseInt(transferAmount, 10) > minTrxAmount ?
+            <View>
+              <Text>Monto total CPL: ${totalClp}</Text>
+              <Text>Monto total Bitcoins: ${totalBitcoins}</Text>
+              <Text>Costo por servicio: ${ fee }</Text>
+            </View> :
+            <Text>La transferencia minima es $100 CLP</Text>
+        }
 
         <Button
           title='Pagar'
           type="solid"
           onPress ={() => handleBudaPayment()}
           loading ={loading}
+          disabled={parseInt(transferAmount, 10) > minTrxAmount}
         />
-        {
-          transactionCompleted && <Text>Transaccion completada con exito</Text>
-        }
+        <Overlay isVisible={isVisible}>
+          <Text>Hello from Overlay!</Text>
+        </Overlay>;
       </ScrollView>
     </View>
 
