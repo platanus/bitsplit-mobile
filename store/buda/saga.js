@@ -59,13 +59,11 @@ function *postBudaPayment(action) {
     const { token, user: { email } } = yield select(state => state.auth);
     const { data: { data: { error, attributes } } } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
     if (attributes) {
-      console.log(attributes);
       yield put(budaActions.setLastPayment(attributes));
     } else if (error) {
       yield put(budaActions.syncBudaRejected(error));
     }
   } catch (err) {
-    console.log('ERR', err.response);
     yield put(budaActions.syncBudaRejected('payment invalido'));
   }
   yield put(budaActions.finish());
