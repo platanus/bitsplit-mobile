@@ -4,13 +4,12 @@ import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
-import style from './styles';
+import { BUDA_QUOTATION, BUDA_PAYMENT, BUDA_UNMOUNT_LAST_PAYMENT } from '../../store/types';
+import styles from './styles';
 
 function PaymentScreen() {
   const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
   const [transferAmount, setTransferAmount] = useState('');
   const dispatch = useDispatch();
 
@@ -19,7 +18,6 @@ function PaymentScreen() {
   const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
   const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
-  const exito = lastPayment ? lastPayment.completed : false;
 
   function handleBudaQuotation(amount) {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
@@ -27,15 +25,11 @@ function PaymentScreen() {
 
   function handleBudaPayment() {
     dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor } });
-    console.log('EXITO?', exito);
-    if (exito) {
-      setIsVisible(!isVisible);
-    }
   }
 
   return (
-    <View style={style.screen}>
-      <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ ...styles.screen, borderWidth: 1 }}>
 
         <Text h2>{'Transferencia'}</Text>
 
@@ -62,8 +56,7 @@ function PaymentScreen() {
           value={transferAmount}
           onChangeText={text => {
             setTransferAmount(text);
-            // dont use text. callbacks
-            if (parseInt(text, 10) > minTrxAmount) {
+            if (parseInt(text, 10) >= minTrxAmount) {
               handleBudaQuotation(text);
             }
           }}
@@ -76,15 +69,14 @@ function PaymentScreen() {
             />
           }
         />
-
         {
-          parseInt(transferAmount, 10) > minTrxAmount ?
+          parseInt(transferAmount, 10) >= minTrxAmount ?
             <View>
-              <Text>Monto total CPL: ${totalClp}</Text>
-              <Text>Monto total Bitcoins: ${totalBitcoins}</Text>
-              <Text>Costo por servicio: ${ fee }</Text>
+              <Text h4>Monto total CPL: ${totalClp}</Text>
+              <Text h4 >Monto total Bitcoins: ${totalBitcoins}</Text>
+              <Text h4>Costo por servicio: ${ fee }</Text>
             </View> :
-            <Text>La transferencia minima es $100 CLP</Text>
+            <Text h4>La transferencia minima es $100 CLP</Text>
         }
 
         <Button
@@ -92,20 +84,31 @@ function PaymentScreen() {
           type="solid"
           onPress ={() => handleBudaPayment()}
           loading ={loading}
-          disabled={parseInt(transferAmount, 10) < minTrxAmount}
+          disabled={! parseInt(transferAmount, 10) || (parseInt(transferAmount, 10) <= minTrxAmount)}
         />
 
-        { isVisible && <Overlay
-          windowBackgroundColor="rgba(255, 255, 255, .5)"
-          overlayBackgroundColor="green"
-          width="auto"
-          height="auto">
-          <Text>Transferencia Exitosa!</Text>
-        </Overlay>
+        { lastPayment &&
+          <Overlay
+            isVisible={!!lastPayment}
+            windowBackgroundColor="rgba(255, 255, 255, .5)"
+            onBackdropPress={() => { dispatch({ type: BUDA_UNMOUNT_LAST_PAYMENT }); }}
+          >
+            <View style={styles.screen}>
+              <Text h3>Succesful Payment</Text>
+              <Text h4>{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+              <Text h4>Receptor {lastPayment.receiver_email} </Text>
+              <Button
+                title='Listo'
+                type="solid"
+                onPress ={() => { dispatch({ type: BUDA_UNMOUNT_LAST_PAYMENT }); }}
+              />
+            </View>
+
+          </Overlay>
         }
 
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
 
   );
 }

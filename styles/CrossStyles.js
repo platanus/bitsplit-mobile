@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const crossStyles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
 });

@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as budaActions } from './slice';
-import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT } from '../types';
+import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT, BUDA_UNMOUNT_LAST_PAYMENT } from '../types';
 import api from '../../utils/api';
 
 function *syncBudaRequest(action) {
@@ -47,6 +47,7 @@ function *getBudaQuotation(action) {
     const { data: { data: { quotation } } } = yield call(api.budaGetQuotationApi, { token, email, amount: action.payload });
     yield put(budaActions.setQuotations(quotation));
   } catch (err) {
+    yield put(budaActions.syncBudaRejected(err));
     console.log('ERR', err.response);
   }
   yield put(budaActions.finish());
@@ -56,10 +57,13 @@ function *postBudaPayment(action) {
   yield put(budaActions.start());
   try {
     const { token, user: { email } } = yield select(state => state.auth);
-    const { data } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
-    console.log('data ', data);
-    // if (attributes) yield put(budaActions.setLastPayment(attributes));
-    // console.log('SAGA PAYMENT ', attributes);
+    const { data: { data: { error, attributes } } } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
+    if (attributes) {
+      console.log(attributes);
+      yield put(budaActions.setLastPayment(attributes));
+    } else if (error) {
+      yield put(budaActions.syncBudaRejected(error));
+    }
   } catch (err) {
     console.log('ERR', err.response);
     yield put(budaActions.syncBudaRejected('payment invalido'));
@@ -67,9 +71,14 @@ function *postBudaPayment(action) {
   yield put(budaActions.finish());
 }
 
+function *unmountLastPayment() {
+  yield put(budaActions.unmountLastPayment());
+}
+
 export default function *loginSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
   yield takeLatest(BUDA_PAYMENT, postBudaPayment);
+  yield takeLatest(BUDA_UNMOUNT_LAST_PAYMENT, unmountLastPayment);
 }
