@@ -10,7 +10,7 @@ import style from './styles';
 function PaymentScreen() {
   const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
   const [receptor, setReceptor] = useState('');
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [transferAmount, setTransferAmount] = useState('');
   const dispatch = useDispatch();
 
@@ -25,7 +25,9 @@ function PaymentScreen() {
   }
 
   function handleBudaPayment() {
+    setIsVisible(!isVisible);
     dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor } });
+    // setisvisible if lastpayment.completed is true
   }
 
   return (
@@ -86,7 +88,6 @@ function PaymentScreen() {
           title='Pagar'
           type="solid"
           onPress ={() => handleBudaPayment()}
-          onBackdropPress={() => this.setState({ isVisible: true })}
           loading ={loading}
           disabled={parseInt(transferAmount, 10) > minTrxAmount}
         />
