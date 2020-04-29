@@ -57,7 +57,7 @@ function PaymentScreen() {
           value={transferAmount}
           onChangeText={text => {
             setTransferAmount(text);
-            if (parseInt(text, 10) >= minTrxAmount) {
+            if (parseInt(text) >= minTrxAmount) {
               handleBudaQuotation(text);
             }
           }}
