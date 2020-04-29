@@ -20,7 +20,7 @@ function HomeScreen(props) {
       <Badge value={apiKey ? 'Sincronizado con Buda' : 'Falta Sincronizar'} status={apiKey ? 'success' : 'error' } />
       <Text>{`Hola ${email}!`}</Text>
 
-      {apiKey ?
+      {balance ?
         <View>
           <Text style={styles.saldoText}>{`Saldo \n${balance.BTC.amount} BTC\n${balance.CLP.amount} CLP `}</Text>
           <Button

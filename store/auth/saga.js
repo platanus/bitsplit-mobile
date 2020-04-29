@@ -8,7 +8,7 @@ import { LOGIN_REQUEST, REGISTER_REQUEST } from '../types';
 import api from '../../utils/api';
 
 function *loginRequest(action) {
-  yield put(budaActions.start());
+  yield put(authActions.start());
   try {
     const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.loginApi, action.payload);
     if (attributes) {
@@ -27,11 +27,11 @@ function *loginRequest(action) {
       yield put(authActions.loginRejected('Tus credenciales son invalidas'));
     }
   }
-  yield put(budaActions.finish());
+  yield put(authActions.finish());
 }
 
 function *register(action) {
-  yield put(budaActions.start());
+  yield put(authActions.start());
   try {
     const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
     if (attributes) {
@@ -46,7 +46,7 @@ function *register(action) {
       yield put(authActions.loginRejected('Error registrando, revisa tus credenciales'));
     }
   }
-  yield put(budaActions.finish());
+  yield put(authActions.finish());
 }
 
 export default function *loginSaga() {
