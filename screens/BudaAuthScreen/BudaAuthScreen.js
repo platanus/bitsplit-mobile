@@ -96,4 +96,8 @@ function BudaAuthScreen(props) {
   );
 }
 
+BudaAuthScreen.navigationOptions = {
+  headerTitle: 'Buda',
+};
+
 export default BudaAuthScreen;

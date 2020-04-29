@@ -1,11 +1,13 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
+// import { HeaderButton, Item } from 'react-navigation-header-buttons';
 import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import styles from './styles';
+// import HeaderButtons from '../../components/HeaderButton';
 
 function PaymentScreen() {
   const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
@@ -116,5 +118,16 @@ function PaymentScreen() {
 
   );
 }
+
+PaymentScreen.navigationOptions = navData => ({
+  headerTitle: 'Pago',
+  headerLeft: () => (
+    <Button
+      onPress={() => {
+        navData.navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
 
 export default PaymentScreen;
