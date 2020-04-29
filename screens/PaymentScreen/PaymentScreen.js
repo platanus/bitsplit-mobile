@@ -34,7 +34,7 @@ function PaymentScreen() {
 
         <Text h2>{'Transferencia'}</Text>
 
-        <Text h4>{ error }</Text>
+        <Text h4>{erro}</Text>
         <Input
           id ="receptor"
           label="Receptor"
