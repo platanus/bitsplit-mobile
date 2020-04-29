@@ -77,7 +77,7 @@ function PaymentScreen() {
                 <Text h4>Cotizacion</Text>
                 <Text >Monto total CPL: ${totalClp}</Text>
                 <Text >Monto total BTC: ${totalBitcoins}</Text>
-                <Text>Costo por servicio: ${ fee }</Text>
+                <Text>Costo por servicio: ${fee}</Text>
               </View> :
               <Text h4>La transferencia minima es $100 CLP</Text>
           }
