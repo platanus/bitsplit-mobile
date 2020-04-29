@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -26,7 +27,10 @@ const slice = createSlice({
       state.error = action.payload;
     },
     logout(state) {
-      state = { ...initialState };
+      state.token = null;
+    },
+    reset() {
+      return initialState;
     },
   },
 

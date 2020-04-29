@@ -33,8 +33,8 @@ const slice = createSlice({
     setLastPayment(state, action) {
       state.lastPayment = action.payload;
     },
-    logout(state) {
-      state = { ...initialState };
+    reset() {
+      return initialState;
     },
   },
 

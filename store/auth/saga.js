@@ -57,8 +57,9 @@ function *logoutRequest(action) {
     const { status } = yield call(api.logoutApi, { email, token });
     if (status === success_status) {
       yield put(authActions.logout());
-      yield put(budaActions.logout());
       action.callback();
+      yield put(authActions.reset());
+      yield put(budaActions.reset());
     }
   } catch (err) {
     console.log('err', err);
