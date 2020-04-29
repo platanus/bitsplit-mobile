@@ -23,6 +23,10 @@ const slice = createSlice({
     loginRejected(state, action) {
       state.error = action.payload;
     },
+    // reducer para logout
+    // loginFinish(state, action) {
+    //   return initialState;
+    // },
   },
 
 });

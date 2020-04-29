@@ -1,11 +1,12 @@
+import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import { Platform, SafeAreaView, Button, View } from 'react-native';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
-import { Platform } from 'react-native';
 import colors from '../styles/colors';
 
 const defaultNavOptions = {
@@ -20,6 +21,24 @@ const defaultNavOptions = {
   // },
   headerTintColor: Platform.OS === 'android' ? 'white' : colors.purple,
 };
+
+function defaultContentComponent(props) {
+  return (
+    <View style = {{ flex: 1, paddingTop: 20 }}>
+      <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+        <DrawerItems {... props} />
+        <Button
+          title="Logout"
+          color={colors.red}
+        // onPress={() => {
+        //   // dispach logout
+        //   props.navigation.navigate({ routeName: 'Authentication' });
+        // }}
+        />
+      </SafeAreaView>
+    </View>
+  );
+}
 
 const AuthNavigator = createStackNavigator({
   Authentication: AuthScreen,
@@ -41,14 +60,20 @@ const PaymentNavigator = createStackNavigator({
   defaultNavigationOptions: defaultNavOptions,
 });
 
-const ProfileNavigator = createDrawerNavigator({
-  Home: HomeNavigator,
-  Payment: PaymentNavigator,
-}, {
-  contentOptions: {
-    activeTintColor: colors.purple,
+const ProfileNavigator = createDrawerNavigator(
+  {
+    Home: HomeNavigator,
+    Payment: PaymentNavigator,
   },
-});
+  {
+    contentOptions: {
+      activeTintColor: colors.purple,
+    },
+    contentComponent: defaultContentComponent,
+
+  },
+
+);
 
 const MenuNavigator = createSwitchNavigator({
   Authentication: AuthNavigator,

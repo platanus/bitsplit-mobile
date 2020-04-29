@@ -4,7 +4,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
 import { getBudaBalance } from '../buda/saga';
-import { LOGIN_REQUEST, REGISTER_REQUEST } from '../types';
+import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
 
 function *loginRequest(action) {
@@ -49,7 +49,14 @@ function *register(action) {
   yield put(budaActions.finish());
 }
 
+function *logoutRequest(action) {
+  yield put(budaActions.start());
+  const logout = yield call(api.logoutApi, action.payload);
+  yield put(budaActions.finish());
+}
+
 export default function *loginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(REGISTER_REQUEST, register);
+  yield takeLatest(LOGOUT_REQUEST, logoutRequest);
 }
