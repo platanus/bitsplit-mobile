@@ -3,9 +3,9 @@ import env from '../../../env';
 
 function budaBalance(payload) {
   return axios.get(
-    `${env.url}/api/v1/balances`,
-    {
-      headers: { 'Content-Type': 'application/json',
+    `${env.url}/api/v1/balances`, {
+      headers: {
+        'Content-Type': 'application/json',
         'X-User-Email': payload.email,
         'X-User-Token': payload.token,
       },
@@ -15,12 +15,11 @@ function budaBalance(payload) {
 
 function budaGetQuotationApi(payload) {
   return axios.post(
-    `${env.url}/api/v1/quotations/`,
-    {
+    `${env.url}/api/v1/quotations/`, {
       amount: payload.amount,
-    },
-    {
-      headers: { 'Content-Type': 'application/json',
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
         'X-User-Email': payload.email,
         'X-User-Token': payload.token,
       },
@@ -31,13 +30,12 @@ function budaGetQuotationApi(payload) {
 
 function budaPaymentApi(payload) {
   return axios.post(
-    `${env.url}/api/v1/payments`,
-    {
+    `${env.url}/api/v1/payments`, {
       'payment_amount': payload.amountBtc,
       'receiver_email': payload.receptor,
-    },
-    {
-      headers: { 'Content-Type': 'application/json',
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
         'X-User-Email': payload.email,
         'X-User-Token': payload.token,
       },
@@ -46,5 +44,9 @@ function budaPaymentApi(payload) {
   );
 }
 
-const budaApi = { budaBalance, budaGetQuotationApi, budaPaymentApi };
+const budaApi = {
+  budaBalance,
+  budaGetQuotationApi,
+  budaPaymentApi,
+};
 export default budaApi;

@@ -9,17 +9,18 @@ const slice = createSlice({
     loading: false,
   },
   reducers: {
-    login(state) {
+    start(state) {
       state.loading = true;
     },
-    loginSuccess(state, action) {
+    finish(state) {
       state.loading = false;
+    },
+    loginSuccess(state, action) {
       state.token = action.payload.authentication_token;
       state.user = action.payload;
       if (action.payload.api_key) state.apiKey = action.payload.api_key;
     },
     loginRejected(state, action) {
-      state.loading = false;
       state.error = action.payload;
     },
   },

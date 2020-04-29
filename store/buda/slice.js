@@ -8,25 +8,29 @@ const slice = createSlice({
     loading: false,
     balance: null,
     quotation: null,
+    lastPayment: null,
   },
   reducers: {
-    syncBuda(state) {
+    start(state) {
       state.loading = true;
     },
-    setBudaKey(state, action) {
+    finish(state) {
       state.loading = false;
+    },
+    setBudaKey(state, action) {
       state.apiKey = action.payload;
     },
     syncBudaRejected(state, action) {
-      state.loading = false;
       state.error = action.payload;
     },
     budaBalance(state, action) {
-      state.loading = false;
       state.balance = action.payload;
     },
     setQuotations(state, action) {
       state.quotation = action.payload;
+    },
+    setLastPayment(state, action) {
+      state.lastPayment = action.payload;
     },
   },
 

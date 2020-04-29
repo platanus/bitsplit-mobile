@@ -1,45 +1,65 @@
 /* eslint-disable max-statements */
-import React, { useState } from 'react';
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text } from 'react-native-elements';
+import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
-import style from './styles';
+import styles from './styles';
+import useForm from '../../utils/hooks/useForm';
+import useToggle from '../../utils/hooks/useToggle';
 
-function PaymentScreen() {
-  const { error, quotation } = useSelector(state => state.buda);
-  const [receptor, setReceptor] = useState('');
-  const [transferAmount, setTransferAmount] = useState('');
-  const minTrxAmount = 100;
+const minTrxAmount = 100;
+
+function useBudaPayments() {
   const dispatch = useDispatch();
-  const totalClp = quotation ? quotation.amount_clp[0] : '0';
-  const totalBitcoins = quotation ? quotation.amount_btc[0] : '0';
-  const evalFee = parseInt(totalClp, 10) - parseInt(transferAmount, 10);
-  const fee = evalFee && evalFee > 0 ? evalFee : '0';
-
   function handleBudaQuotation(amount) {
-    console.log('react view', transferAmount, amount);
     dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
-
-  function handleBudaPayment() {
-    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc: parseFloat(quotation.amount_btc[0]), receptor } });
+  function handleBudaPayment(receptor, amountBtc, callback) {
+    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc, receptor }, callback });
   }
 
+  const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
+
+  const totalClp = parseInt(quotation ? quotation.amount_clp[0] : '0');
+  const totalBitcoins = parseFloat(quotation ? quotation.amount_btc[0] : '0');
+
+  return { error, totalClp, totalBitcoins, lastPayment, loading, handleBudaQuotation, handleBudaPayment };
+}
+
+function PaymentScreen() {
+  const { error, totalClp, totalBitcoins, lastPayment, loading, handleBudaQuotation, handleBudaPayment } = useBudaPayments();
+  const [state, bind] = useForm(
+    { receptor: '', transferAmount: '' },
+    {
+      validations: { transferAmount: value => !isNaN(value) },
+      sideEffects: { transferAmount: value => parseInt(value) >= minTrxAmount && handleBudaQuotation(value) },
+      errorMessages: { transferAmount: 'Debes ingresar un número' },
+    },
+  );
+
+  const [isDisplayVisible, toggleDisplay] = useToggle();
+
+  const transferAmount = parseInt(state.transferAmount);
+  const evalFee = totalClp - transferAmount;
+  const fee = evalFee && evalFee > 0 ? evalFee : '0';
+  const isValidQuotation = transferAmount >= minTrxAmount;
+  const isPayDisabled = !transferAmount || transferAmount <= minTrxAmount;
+
+  const onPayPress = () =>
+    handleBudaPayment(state.receptor, totalBitcoins, toggleDisplay);
+
   return (
-    <View style={style.screen}>
-      <ScrollView style={{ flex: 1 }}>
+    <ScrollView>
+      <View style={styles.screen}>
 
         <Text h2>{'Transferencia'}</Text>
 
-        <Text h4>{ error }</Text>
+        <Text h4>{error}</Text>
         <Input
-          id ="receptor"
-          label="Receptor"
+          {...bind('receptor')}
           autoCapitalize="none"
-          value={ receptor }
-          onChangeText={ text => setReceptor(text) }
           placeholder='receptor email'
           leftIcon={
             <Icon
@@ -50,17 +70,9 @@ function PaymentScreen() {
           }
         />
         <Input
-          id ="transferAmount"
+          {...bind('transferAmount')}
           label="Monto a transferir"
           autoCapitalize="none"
-          value={transferAmount}
-          onChangeText={text => {
-            setTransferAmount(text);
-            // dont use text. callbacks
-            if (parseInt(text, 10) > minTrxAmount) {
-              handleBudaQuotation(text);
-            }
-          }}
           placeholder='Monto de llegada en CLP'
           leftIcon={
             <Icon
@@ -70,21 +82,49 @@ function PaymentScreen() {
             />
           }
         />
-        <View>
-
-          <Text>Monto total CPL: ${totalClp}</Text>
-          <Text>Monto total Bitcoins: ${totalBitcoins}</Text>
-          <Text>Costo por servicio: ${ fee }</Text>
+        <View style={styles.quotationContainer}>
+          {
+            isValidQuotation ?
+              <View>
+                <Text h4>Cotizacion</Text>
+                <Text>Monto total CPL: ${totalClp}</Text>
+                <Text>Monto total BTC: ${totalBitcoins}</Text>
+                <Text>Costo por servicio: ${fee}</Text>
+              </View> :
+              <Text h4>La transferencia minima es $100 CLP</Text>
+          }
         </View>
 
         <Button
           title='Pagar'
           type="solid"
-          onPress ={() => handleBudaPayment()}
+          onPress ={onPayPress}
+          loading ={loading}
+          disabled={isPayDisabled}
         />
+        {
+          lastPayment &&
+        <Overlay
+          isVisible={isDisplayVisible}
+          overlayStyle={styles.overlayContainer}
+          windowBackgroundColor="rgba(255, 255, 255, .5)"
+          onBackdropPress={toggleDisplay}
+        >
+          <View style={styles.screen}>
+            <Text h4>Pago Exitoso</Text>
+            <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+            <Text h5>{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+            <Button
+              title='Listo'
+              type="solid"
+              onPress ={toggleDisplay}
+            />
+          </View>
+        </Overlay>
+        }
 
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
 
   );
 }

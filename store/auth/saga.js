@@ -6,8 +6,8 @@ import { LOGIN_REQUEST, REGISTER_REQUEST } from '../types';
 import api from '../../utils/api';
 
 function *loginRequest(action) {
+  yield put(authActions.start());
   try {
-    yield put(authActions.login());
     const { data: { data: { attributes } } } = yield call(api.loginApi, action.payload);
     if (attributes) {
       yield put(authActions.loginSuccess(attributes));
@@ -21,11 +21,12 @@ function *loginRequest(action) {
       yield put(authActions.loginRejected('Tus credenciales son invalidas'));
     }
   }
+  yield put(authActions.finish());
 }
 
 function *register(action) {
+  yield put(authActions.start());
   try {
-    yield put(authActions.login());
     const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
     if (attributes) {
       yield put(authActions.loginSuccess(attributes));
@@ -39,6 +40,7 @@ function *register(action) {
       yield put(authActions.loginRejected('Error registrando, revisa tus credenciales'));
     }
   }
+  yield put(authActions.finish());
 }
 
 export default function *loginSaga() {
