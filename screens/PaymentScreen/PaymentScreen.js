@@ -88,7 +88,7 @@ function PaymentScreen() {
           type="solid"
           onPress ={() => handleBudaPayment()}
           loading ={loading}
-          disabled={! parseInt(transferAmount, 10) || (parseInt(transferAmount, 10) <= minTrxAmount)}
+          disabled={!parseInt(transferAmount, 10) || (parseInt(transferAmount, 10) <= minTrxAmount)}
         />
         {
           lastPayment &&
