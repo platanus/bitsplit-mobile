@@ -39,8 +39,8 @@ function PaymentScreen() {
           id ="receptor"
           label="Receptor"
           autoCapitalize="none"
-          value={ receptor }
-          onChangeText={ text => setReceptor(text) }
+          value={receptor}
+          onChangeText={text => setReceptor(text)}
           placeholder='receptor email'
           leftIcon={
             <Icon
