@@ -105,7 +105,7 @@ function PaymentScreen() {
             <Button
               title='Listo'
               type="solid"
-              onPress ={() => setOverlayDisplay(false) }
+              onPress ={() => setOverlayDisplay(false)}
             />
           </View>
         </Overlay>
