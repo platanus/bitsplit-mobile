@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  apiKey: null,
+  error: null,
+  loading: false,
+  balance: null,
+  quotation: null,
+  lastPayment: null,
+};
 const slice = createSlice({
   name: 'buda',
-  initialState: {
-    apiKey: null,
-    error: null,
-    loading: false,
-    balance: null,
-    quotation: null,
-    lastPayment: null,
-  },
+  initialState,
   reducers: {
     start(state) {
       state.loading = true;
@@ -31,6 +32,9 @@ const slice = createSlice({
     },
     setLastPayment(state, action) {
       state.lastPayment = action.payload;
+    },
+    logout(state) {
+      state = { ...initialState };
     },
   },
 

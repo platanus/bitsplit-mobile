@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 /* eslint-disable camelcase */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
 import { getBudaBalance } from '../buda/saga';
@@ -50,8 +50,20 @@ function *register(action) {
 }
 
 function *logoutRequest(action) {
+  const success_status = 204;
   yield put(budaActions.start());
-  const logout = yield call(api.logoutApi, action.payload);
+  try {
+    const { token, user: { email } } = yield select(state => state.auth);
+    const { status } = yield call(api.logoutApi, { email, token });
+    if (status === success_status) {
+      yield put(authActions.logout());
+      yield put(budaActions.logout());
+      action.callback();
+    }
+  } catch (err) {
+    console.log('err', err);
+  }
+
   yield put(budaActions.finish());
 }
 

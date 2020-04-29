@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  token: null,
+  user: null,
+  error: null,
+  loading: false,
+};
+
 const slice = createSlice({
   name: 'auth',
-  initialState: {
-    token: null,
-    user: null,
-    error: null,
-    loading: false,
-  },
+  initialState,
   reducers: {
     start(state) {
       state.loading = true;
@@ -23,10 +25,9 @@ const slice = createSlice({
     loginRejected(state, action) {
       state.error = action.payload;
     },
-    // reducer para logout
-    // loginFinish(state, action) {
-    //   return initialState;
-    // },
+    logout(state) {
+      state = { ...initialState };
+    },
   },
 
 });

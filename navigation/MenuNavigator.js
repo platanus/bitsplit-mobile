@@ -3,6 +3,8 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { Platform, SafeAreaView, Button, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { LOGOUT_REQUEST } from '../store/types';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
@@ -23,6 +25,8 @@ const defaultNavOptions = {
 };
 
 function defaultContentComponent(props) {
+  const dispatch = useDispatch();
+
   return (
     <View style = {{ flex: 1, paddingTop: 20 }}>
       <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
@@ -30,10 +34,10 @@ function defaultContentComponent(props) {
         <Button
           title="Logout"
           color={colors.red}
-        // onPress={() => {
-        //   // dispach logout
-        //   props.navigation.navigate({ routeName: 'Authentication' });
-        // }}
+          onPress={() => {
+          // dispach logout
+            dispatch({ type: LOGOUT_REQUEST, callback: () => props.navigation.navigate({ routeName: 'Authentication' }) });
+          }}
         />
       </SafeAreaView>
     </View>
