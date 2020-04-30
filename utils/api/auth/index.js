@@ -14,13 +14,13 @@ function loginApi(payload) {
   );
 }
 
-function logoutApi(payload) {
+function logoutApi({ email, token }) {
   return axios.delete(
     `${env.url}/api/v1/sessions/`,
     {
       headers: { 'Content-Type': 'application/json',
-        'X-User-Email': payload.email,
-        'X-User-Token': payload.token,
+        'X-User-Email': email,
+        'X-User-Token': token,
       },
     },
   );
