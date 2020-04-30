@@ -9,8 +9,9 @@ import api from '../../utils/api';
 function *loginRequest(action) {
   yield put(authActions.start());
   try {
-    const { data: { data: { attributes } } } = yield call(api.loginApi, action.payload);
+    const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.loginApi, action.payload);
     if (attributes) {
+      if (api_key) yield put(budaActions.setBudaKey(api_key));
       yield put(authActions.loginSuccess(attributes));
     } else {
       yield put(authActions.loginRejected('Usuario y contraseña no coinciden'));
