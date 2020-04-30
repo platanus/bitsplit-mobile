@@ -1,48 +1,20 @@
-import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import { Platform, SafeAreaView, Button, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { LOGOUT_REQUEST } from '../store/types';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Platform } from 'react-native';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import colors from '../styles/colors';
+import contentComponents from '../components/contentComponents';
 
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? colors.purple : '',
   },
-  // headerTitleStyle: {
-  //   fontFamily: 'open-sans-bold',
-  // },
-  // headerBackTitlesStyle: {
-  //   fontFamily: 'open-sans',
-  // },
   headerTintColor: Platform.OS === 'android' ? 'white' : colors.purple,
 };
-
-function defaultContentComponent(props) {
-  const dispatch = useDispatch();
-
-  return (
-    <View style = {{ flex: 1, paddingTop: 20 }}>
-      <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-        <DrawerItems {... props} />
-        <Button
-          title="Logout"
-          color={colors.red}
-          onPress={() => {
-          // dispach logout
-            dispatch({ type: LOGOUT_REQUEST, callback: () => props.navigation.navigate({ routeName: 'Authentication' }) });
-          }}
-        />
-      </SafeAreaView>
-    </View>
-  );
-}
 
 const AuthNavigator = createStackNavigator({
   Authentication: AuthScreen,
@@ -73,7 +45,7 @@ const ProfileNavigator = createDrawerNavigator(
     contentOptions: {
       activeTintColor: colors.purple,
     },
-    contentComponent: defaultContentComponent,
+    contentComponent: contentComponents,
 
   },
 
