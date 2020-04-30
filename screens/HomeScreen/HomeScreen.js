@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Avatar, Button, Badge } from 'react-native-elements';
-// import { HeaderButton, Item } from 'react-navigation-header-buttons';
 import styles from './styles';
-// import HeaderButtons from '../../components/HeaderButton';
 
 function HomeScreen(props) {
   const { auth: { user: { email } }, buda: { apiKey, balance } } = useSelector(state => state);
@@ -46,19 +44,15 @@ function HomeScreen(props) {
   );
 }
 
-// HomeScreen.navigationOptions = navData => ({
-//   headerTitle: 'Perfil',
-//   headerLeft: (
-//     <HeaderButtons HeaderButtonsComponent={HeaderButton}>
-//       <Item
-//         title='Menu'
-//         conName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-//         onPress={() => {
-//           navData.navigation.toggleDrawer();
-//         }}
-//       />
-//     </HeaderButtons>
-//   ),
-// });
+HomeScreen.navigationOptions = navData => ({
+  headerTitle: 'Inicio',
+  headerLeft: () => (
+    <Button
+      onPress={() => {
+        navData.navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
 
 export default HomeScreen;

@@ -62,7 +62,6 @@ function *logoutRequest(action) {
       yield put(budaActions.reset());
     }
   } catch (err) {
-    console.log('err', err);
   }
 
   yield put(budaActions.finish());

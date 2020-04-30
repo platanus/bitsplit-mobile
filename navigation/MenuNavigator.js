@@ -2,12 +2,13 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Platform } from 'react-native';
+import colors from '../styles/colors';
+import contentComponents from '../components/contentComponents';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
-import colors from '../styles/colors';
-import contentComponents from '../components/contentComponents';
+import RecordScreen from '../screens/HomeScreen/RecordScreen';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -30,16 +31,12 @@ const HomeNavigator = createStackNavigator({
   defaultNavigationOptions: defaultNavOptions,
 });
 
-const PaymentNavigator = createStackNavigator({
-  Payment: PaymentScreen,
-}, {
-  defaultNavigationOptions: defaultNavOptions,
-});
-
 const ProfileNavigator = createDrawerNavigator(
   {
     Home: HomeNavigator,
-    Payment: PaymentNavigator,
+    BudaAuth: BudaAuthScreen,
+    Payment: PaymentScreen,
+    Record: RecordScreen,
   },
   {
     contentOptions: {
