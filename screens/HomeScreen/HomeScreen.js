@@ -44,4 +44,15 @@ function HomeScreen(props) {
   );
 }
 
+HomeScreen.navigationOptions = navData => ({
+  headerTitle: 'Inicio',
+  headerLeft: () => (
+    <Button
+      onPress={() => {
+        navData.navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
+
 export default HomeScreen;

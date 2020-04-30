@@ -14,6 +14,18 @@ function loginApi(payload) {
   );
 }
 
+function logoutApi({ email, token }) {
+  return axios.delete(
+    `${env.url}/api/v1/sessions/`,
+    {
+      headers: { 'Content-Type': 'application/json',
+        'X-User-Email': email,
+        'X-User-Token': token,
+      },
+    },
+  );
+}
+
 function signUpApi(payload) {
   return axios.post(
     `${env.url}/api/v1/users/`,
@@ -41,5 +53,5 @@ function budaSyncApi(payload) {
   );
 }
 
-const authApi = { loginApi, signUpApi, budaSyncApi };
+const authApi = { loginApi, logoutApi, signUpApi, budaSyncApi };
 export default authApi;

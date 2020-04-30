@@ -129,4 +129,15 @@ function PaymentScreen() {
   );
 }
 
+PaymentScreen.navigationOptions = navData => ({
+  headerTitle: 'Transferencia',
+  headerLeft: () => (
+    <Button
+      onPress={() => {
+        navData.navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
+
 export default PaymentScreen;

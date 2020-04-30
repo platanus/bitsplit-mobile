@@ -96,4 +96,15 @@ function BudaAuthScreen(props) {
   );
 }
 
+BudaAuthScreen.navigationOptions = navData => ({
+  headerTitle: 'Buda Autentificacion',
+  headerLeft: () => (
+    <Button
+      onPress={() => {
+        navData.navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
+
 export default BudaAuthScreen;

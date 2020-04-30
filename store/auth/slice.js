@@ -1,13 +1,16 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  token: null,
+  user: null,
+  error: null,
+  loading: false,
+};
 
 const slice = createSlice({
   name: 'auth',
-  initialState: {
-    token: null,
-    user: null,
-    error: null,
-    loading: false,
-  },
+  initialState,
   reducers: {
     start(state) {
       state.loading = true;
@@ -22,6 +25,12 @@ const slice = createSlice({
     },
     loginRejected(state, action) {
       state.error = action.payload;
+    },
+    logout(state) {
+      state.token = null;
+    },
+    reset() {
+      return initialState;
     },
   },
 

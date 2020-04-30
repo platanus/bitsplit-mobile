@@ -1,9 +1,9 @@
 /* eslint-disable max-statements */
 /* eslint-disable camelcase */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
-import { LOGIN_REQUEST, REGISTER_REQUEST } from '../types';
+import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
 
 function *loginRequest(action) {
@@ -45,7 +45,25 @@ function *register(action) {
   yield put(authActions.finish());
 }
 
+function *logoutRequest(action) {
+  const success_status = 204;
+  yield put(budaActions.start());
+  try {
+    const { token, user: { email } } = yield select(state => state.auth);
+    const { status } = yield call(api.logoutApi, { email, token });
+    if (status === success_status) {
+      yield put(authActions.logout());
+      action.callback();
+      yield put(authActions.reset());
+      yield put(budaActions.reset());
+    }
+  } catch (err) {
+  }
+  yield put(budaActions.finish());
+}
+
 export default function *loginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(REGISTER_REQUEST, register);
+  yield takeLatest(LOGOUT_REQUEST, logoutRequest);
 }

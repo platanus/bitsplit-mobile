@@ -118,10 +118,6 @@ function AuthScreen(props) {
 
 AuthScreen.navigationOptions = {
   headerTitle: 'BitSplit',
-  headerStyle: {
-    backgroundColor: colors.purple,
-  },
-  headerTintColor: 'white',
 };
 
 export default AuthScreen;
