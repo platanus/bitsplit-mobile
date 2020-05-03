@@ -8,7 +8,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
-import RecordScreen from '../screens/HomeScreen/RecordScreen';
+import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -27,6 +27,7 @@ const HomeNavigator = createStackNavigator({
   Inicio: HomeScreen,
   Buda: BudaAuthScreen,
   Pagar: PaymentScreen,
+  "Historial de Pagos": PaymentHistoryScreen,
 }, {
   defaultNavigationOptions: defaultNavOptions,
 });
@@ -36,7 +37,7 @@ const ProfileNavigator = createDrawerNavigator(
     Inicio: HomeNavigator,
     Buda: BudaAuthScreen,
     Pagar: PaymentScreen,
-    "Historial de Pagos": RecordScreen,
+    "Historial de Pagos": PaymentHistoryScreen,
   },
   {
     contentOptions: {

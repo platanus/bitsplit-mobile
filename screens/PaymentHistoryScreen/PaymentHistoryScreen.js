@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './styles';
 import { View, Text, Image } from 'react-native';
 import { Button } from 'react-native-elements';
+import styles from './styles';
 
-function RecordScreen(props) {
+function PaymentHistoryScreen(props) {
   return (
     <View style={styles.screen}>
 
@@ -14,7 +14,7 @@ function RecordScreen(props) {
   );
 }
 
-RecordScreen.navigationOptions = navData => ({
+PaymentHistoryScreen.navigationOptions = navData => ({
   headerTitle: 'Historial de Pagos',
   headerLeft: () => (
     <Button
@@ -25,5 +25,5 @@ RecordScreen.navigationOptions = navData => ({
   ),
 });
 
-export default RecordScreen;
+export default PaymentHistoryScreen;
 
