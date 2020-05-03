@@ -69,7 +69,7 @@ function *postBudaPayment(action) {
   yield put(budaActions.finish());
 }
 
-export default function *loginSaga() {
+export default function *budaSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
