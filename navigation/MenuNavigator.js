@@ -24,19 +24,19 @@ const AuthNavigator = createStackNavigator({
 });
 
 const HomeNavigator = createStackNavigator({
-  Home: HomeScreen,
-  BudaAuth: BudaAuthScreen,
-  Payment: PaymentScreen,
+  Inicio: HomeScreen,
+  Buda: BudaAuthScreen,
+  Pagar: PaymentScreen,
 }, {
   defaultNavigationOptions: defaultNavOptions,
 });
 
 const ProfileNavigator = createDrawerNavigator(
   {
-    Home: HomeNavigator,
-    BudaAuth: BudaAuthScreen,
-    Payment: PaymentScreen,
-    Record: RecordScreen,
+    Inicio: HomeNavigator,
+    Buda: BudaAuthScreen,
+    Pagar: PaymentScreen,
+    "Historial de Pagos": RecordScreen,
   },
   {
     contentOptions: {
