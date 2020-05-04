@@ -13,7 +13,7 @@ function contentComponents(props) {
       <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
         <DrawerItems {... props} />
         <Button
-          title="Logout"
+          title="Cerrar sesión"
           color={colors.red}
           onPress={() => {
             // dispach logout
