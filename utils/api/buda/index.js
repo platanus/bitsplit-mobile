@@ -44,9 +44,23 @@ function budaPaymentApi(payload) {
   );
 }
 
+function budaPaymentHistoryApi(payload) {
+  return axios.get(
+    `${env.url}/api/v1/payments`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Email': payload.email,
+        'X-User-Token': payload.token,
+      },
+
+    },
+  );
+}
+
 const budaApi = {
   budaBalance,
   budaGetQuotationApi,
   budaPaymentApi,
+  budaPaymentHistoryApi
 };
 export default budaApi;
