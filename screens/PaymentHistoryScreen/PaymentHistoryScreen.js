@@ -7,7 +7,6 @@ import moment from "moment";
 
 function PaymentHistoryScreen() {
   const [payments, loading] = usePaymentHistory();
-  console.log(payments);
   return (
     <ScrollView>
       <View>
