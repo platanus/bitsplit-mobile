@@ -93,25 +93,12 @@ function *getBudaPaymentHistory() {
   yield put(budaActions.finish());
 }
 
-function *patchBudaNotifications() {
+function *patchBudaNotifications(action) {
   yield put(budaActions.start());
   try {
-    const {
-      token,
-      user: { email },
-    } = yield select((state) => state.auth);
-    const {
-      data: { data },
-    } = yield call(api.budaNotification, { token, email });
-    console.log('DATAAA', data);
-    const notifications = data
-      .map(({ id, amount, created_at }) => ({
-        id,
-        amount,
-        created_at,
-      }))
-      .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
-    yield put(budaActions.setNotifications(notifications));
+    const { token, user: { email } } = yield select(state => state.auth);
+    const { response } = yield call(api.budaNotification, { token, email, notification_token: action.payload });
+    console.log('RESPUESTA', response);
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));
   }
