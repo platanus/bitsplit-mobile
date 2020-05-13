@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as budaActions } from './slice';
-import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT, BUDA_GET_PAYMENT_HISTORY } from '../types';
+import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT, BUDA_GET_PAYMENT_HISTORY, BUDA_NOTIFICATIONS } from '../types';
 import api from '../../utils/api';
 
 function *syncBudaRequest(action) {
@@ -69,7 +69,7 @@ function *postBudaPayment(action) {
   yield put(budaActions.finish());
 }
 
-function* getBudaPaymentHistory() {
+function *getBudaPaymentHistory() {
   yield put(budaActions.start());
   try {
     const {
@@ -85,8 +85,33 @@ function* getBudaPaymentHistory() {
         ...attributes,
         received: attributes.receiver_email === email,
       }))
-      .sort(({created_at: d1}, {created_at: d2}) => d1 < d2 ? 1 : -1)
+      .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
     yield put(budaActions.setPayments(payments));
+  } catch (err) {
+    yield put(budaActions.syncBudaRejected(err));
+  }
+  yield put(budaActions.finish());
+}
+
+function *patchBudaNotifications() {
+  yield put(budaActions.start());
+  try {
+    const {
+      token,
+      user: { email },
+    } = yield select((state) => state.auth);
+    const {
+      data: { data },
+    } = yield call(api.budaNotification, { token, email });
+    console.log('DATAAA', data);
+    const notifications = data
+      .map(({ id, amount, created_at }) => ({
+        id,
+        amount,
+        created_at,
+      }))
+      .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
+    yield put(budaActions.setNotifications(notifications));
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));
   }
@@ -99,4 +124,5 @@ export default function *budaSaga() {
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
   yield takeLatest(BUDA_PAYMENT, postBudaPayment);
   yield takeLatest(BUDA_GET_PAYMENT_HISTORY, getBudaPaymentHistory);
+  yield takeLatest(BUDA_NOTIFICATIONS, patchBudaNotifications);
 }
