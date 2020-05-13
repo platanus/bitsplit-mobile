@@ -4,10 +4,7 @@ import { Button, Text, ListItem } from 'react-native-elements';
 import { useListVals } from 'react-firebase-hooks/database';
 import { useSelector } from 'react-redux';
 import styles from './styles';
-// import { useNotifications } from './hooks';
 import { database } from '../../utils/firebase/database/config';
-
-// const email = useSelector(state => state.user.email)
 
 function NotificationScreen() {
   const { auth: { user: { email } } } = useSelector(state => state);
