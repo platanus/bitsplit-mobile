@@ -98,7 +98,6 @@ function *patchBudaNotifications(action) {
   try {
     const { token, user: { email } } = yield select(state => state.auth);
     const { response } = yield call(api.budaNotification, { token, email, notification_token: action.payload });
-    console.log('RESPUESTA', response);
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));
   }

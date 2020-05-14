@@ -4,10 +4,10 @@ import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
   new: {
-    color: colors.lightblue,
+    color: colors.green,
   },
   old: {
-    color: colors.gray,
+    color: colors.lightblue,
   },
 });
 export default { ...styles, ...crossStyles };
