@@ -1,12 +1,14 @@
 import axios from 'axios';
 import env from '../../../env';
 
-function loginApi(payload) {
+function loginApi({ email, password }) {
   return axios.post(
     `${env.url}/api/v1/sessions/`,
     {
-      email: payload.email,
-      password: payload.password,
+      'user': {
+        email,
+        password,
+      },
     },
     {
       headers: { 'Content-Type': 'application/json' },
@@ -14,6 +16,17 @@ function loginApi(payload) {
   );
 }
 
+function fetchUserApi({ email, token }) {
+  return axios.get(
+    `${env.url}/api/v1/balances`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Email': email,
+        'X-User-Token': token,
+      },
+    },
+  );
+}
 function logoutApi({ email, token }) {
   return axios.delete(
     `${env.url}/api/v1/sessions/`,
@@ -53,5 +66,5 @@ function budaSyncApi(payload) {
   );
 }
 
-const authApi = { loginApi, logoutApi, signUpApi, budaSyncApi };
+const authApi = { loginApi, logoutApi, signUpApi, budaSyncApi, fetchUserApi };
 export default authApi;

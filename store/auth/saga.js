@@ -6,17 +6,32 @@ import { actions as budaActions } from '../buda/slice';
 import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
 
-function *loginRequest(action) {
+function *fetchUser() {
   yield put(authActions.start());
   try {
-    const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.loginApi, action.payload);
+    const { token, user: { email } } = yield select(state => state.auth);
+    const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.fetchUserApi, { email, token });
+    console.log('fetch user', attributes);
+
     if (attributes) {
       if (api_key) yield put(budaActions.setBudaKey(api_key));
       yield put(authActions.loginSuccess(attributes));
-    } else {
-      yield put(authActions.loginRejected('Usuario y contraseña no coinciden'));
     }
   } catch (err) {
+    console.log(err);
+  }
+  yield put(authActions.finish());
+}
+
+function *loginRequest(action) {
+  yield put(authActions.start());
+  try {
+    const { data: { data: { authentication_token } } } = yield call(api.loginApi, action.payload);
+    console.log('login res', authentication_token);
+    yield put(authActions.loginSuccess({ authentication_token }));
+    yield call(fetchUser);
+  } catch (err) {
+    console.log(err);
     if (err.response.status.toString() === '500') {
       yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
     } else {
@@ -29,13 +44,19 @@ function *loginRequest(action) {
 function *register(action) {
   yield put(authActions.start());
   try {
+    console.log('post start');
     const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
-    if (attributes) {
-      yield put(authActions.loginSuccess(attributes));
+    console.log('post', attributes);
+    yield put(authActions.fetchUser(attributes));
+    const { data: { data: { authentication_token } } } = yield call(api.loginApi, action.payload);
+    console.log('registrar', authentication_token);
+    if (attributes && authentication_token) {
+      yield put(authActions.loginSuccess({ authentication_token }));
     } else {
       yield put(authActions.loginRejected('Error registrando'));
     }
   } catch (err) {
+    console.log(err);
     if (err.response.status.toString() === '500') {
       yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
     } else {
