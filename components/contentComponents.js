@@ -1,6 +1,5 @@
 import React from 'react';
 import { SafeAreaView, Button, View, ActivityIndicator } from 'react-native';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { DrawerItems } from 'react-navigation-drawer';
 import { LOGOUT_REQUEST } from '../store/types';
