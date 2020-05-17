@@ -18,7 +18,7 @@ function loginApi({ email, password }) {
 
 function fetchUserApi({ email, token }) {
   return axios.get(
-    `${env.url}/api/v1/balances`, {
+    `${env.url}/api/v1/users`, {
       headers: {
         'Content-Type': 'application/json',
         'X-User-Email': email,

@@ -11,14 +11,10 @@ function *fetchUser() {
   try {
     const { token, user: { email } } = yield select(state => state.auth);
     const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.fetchUserApi, { email, token });
-    console.log('fetch user', attributes);
-
-    if (attributes) {
-      if (api_key) yield put(budaActions.setBudaKey(api_key));
-      yield put(authActions.loginSuccess(attributes));
-    }
+    if (api_key) yield put(budaActions.setBudaKey(api_key));
+    yield put(authActions.fetchUser(attributes));
   } catch (err) {
-    console.log(err);
+    yield put(authActions.loginRejected('Error pidiendo datos del usuario'));
   }
   yield put(authActions.finish());
 }
@@ -26,12 +22,10 @@ function *fetchUser() {
 function *loginRequest(action) {
   yield put(authActions.start());
   try {
-    const { data: { data: { authentication_token } } } = yield call(api.loginApi, action.payload);
-    console.log('login res', authentication_token);
-    yield put(authActions.loginSuccess({ authentication_token }));
-    yield call(fetchUser);
+    const { data: { authentication_token } } = yield call(api.loginApi, action.payload);
+    yield put(authActions.loginSuccess({ email: action.payload.email, authentication_token }));
+    yield *fetchUser();
   } catch (err) {
-    console.log(err);
     if (err.response.status.toString() === '500') {
       yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
     } else {
@@ -44,19 +38,15 @@ function *loginRequest(action) {
 function *register(action) {
   yield put(authActions.start());
   try {
-    console.log('post start');
     const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
-    console.log('post', attributes);
     yield put(authActions.fetchUser(attributes));
-    const { data: { data: { authentication_token } } } = yield call(api.loginApi, action.payload);
-    console.log('registrar', authentication_token);
+    const { data: { authentication_token } } = yield call(api.loginApi, action.payload);
     if (attributes && authentication_token) {
       yield put(authActions.loginSuccess({ authentication_token }));
     } else {
       yield put(authActions.loginRejected('Error registrando'));
     }
   } catch (err) {
-    console.log(err);
     if (err.response.status.toString() === '500') {
       yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
     } else {
@@ -67,12 +57,13 @@ function *register(action) {
 }
 
 function *logoutRequest(action) {
-  const success_status = 204;
-  yield put(budaActions.start());
+  yield put(authActions.start());
+  const success_status = [200, 204];
   try {
     const { token, user: { email } } = yield select(state => state.auth);
     const { status } = yield call(api.logoutApi, { email, token });
-    if (status === success_status) {
+
+    if (success_status.includes(status)) {
       yield put(authActions.logout());
       action.callback();
       yield put(authActions.reset());
@@ -80,7 +71,7 @@ function *logoutRequest(action) {
     }
   } catch (err) {
   }
-  yield put(budaActions.finish());
+  yield put(authActions.finish());
 }
 
 export default function *loginSaga() {
