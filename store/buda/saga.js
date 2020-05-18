@@ -69,7 +69,7 @@ function *postBudaPayment(action) {
   yield put(budaActions.finish());
 }
 
-function* getBudaPaymentHistory() {
+function *getBudaPaymentHistory() {
   yield put(budaActions.start());
   try {
     const {
@@ -85,7 +85,7 @@ function* getBudaPaymentHistory() {
         ...attributes,
         received: attributes.receiver_email === email,
       }))
-      .sort(({created_at: d1}, {created_at: d2}) => d1 < d2 ? 1 : -1)
+      .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
     yield put(budaActions.setPayments(payments));
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));

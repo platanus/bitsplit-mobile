@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, Button, Badge } from 'react-native-elements';
+import { BUDA_GET_BALANCE } from '../../store/types';
 import styles from './styles';
 
 function HomeScreen(props) {
-  const { auth: { user: { email } }, buda: { apiKey, balance } } = useSelector(state => state);
+  const dispatch = useDispatch();
+  const { auth: { user: { email } }, buda: { apiKey, balance, loading } } = useSelector(state => state);
+
+  useEffect(() => {
+    if (apiKey) {
+      dispatch({ type: BUDA_GET_BALANCE });
+    }
+  }, [apiKey, dispatch]);
 
   return (
     <View style={styles.screen}>
@@ -14,7 +22,7 @@ function HomeScreen(props) {
         rounded
         source={{
           uri:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+            'https://www.nicepng.com/png/detail/804-8049853_med-boukrima-specialist-webmaster-php-e-commerce-web.png',
         }}
       />
       <Badge value={apiKey ? 'Sincronizado con Buda' : 'Falta Sincronizar'} status={apiKey ? 'success' : 'error' } />
@@ -30,11 +38,12 @@ function HomeScreen(props) {
           />
         </View> :
         <View>
-          <Text style={styles.saldoText}>{'Debes sincronizar con Buda'}</Text>
+          <Text style={styles.saldoText}>{loading || 'Debes sincronizar con Buda'}</Text>
           <Button
             title= 'Sincronizar'
             type="solid"
             onPress ={() => props.navigation.navigate({ routeName: 'BudaAuth' })}
+
           />
         </View>
       }
