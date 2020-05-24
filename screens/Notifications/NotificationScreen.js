@@ -9,8 +9,6 @@ import { database } from '../../utils/firebase/database/config';
 
 function NotificationScreen() {
   const { auth: { user: { email } } } = useSelector(state => state);
-  // const email = useSelector(state => state.user.email);
-  // const email = useSelector(state => state.user && state.user.email);
   const firebaseEmail = email.replace('.', ',');
   const [notifications, loading] = useListVals(database.ref('notifications').child(firebaseEmail), { keyField: 'token' });
   const dispatch = useDispatch();
