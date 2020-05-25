@@ -20,6 +20,9 @@ const slice = createSlice({
     },
     loginSuccess(state, action) {
       state.token = action.payload.authentication_token;
+      if (!state.user) state.user = { email: action.payload.email };
+    },
+    fetchUser(state, action) {
       state.user = action.payload;
       if (action.payload.api_key) state.apiKey = action.payload.api_key;
     },
