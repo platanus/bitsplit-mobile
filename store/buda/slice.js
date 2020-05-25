@@ -37,6 +37,9 @@ const slice = createSlice({
     setPayments(state, action) {
       state.payments = action.payload;
     },
+    addPayment(state, action) {
+      state.payments.unshift(action.payload);
+    },
     reset() {
       return initialState;
     },
