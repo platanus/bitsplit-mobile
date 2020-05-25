@@ -19,7 +19,7 @@ function BudaAuthScreen(props) {
 
   useEffect(() => {
     if (balance) {
-      props.navigation.navigate({ routeName: 'Home' });
+      props.navigation.navigate({ routeName: 'Inicio' });
     }
   }, [balance, props]);
 
