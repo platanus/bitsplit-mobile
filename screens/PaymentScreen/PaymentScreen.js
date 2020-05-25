@@ -56,7 +56,7 @@ function PaymentScreen() {
 
         <Text h2>{'Transferencia'}</Text>
 
-        <Text h4>{error}</Text>
+        <Text h4>{error && error.message || JSON.stringify(error)}</Text>
         <Input
           {...bind('receptor')}
           autoCapitalize="none"
@@ -87,7 +87,7 @@ function PaymentScreen() {
             isValidQuotation ?
               <View>
                 <Text h4>Cotizacion</Text>
-                <Text>Monto total CPL: ${totalClp}</Text>
+                <Text>Monto total CLP: ${totalClp}</Text>
                 <Text>Monto total BTC: ${totalBitcoins}</Text>
                 <Text>Costo por servicio: ${fee}</Text>
               </View> :
