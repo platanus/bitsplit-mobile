@@ -11,7 +11,7 @@ function PaymentHistoryScreen() {
     <ScrollView>
       <View>
         {!loading &&
-          payments.map(
+          payments && payments.map(
             ({
               id,
               amount,
