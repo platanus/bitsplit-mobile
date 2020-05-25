@@ -29,7 +29,7 @@ function BudaAuthScreen(props) {
 
         <Text h2>{'Autentificación Buda'}</Text>
 
-        <Text h4>{ error }</Text>
+        <Text h4>{error && error.message || JSON.stringify(error)}</Text>
         <Input
           id ="API_KEY"
           label="API KEY"
