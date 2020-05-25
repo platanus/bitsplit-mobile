@@ -4,7 +4,7 @@ import { Button, Text, ListItem } from 'react-native-elements';
 import { useListVals } from 'react-firebase-hooks/database';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles';
-import { BUDA_NOTIFICATIONS } from '../../store/types';
+import { FIREBASE_NOTIFICATIONS } from '../../store/types';
 import { database } from '../../utils/firebase/database/config';
 
 function NotificationScreen() {
@@ -14,7 +14,7 @@ function NotificationScreen() {
   const dispatch = useDispatch();
 
   function handleSeen(notificationToken) {
-    dispatch({ type: BUDA_NOTIFICATIONS, payload: notificationToken });
+    dispatch({ type: FIREBASE_NOTIFICATIONS, payload: notificationToken });
   }
 
   return (
