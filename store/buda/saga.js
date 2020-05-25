@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as budaActions } from './slice';
-import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT, BUDA_GET_PAYMENT_HISTORY, BUDA_NOTIFICATIONS } from '../types';
+import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT, BUDA_GET_PAYMENT_HISTORY } from '../types';
 import api from '../../utils/api';
 
 function *syncBudaRequest(action) {
@@ -93,22 +93,10 @@ function *getBudaPaymentHistory() {
   yield put(budaActions.finish());
 }
 
-function *patchBudaNotifications(action) {
-  yield put(budaActions.start());
-  try {
-    const { token, user: { email } } = yield select(state => state.auth);
-    const { response } = yield call(api.budaNotification, { token, email, notification_token: action.payload });
-  } catch (err) {
-    yield put(budaActions.syncBudaRejected(err));
-  }
-  yield put(budaActions.finish());
-}
-
 export default function *budaSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
   yield takeLatest(BUDA_PAYMENT, postBudaPayment);
   yield takeLatest(BUDA_GET_PAYMENT_HISTORY, getBudaPaymentHistory);
-  yield takeLatest(BUDA_NOTIFICATIONS, patchBudaNotifications);
 }

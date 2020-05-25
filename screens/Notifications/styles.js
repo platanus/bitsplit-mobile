@@ -9,5 +9,10 @@ const styles = StyleSheet.create({
   old: {
     color: colors.lightblue,
   },
+  text: {
+    fontSize: 20,
+    margin: 50,
+    marginTop: 200,
+  },
 });
 export default { ...styles, ...crossStyles };
