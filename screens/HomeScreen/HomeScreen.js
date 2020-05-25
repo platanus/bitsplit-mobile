@@ -34,7 +34,7 @@ function HomeScreen(props) {
           <Button
             title= 'Generar Pago'
             type="solid"
-            onPress ={() => props.navigation.navigate({ routeName: 'Payment' })}
+            onPress ={() => props.navigation.navigate({ routeName: 'Pagar' })}
           />
         </View> :
         <View>
