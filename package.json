@@ -20,6 +20,7 @@
     "expo-constants": "^9.0.0",
     "expo-linear-gradient": "~8.1.0",
     "firebase": "^7.14.5",
+    "lint-staged": ">=10",
     "moment": "^2.26.0",
     "moments": "^0.0.2",
     "native": "^0.3.3",
@@ -42,12 +43,22 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.1.3"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "^8.1.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
     "react-native-known-styling-properties": "^1.0.5",
     "stylelint": "^13.3.2",
     "stylelint-react-native": "^2.2.0"
+  },
+  "lint-staged": {
+    "*.js": "prettier --write"
   },
   "private": true
 }
