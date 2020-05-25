@@ -6,11 +6,21 @@ import { actions as budaActions } from '../buda/slice';
 import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
 
-function *fetchUser() {
+function* fetchUser() {
   yield put(authActions.start());
   try {
-    const { token, user: { email } } = yield select(state => state.auth);
-    const { data: { data: { attributes, attributes: { api_key } } } } = yield call(api.fetchUserApi, { email, token });
+    const {
+      token,
+      user: { email },
+    } = yield select(state => state.auth);
+    const {
+      data: {
+        data: {
+          attributes,
+          attributes: { api_key },
+        },
+      },
+    } = yield call(api.fetchUserApi, { email, token });
     if (api_key) yield put(budaActions.setBudaKey(api_key));
     yield put(authActions.fetchUser(attributes));
   } catch (err) {
@@ -19,15 +29,24 @@ function *fetchUser() {
   yield put(authActions.finish());
 }
 
-function *loginRequest(action) {
+function* loginRequest(action) {
   yield put(authActions.start());
   try {
-    const { data: { authentication_token } } = yield call(api.loginApi, action.payload);
-    yield put(authActions.loginSuccess({ email: action.payload.email, authentication_token }));
-    yield *fetchUser();
+    const {
+      data: { authentication_token },
+    } = yield call(api.loginApi, action.payload);
+    yield put(
+      authActions.loginSuccess({
+        email: action.payload.email,
+        authentication_token,
+      })
+    );
+    yield* fetchUser();
   } catch (err) {
     if (err.response.status.toString() === '500') {
-      yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
+      yield put(
+        authActions.loginRejected('Estamos experimentando problemas internos')
+      );
     } else {
       yield put(authActions.loginRejected('Tus credenciales son invalidas'));
     }
@@ -35,12 +54,18 @@ function *loginRequest(action) {
   yield put(authActions.finish());
 }
 
-function *register(action) {
+function* register(action) {
   yield put(authActions.start());
   try {
-    const { data: { data: { attributes } } } = yield call(api.signUpApi, action.payload);
+    const {
+      data: {
+        data: { attributes },
+      },
+    } = yield call(api.signUpApi, action.payload);
     yield put(authActions.fetchUser(attributes));
-    const { data: { authentication_token } } = yield call(api.loginApi, action.payload);
+    const {
+      data: { authentication_token },
+    } = yield call(api.loginApi, action.payload);
     if (attributes && authentication_token) {
       yield put(authActions.loginSuccess({ authentication_token }));
     } else {
@@ -48,19 +73,26 @@ function *register(action) {
     }
   } catch (err) {
     if (err.response.status.toString() === '500') {
-      yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
+      yield put(
+        authActions.loginRejected('Estamos experimentando problemas internos')
+      );
     } else {
-      yield put(authActions.loginRejected('Error registrando, revisa tus credenciales'));
+      yield put(
+        authActions.loginRejected('Error registrando, revisa tus credenciales')
+      );
     }
   }
   yield put(authActions.finish());
 }
 
-function *logoutRequest(action) {
+function* logoutRequest(action) {
   yield put(authActions.start());
   const success_status = [200, 204];
   try {
-    const { token, user: { email } } = yield select(state => state.auth);
+    const {
+      token,
+      user: { email },
+    } = yield select(state => state.auth);
     const { status } = yield call(api.logoutApi, { email, token });
 
     if (success_status.includes(status)) {
@@ -69,12 +101,11 @@ function *logoutRequest(action) {
       yield put(authActions.reset());
       yield put(budaActions.reset());
     }
-  } catch (err) {
-  }
+  } catch (err) {}
   yield put(authActions.finish());
 }
 
-export default function *loginSaga() {
+export default function* loginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(REGISTER_REQUEST, register);
   yield takeLatest(LOGOUT_REQUEST, logoutRequest);

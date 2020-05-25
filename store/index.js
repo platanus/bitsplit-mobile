@@ -25,4 +25,3 @@ function runSagas() {
 }
 const persistor = persistStore(store);
 export { store, runSagas, persistor };
-

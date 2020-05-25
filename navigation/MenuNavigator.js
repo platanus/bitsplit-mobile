@@ -18,20 +18,26 @@ const defaultNavOptions = {
   headerTintColor: Platform.OS === 'android' ? 'white' : colors.purple,
 };
 
-const AuthNavigator = createStackNavigator({
-  Authentication: AuthScreen,
-}, {
-  defaultNavigationOptions: defaultNavOptions,
-});
+const AuthNavigator = createStackNavigator(
+  {
+    Authentication: AuthScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
 
-const HomeNavigator = createStackNavigator({
-  Inicio: HomeScreen,
-  Buda: BudaAuthScreen,
-  Pagar: PaymentScreen,
-  'Historial de Pagos': PaymentHistoryScreen,
-}, {
-  defaultNavigationOptions: defaultNavOptions,
-});
+const HomeNavigator = createStackNavigator(
+  {
+    Inicio: HomeScreen,
+    Buda: BudaAuthScreen,
+    Pagar: PaymentScreen,
+    'Historial de Pagos': PaymentHistoryScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
 
 const ProfileNavigator = createDrawerNavigator(
   {
@@ -46,16 +52,17 @@ const ProfileNavigator = createDrawerNavigator(
       activeTintColor: colors.purple,
     },
     contentComponent: contentComponents,
-
-  },
-
+  }
 );
 
-const MenuNavigator = createSwitchNavigator({
-  Authentication: AuthNavigator,
-  Home: ProfileNavigator,
-}, {
-  defaultNavigationOptions: defaultNavOptions,
-});
+const MenuNavigator = createSwitchNavigator(
+  {
+    Authentication: AuthNavigator,
+    Home: ProfileNavigator,
+  },
+  {
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
 
 export default createAppContainer(MenuNavigator);
