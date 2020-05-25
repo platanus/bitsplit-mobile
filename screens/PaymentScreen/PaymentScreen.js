@@ -17,26 +17,51 @@ function useBudaPayments() {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
   function handleBudaPayment(receptor, amountBtc, callback) {
-    dispatch({ type: BUDA_PAYMENT, payload: { amountBtc, receptor }, callback });
+    dispatch({
+      type: BUDA_PAYMENT,
+      payload: { amountBtc, receptor },
+      callback,
+    });
   }
 
-  const { error, quotation, lastPayment, loading } = useSelector(state => state.buda);
+  const { error, quotation, lastPayment, loading } = useSelector(
+    state => state.buda
+  );
 
   const totalClp = parseInt(quotation ? quotation.amount_clp[0] : '0');
   const totalBitcoins = parseFloat(quotation ? quotation.amount_btc[0] : '0');
 
-  return { error, totalClp, totalBitcoins, lastPayment, loading, handleBudaQuotation, handleBudaPayment };
+  return {
+    error,
+    totalClp,
+    totalBitcoins,
+    lastPayment,
+    loading,
+    handleBudaQuotation,
+    handleBudaPayment,
+  };
 }
 
 function PaymentScreen() {
-  const { error, totalClp, totalBitcoins, lastPayment, loading, handleBudaQuotation, handleBudaPayment } = useBudaPayments();
+  const {
+    error,
+    totalClp,
+    totalBitcoins,
+    lastPayment,
+    loading,
+    handleBudaQuotation,
+    handleBudaPayment,
+  } = useBudaPayments();
   const [state, bind] = useForm(
     { receptor: '', transferAmount: '' },
     {
       validations: { transferAmount: value => !isNaN(value) },
-      sideEffects: { transferAmount: value => parseInt(value) >= minTrxAmount && handleBudaQuotation(value) },
+      sideEffects: {
+        transferAmount: value =>
+          parseInt(value) >= minTrxAmount && handleBudaQuotation(value),
+      },
       errorMessages: { transferAmount: 'Debes ingresar un número' },
-    },
+    }
   );
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
@@ -53,79 +78,61 @@ function PaymentScreen() {
   return (
     <ScrollView>
       <View style={styles.screen}>
-
         <Text h2>{'Transferencia'}</Text>
 
-        <Text h4>{error && error.message || JSON.stringify(error)}</Text>
+        <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
         <Input
           {...bind('receptor')}
-          autoCapitalize="none"
+          autoCapitalize='none'
           placeholder='receptor email'
-          leftIcon={
-            <Icon
-              name='user'
-              size={24}
-              color='black'
-            />
-          }
+          leftIcon={<Icon name='user' size={24} color='black' />}
         />
         <Input
           {...bind('transferAmount')}
-          label="Monto a transferir"
-          autoCapitalize="none"
+          label='Monto a transferir'
+          autoCapitalize='none'
           placeholder='Monto de llegada en CLP'
-          leftIcon={
-            <Icon
-              name='user'
-              size={24}
-              color='black'
-            />
-          }
+          leftIcon={<Icon name='user' size={24} color='black' />}
         />
         <View style={styles.quotationContainer}>
-          {
-            isValidQuotation ?
-              <View>
-                <Text h4>Cotizacion</Text>
-                <Text>Monto total CLP: ${totalClp}</Text>
-                <Text>Monto total BTC: ${totalBitcoins}</Text>
-                <Text>Costo por servicio: ${fee}</Text>
-              </View> :
-              <Text h4>La transferencia minima es $100 CLP</Text>
-          }
+          {isValidQuotation ? (
+            <View>
+              <Text h4>Cotizacion</Text>
+              <Text>Monto total CLP: ${totalClp}</Text>
+              <Text>Monto total BTC: ${totalBitcoins}</Text>
+              <Text>Costo por servicio: ${fee}</Text>
+            </View>
+          ) : (
+            <Text h4>La transferencia minima es $100 CLP</Text>
+          )}
         </View>
 
         <Button
           title='Pagar'
-          type="solid"
-          onPress ={onPayPress}
-          loading ={loading}
+          type='solid'
+          onPress={onPayPress}
+          loading={loading}
           disabled={isPayDisabled}
         />
-        {
-          lastPayment &&
-        <Overlay
-          isVisible={isDisplayVisible}
-          overlayStyle={styles.overlayContainer}
-          windowBackgroundColor="rgba(255, 255, 255, .5)"
-          onBackdropPress={toggleDisplay}
-        >
-          <View style={styles.screen}>
-            <Text h4>Pago Exitoso</Text>
-            <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
-            <Text h5>{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-            <Button
-              title='Listo'
-              type="solid"
-              onPress ={toggleDisplay}
-            />
-          </View>
-        </Overlay>
-        }
-
+        {lastPayment && (
+          <Overlay
+            isVisible={isDisplayVisible}
+            overlayStyle={styles.overlayContainer}
+            windowBackgroundColor='rgba(255, 255, 255, .5)'
+            onBackdropPress={toggleDisplay}
+          >
+            <View style={styles.screen}>
+              <Text h4>Pago Exitoso</Text>
+              <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+              <Text
+                h5
+              >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+              <Button title='Listo' type='solid' onPress={toggleDisplay} />
+            </View>
+          </Overlay>
+        )}
       </View>
     </ScrollView>
-
   );
 }
 

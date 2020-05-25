@@ -14,9 +14,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <MenuNavigator/>
+        <MenuNavigator />
       </PersistGate>
     </Provider>
   );
 }
-
