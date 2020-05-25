@@ -7,7 +7,7 @@ const initialState = {
   balance: null,
   quotation: null,
   lastPayment: null,
-  payments: []
+  payments: [],
 };
 const slice = createSlice({
   name: 'buda',

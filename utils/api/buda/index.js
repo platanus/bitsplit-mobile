@@ -61,6 +61,6 @@ const budaApi = {
   budaBalance,
   budaGetQuotationApi,
   budaPaymentApi,
-  budaPaymentHistoryApi
+  budaPaymentHistoryApi,
 };
 export default budaApi;
