@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   error: null,
   loading: false,
+  pin: null,
 };
 
 const slice = createSlice({
@@ -25,6 +26,9 @@ const slice = createSlice({
     fetchUser(state, action) {
       state.user = action.payload;
       if (action.payload.api_key) state.apiKey = action.payload.api_key;
+    },
+    setPin(state, action) {
+      state.pin = action.payload;
     },
     loginRejected(state, action) {
       state.error = action.payload;

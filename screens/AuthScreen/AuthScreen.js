@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Divider, Text } from 'react-native-elements';
+import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
 import styles from './styles';
@@ -12,6 +13,7 @@ function AuthScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [showPin, setShowPin] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const {
@@ -33,9 +35,13 @@ function AuthScreen(props) {
     }
   }
 
+  const goHome = () => {
+    props.navigation.navigate({ routeName: 'Home' });
+  };
+  const togglePin = () => setShowPin(!showPin);
   useEffect(() => {
     if (token) {
-      props.navigation.navigate({ routeName: 'Home' });
+      togglePin();
     }
   }, [token]);
 
@@ -104,6 +110,14 @@ function AuthScreen(props) {
           onPress={() => setIsSignup(!isSignup)}
         />
       </ScrollView>
+      {showPin && (
+        <PinOverlay
+          onSuccess={goHome}
+          onFailure={togglePin}
+          pinLength={4}
+          maxTries={3}
+        />
+      )}
     </View>
   );
 }
