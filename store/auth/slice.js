@@ -40,7 +40,6 @@ const slice = createSlice({
       return initialState;
     },
   },
-
 });
 
 export default slice;

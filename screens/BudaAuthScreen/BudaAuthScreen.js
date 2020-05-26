@@ -14,82 +14,66 @@ function BudaAuthScreen(props) {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   function handleBudaAuth() {
-    dispatch({ type: BUDA_AUTH_REQUEST, payload: { apiKey, apiSecret, password } });
+    dispatch({
+      type: BUDA_AUTH_REQUEST,
+      payload: { apiKey, apiSecret, password },
+    });
   }
 
   useEffect(() => {
     if (balance) {
-      props.navigation.navigate({ routeName: 'Home' });
+      props.navigation.navigate({ routeName: 'Inicio' });
     }
   }, [balance, props]);
 
   return (
     <View style={style.screen}>
       <ScrollView style={{ flex: 1 }}>
-
         <Text h2>{'Autentificación Buda'}</Text>
 
-        <Text h4>{ error }</Text>
+        <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
         <Input
-          id ="API_KEY"
-          label="API KEY"
+          id='API_KEY'
+          label='API KEY'
           required
           secureTextEntry
-          autoCapitalize="none"
-          value={ apiKey }
-          onChangeText={ text => setApiKey(text) }
+          autoCapitalize='none'
+          value={apiKey}
+          onChangeText={text => setApiKey(text)}
           placeholder='buda api key'
-          leftIcon={
-            <Icon
-              name='key'
-              size={24}
-              color='black'
-            />
-          }
+          leftIcon={<Icon name='key' size={24} color='black' />}
         />
         <Input
-          id ="API_SECRET"
-          label="API SECRET"
+          id='API_SECRET'
+          label='API SECRET'
           required
           secureTextEntry
-          autoCapitalize="none"
+          autoCapitalize='none'
           value={apiSecret}
           onChangeText={text => setApiSecret(text)}
           placeholder='buda api secret'
-          leftIcon={
-            <Icon
-              name='user-secret'
-              size={24}
-              color='black'
-            />
-          }
+          leftIcon={<Icon name='user-secret' size={24} color='black' />}
         />
 
         <Input
-          id ="password"
-          label="Bitsplit Password"
-          keyboardType="default"
+          id='password'
+          label='Bitsplit Password'
+          keyboardType='default'
           secureTextEntry
           required
           minLength={5}
-          autoCapitalize="none"
-          errorMessage="Ingrese un contrasena valida"
+          autoCapitalize='none'
+          errorMessage='Ingrese un contrasena valida'
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={text => setPassword(text)}
           placeholder='password'
-          leftIcon={
-            <Icon
-              name='lock'
-              size={24}
-              color='black'
-            />
-          }
+          leftIcon={<Icon name='lock' size={24} color='black' />}
         />
         <Button
-          title="send"
-          type="solid"
-          onPress ={() => handleBudaAuth()}
-          loading ={loading}
+          title='send'
+          type='solid'
+          onPress={() => handleBudaAuth()}
+          loading={loading}
         />
       </ScrollView>
     </View>

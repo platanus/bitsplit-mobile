@@ -49,7 +49,6 @@ const crossStyles = StyleSheet.create({
     maxWidth: '80%',
     maxHeight: '10%',
   },
-
 });
 
 export default crossStyles;

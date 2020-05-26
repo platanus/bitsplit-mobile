@@ -8,7 +8,11 @@ export default function useForm(initialState, options) {
 
   useEffect(() => {
     for (const field in state) {
-      if (initialState[field] !== state[field] && oldState[field] !== state[field] && sideEffects[field]) {
+      if (
+        initialState[field] !== state[field] &&
+        oldState[field] !== state[field] &&
+        sideEffects[field]
+      ) {
         sideEffects[field](state[field]);
       }
     }

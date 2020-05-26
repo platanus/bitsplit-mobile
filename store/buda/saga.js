@@ -1,16 +1,35 @@
 /* eslint-disable max-statements */
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as budaActions } from './slice';
-import { BUDA_AUTH_REQUEST, BUDA_GET_BALANCE, BUDA_QUOTATION, BUDA_PAYMENT, BUDA_GET_PAYMENT_HISTORY } from '../types';
+import {
+  BUDA_AUTH_REQUEST,
+  BUDA_GET_BALANCE,
+  BUDA_QUOTATION,
+  BUDA_PAYMENT,
+  BUDA_GET_PAYMENT_HISTORY,
+} from '../types';
 import api from '../../utils/api';
 
-function *syncBudaRequest(action) {
+function* syncBudaRequest(action) {
   yield put(budaActions.start());
   try {
-    const { token, user: { email } } = yield select(state => state.auth);
+    const {
+      token,
+      user: { email },
+    } = yield select(state => state.auth);
     // eslint-disable-next-line camelcase
-    const { data: { data: { attributes: { api_key } } } } = yield call(api.budaSyncApi, { ...action.payload, token, email });
-    const { data: { data: { error, balance } } } = yield call(api.budaBalance, { token, email });
+    const {
+      data: {
+        data: {
+          attributes: { api_key },
+        },
+      },
+    } = yield call(api.budaSyncApi, { ...action.payload, token, email });
+    const {
+      data: {
+        data: { error, balance },
+      },
+    } = yield call(api.budaBalance, { token, email });
     if (error) {
       yield put(budaActions.syncBudaRejected(error.message));
     } else {
@@ -23,11 +42,18 @@ function *syncBudaRequest(action) {
   yield put(budaActions.finish());
 }
 
-export function *getBudaBalance() {
+export function* getBudaBalance() {
   yield put(budaActions.start());
   try {
-    const { token, user: { email } } = yield select(state => state.auth);
-    const { data: { data: { error, balance } } } = yield call(api.budaBalance, { token, email });
+    const {
+      token,
+      user: { email },
+    } = yield select(state => state.auth);
+    const {
+      data: {
+        data: { error, balance },
+      },
+    } = yield call(api.budaBalance, { token, email });
     if (error) {
       yield put(budaActions.setBudaKey(null));
       yield put(budaActions.syncBudaRejected(error.message));
@@ -40,11 +66,22 @@ export function *getBudaBalance() {
   yield put(budaActions.finish());
 }
 
-function *getBudaQuotation(action) {
+function* getBudaQuotation(action) {
   yield put(budaActions.start());
   try {
-    const { token, user: { email } } = yield select(state => state.auth);
-    const { data: { data: { quotation } } } = yield call(api.budaGetQuotationApi, { token, email, amount: action.payload });
+    const {
+      token,
+      user: { email },
+    } = yield select(state => state.auth);
+    const {
+      data: {
+        data: { quotation },
+      },
+    } = yield call(api.budaGetQuotationApi, {
+      token,
+      email,
+      amount: action.payload,
+    });
     yield put(budaActions.setQuotations(quotation));
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));
@@ -52,13 +89,26 @@ function *getBudaQuotation(action) {
   yield put(budaActions.finish());
 }
 
-function *postBudaPayment(action) {
+function* postBudaPayment(action) {
   yield put(budaActions.start());
   try {
-    const { token, user: { email } } = yield select(state => state.auth);
-    const { data: { data: { error, attributes } } } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
+    const {
+      token,
+      user: { email },
+    } = yield select(state => state.auth);
+    const {
+      data: {
+        data: { error, id, attributes },
+      },
+    } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
     if (attributes) {
       yield put(budaActions.setLastPayment(attributes));
+      const newPayment = {
+        id,
+        ...attributes,
+        received: attributes.receiver_email === email,
+      };
+      yield put(budaActions.addPayment(newPayment));
       action.callback();
     } else if (error) {
       yield put(budaActions.syncBudaRejected(error));
@@ -75,7 +125,7 @@ function* getBudaPaymentHistory() {
     const {
       token,
       user: { email },
-    } = yield select((state) => state.auth);
+    } = yield select(state => state.auth);
     const {
       data: { data },
     } = yield call(api.budaPaymentHistoryApi, { token, email });
@@ -85,7 +135,7 @@ function* getBudaPaymentHistory() {
         ...attributes,
         received: attributes.receiver_email === email,
       }))
-      .sort(({created_at: d1}, {created_at: d2}) => d1 < d2 ? 1 : -1)
+      .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
     yield put(budaActions.setPayments(payments));
   } catch (err) {
     yield put(budaActions.syncBudaRejected(err));
@@ -93,7 +143,7 @@ function* getBudaPaymentHistory() {
   yield put(budaActions.finish());
 }
 
-export default function *budaSaga() {
+export default function* budaSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
