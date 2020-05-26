@@ -6,7 +6,6 @@ import { SET_PIN, LOGOUT_REQUEST } from '../../store/types';
 
 export default function usePin(compRef, initialState, pinLength, maxTries, onSuccess = () => {}, onFailure = () => {}) {
   const [state, setState] = useState({ ...initialState, previousPin: '', currentTries: 0 });
-  // const inputRef = useRef();
   const [isDisplayVisible, toggleDisplay] = useToggle(true);
   const { pin: storedPin, loading: closingSession } = useSelector(storage => storage.auth);
   const dispatch = useDispatch();
