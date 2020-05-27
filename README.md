@@ -14,7 +14,7 @@ App de prueba: https://expo.io/@isavega/Bitsplit
 
 ### Requier Cycle Warning
 
-Existe un warning debido a un requerimientos circulares. Aunque que esta bien manejado, el warning puede aparecer de todas formas.
+Existe un warning debido a un requerimientos circulares. Aunque está bien manejado, el warning puede aparecer de todas formas.
 
 >Require cycle: store/index.js -> store/sagas.js -> store/auth/saga.js -> utils/api/index.js -> utils/api/auth/index.js -> utils/api/authedAxios.js -> store/index.js
 Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
@@ -26,5 +26,4 @@ https://stackoverflow.com/questions/55391879/prevent-require-cycle-warnings-on-t
 
 * **Diego Silva** - *Developer* - [DiegoSilvaS](https://github.com/DiegoSilvaS)
 * **Isabel Vega** - *Developer* - [isavega](https://github.com/isavega)
-
 
