@@ -7,7 +7,7 @@ const initialState = {
   balance: null,
   quotation: null,
   lastPayment: null,
-  payments: []
+  payments: [],
 };
 const slice = createSlice({
   name: 'buda',
@@ -37,11 +37,13 @@ const slice = createSlice({
     setPayments(state, action) {
       state.payments = action.payload;
     },
+    addPayment(state, action) {
+      state.payments.unshift(action.payload);
+    },
     reset() {
       return initialState;
     },
   },
-
 });
 
 export default slice;

@@ -1,21 +1,45 @@
 import axios from 'axios';
 import { store } from '../../store';
 
-const authedAxios = axios.create();
-console.log('ask auth');
-if (store) {
-  const { auth: { token, user: { email } } } = store.getState();
-  console.log('authed', token, email);
-  authedAxios.interceptors.request.use(
-    config => {
-      config.headers['X-User-Token'] = token;
-      config.headers['X-User-Email'] = email;
-      config.headers['Content-Type'] = 'application/json';
+// Singleton Pattern
+const authedAxios = (() => {
+  let axiosObject;
+  function createInstance() {
+    const {
+      auth: { token, user: { email } = { email: false } },
+    } = store.getState();
+    if (token && email) {
+      axiosObject = axios.create();
+      axiosObject.interceptors.request.use(
+        config => {
+          config.headers['X-User-Token'] = token;
+          config.headers['X-User-Email'] = email;
+          config.headers['Content-Type'] = 'application/json';
 
-      return config;
-    },
-    error => Promise.reject(error),
-  );
-}
+          return config;
+        },
+        error => Promise.reject(error)
+      );
+    }
+
+    return axiosObject;
+  }
+
+  function getInstance() {
+    console.log('get instance');
+    if (!axiosObject) {
+      return createInstance();
+    }
+
+    return axiosObject;
+  }
+
+  function clear() {
+    console.log('clear');
+    axiosObject = undefined;
+  }
+
+  return { getInstance, clear };
+})();
 
 export default authedAxios;

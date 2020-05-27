@@ -3,11 +3,16 @@ import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
-  received: {
+  new: {
     color: colors.green,
   },
-  sent: {
-    color: colors.red,
+  old: {
+    color: colors.lightblue,
+  },
+  text: {
+    fontSize: 20,
+    margin: 50,
+    marginTop: 200,
   },
 });
 export default { ...styles, ...crossStyles };
