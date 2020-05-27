@@ -26,7 +26,6 @@ const authedAxios = (() => {
   }
 
   function getInstance() {
-    console.log('get instance');
     if (!axiosObject) {
       return createInstance();
     }
@@ -35,7 +34,6 @@ const authedAxios = (() => {
   }
 
   function clear() {
-    console.log('clear');
     axiosObject = undefined;
   }
 

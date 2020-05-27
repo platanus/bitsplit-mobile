@@ -13,10 +13,6 @@ import api from '../../utils/api';
 function* syncBudaRequest(action) {
   yield put(budaActions.start());
   try {
-    const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
     // eslint-disable-next-line camelcase
     const {
       data: {
@@ -24,12 +20,12 @@ function* syncBudaRequest(action) {
           attributes: { api_key },
         },
       },
-    } = yield call(api.budaSyncApi, { ...action.payload, token, email });
+    } = yield call(api.budaSyncApi, { ...action.payload });
     const {
       data: {
         data: { error, balance },
       },
-    } = yield call(api.budaBalance, { token, email });
+    } = yield call(api.budaBalance);
     if (error) {
       yield put(budaActions.syncBudaRejected(error.message));
     } else {
@@ -46,14 +42,10 @@ export function* getBudaBalance() {
   yield put(budaActions.start());
   try {
     const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
-    const {
       data: {
         data: { error, balance },
       },
-    } = yield call(api.budaBalance, { token, email });
+    } = yield call(api.budaBalance);
     if (error) {
       yield put(budaActions.setBudaKey(null));
       yield put(budaActions.syncBudaRejected(error.message));
@@ -70,16 +62,10 @@ function* getBudaQuotation(action) {
   yield put(budaActions.start());
   try {
     const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
-    const {
       data: {
         data: { quotation },
       },
     } = yield call(api.budaGetQuotationApi, {
-      token,
-      email,
       amount: action.payload,
     });
     yield put(budaActions.setQuotations(quotation));
@@ -93,14 +79,13 @@ function* postBudaPayment(action) {
   yield put(budaActions.start());
   try {
     const {
-      token,
       user: { email },
     } = yield select(state => state.auth);
     const {
       data: {
         data: { error, id, attributes },
       },
-    } = yield call(api.budaPaymentApi, { token, email, ...action.payload });
+    } = yield call(api.budaPaymentApi, { ...action.payload });
     if (attributes) {
       yield put(budaActions.setLastPayment(attributes));
       const newPayment = {
@@ -123,12 +108,11 @@ function* getBudaPaymentHistory() {
   yield put(budaActions.start());
   try {
     const {
-      token,
       user: { email },
     } = yield select(state => state.auth);
     const {
       data: { data },
-    } = yield call(api.budaPaymentHistoryApi, { token, email });
+    } = yield call(api.budaPaymentHistoryApi);
     const payments = data
       .map(({ id, attributes }) => ({
         id,
