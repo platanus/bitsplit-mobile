@@ -1,57 +1,25 @@
-import axios from 'axios';
 import env from '../../../env';
+import authedAxios from '../authedAxios';
 
-function budaBalance(payload) {
-  return axios.get(`${env.url}/api/v1/balances`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-User-Email': payload.email,
-      'X-User-Token': payload.token,
-    },
-  });
+function budaBalance() {
+  return authedAxios.getInstance().get(`${env.url}/api/v1/balances`);
 }
 
 function budaGetQuotationApi(payload) {
-  return axios.post(
-    `${env.url}/api/v1/quotations/`,
-    {
-      amount: payload.amount,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-User-Email': payload.email,
-        'X-User-Token': payload.token,
-      },
-    }
-  );
+  return authedAxios.getInstance().post(`${env.url}/api/v1/quotations/`, {
+    amount: payload.amount,
+  });
 }
 
 function budaPaymentApi(payload) {
-  return axios.post(
-    `${env.url}/api/v1/payments`,
-    {
-      payment_amount: payload.amountBtc,
-      receiver_email: payload.receptor,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-User-Email': payload.email,
-        'X-User-Token': payload.token,
-      },
-    }
-  );
+  return authedAxios.getInstance().post(`${env.url}/api/v1/payments`, {
+    payment_amount: payload.amountBtc,
+    receiver_email: payload.receptor,
+  });
 }
 
-function budaPaymentHistoryApi(payload) {
-  return axios.get(`${env.url}/api/v1/payments`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-User-Email': payload.email,
-      'X-User-Token': payload.token,
-    },
-  });
+function budaPaymentHistoryApi() {
+  return authedAxios.getInstance().get(`${env.url}/api/v1/payments`);
 }
 
 const budaApi = {

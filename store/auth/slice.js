@@ -2,11 +2,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: null,
-  user: null,
-  error: null,
+  token: undefined,
+  user: undefined,
+  error: undefined,
   loading: false,
-  pin: null,
+  pin: undefined,
 };
 
 const slice = createSlice({

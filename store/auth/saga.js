@@ -1,18 +1,15 @@
 /* eslint-disable max-statements */
 /* eslint-disable camelcase */
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
 import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
+import authedAxios from '../../utils/api/authedAxios';
 
 function* fetchUser() {
   yield put(authActions.start());
   try {
-    const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
     const {
       data: {
         data: {
@@ -20,7 +17,7 @@ function* fetchUser() {
           attributes: { api_key },
         },
       },
-    } = yield call(api.fetchUserApi, { email, token });
+    } = yield call(api.fetchUserApi);
     if (api_key) yield put(budaActions.setBudaKey(api_key));
     yield put(authActions.fetchUser(attributes));
   } catch (err) {
@@ -89,19 +86,17 @@ function* logoutRequest(action) {
   yield put(authActions.start());
   const success_status = [200, 204];
   try {
-    const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
-    const { status } = yield call(api.logoutApi, { email, token });
-
+    const { status } = yield call(api.logoutApi);
     if (success_status.includes(status)) {
       yield put(authActions.logout());
       action.callback();
       yield put(authActions.reset());
       yield put(budaActions.reset());
+      authedAxios.clear();
     }
-  } catch (err) {}
+  } catch (err) {
+    console.log(err.response);
+  }
   yield put(authActions.finish());
 }
 

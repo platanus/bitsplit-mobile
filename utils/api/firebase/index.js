@@ -1,20 +1,10 @@
-import axios from 'axios';
 import env from '../../../env';
+import authedAxios from '../authedAxios';
 
 function firebaseNotification(payload) {
-  return axios.patch(
-    `${env.url}/api/v1/firebase`,
-    {
-      notification_token: payload.notification_token,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-User-Email': payload.email,
-        'X-User-Token': payload.token,
-      },
-    }
-  );
+  return authedAxios.getInstance().patch(`${env.url}/api/v1/firebase`, {
+    notification_token: payload.notification_token,
+  });
 }
 
 const firebase = {

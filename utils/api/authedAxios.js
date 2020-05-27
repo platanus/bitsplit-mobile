@@ -1,19 +1,43 @@
 import axios from 'axios';
 import { store } from '../../store';
 
-const authedAxios = axios.create();
-if (store) {
-  const state = store;
-  authedAxios.interceptors.request.use(
-    config => {
-      config.headers['X-User-Token'] = state.auth.token;
-      config.headers['X-User-Email'] = state.auth.user.email;
-      config.headers['Content-Type'] = 'application/json';
+// Singleton Pattern
+const authedAxios = (() => {
+  let axiosObject;
+  function createInstance() {
+    const {
+      auth: { token, user: { email } = { email: false } },
+    } = store.getState();
+    if (token && email) {
+      axiosObject = axios.create();
+      axiosObject.interceptors.request.use(
+        config => {
+          config.headers['X-User-Token'] = token;
+          config.headers['X-User-Email'] = email;
+          config.headers['Content-Type'] = 'application/json';
 
-      return config;
-    },
-    error => Promise.reject(error)
-  );
-}
+          return config;
+        },
+        error => Promise.reject(error)
+      );
+    }
+
+    return axiosObject;
+  }
+
+  function getInstance() {
+    if (!axiosObject) {
+      return createInstance();
+    }
+
+    return axiosObject;
+  }
+
+  function clear() {
+    axiosObject = undefined;
+  }
+
+  return { getInstance, clear };
+})();
 
 export default authedAxios;

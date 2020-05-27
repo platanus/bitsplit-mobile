@@ -7,13 +7,7 @@ import api from '../../utils/api';
 function* patchNotifications(action) {
   yield put(firebaseActions.start());
   try {
-    const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
     const { response } = yield call(api.firebaseNotification, {
-      token,
-      email,
       notification_token: action.payload,
     });
   } catch (err) {
