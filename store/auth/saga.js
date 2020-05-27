@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 /* eslint-disable camelcase */
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
 import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
@@ -11,17 +11,13 @@ function* fetchUser() {
   yield put(authActions.start());
   try {
     const {
-      token,
-      user: { email },
-    } = yield select(state => state.auth);
-    const {
       data: {
         data: {
           attributes,
           attributes: { api_key },
         },
       },
-    } = yield call(api.fetchUserApi, { email, token });
+    } = yield call(api.fetchUserApi);
     if (api_key) yield put(budaActions.setBudaKey(api_key));
     yield put(authActions.fetchUser(attributes));
   } catch (err) {
