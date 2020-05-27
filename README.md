@@ -12,7 +12,7 @@ expo publish
 ```
 App de prueba: https://expo.io/@isavega/Bitsplit
 
-### Requier Cycle Warning
+### Require Cycle Warning
 
 Existe un warning debido a un requerimientos circulares. Aunque está bien manejado, el warning puede aparecer de todas formas.
 
@@ -26,4 +26,3 @@ https://stackoverflow.com/questions/55391879/prevent-require-cycle-warnings-on-t
 
 * **Diego Silva** - *Developer* - [DiegoSilvaS](https://github.com/DiegoSilvaS)
 * **Isabel Vega** - *Developer* - [isavega](https://github.com/isavega)
-
