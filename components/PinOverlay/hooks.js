@@ -66,7 +66,7 @@ export default function usePin(
   };
 
   const onChangePin = text => {
-    if (text && text[text.length - 1] !== '.') {
+    if (!text || text[text.length - 1] !== '.') {
       setState(prevState => ({ ...prevState, inputPin: text }));
       if (text.length === pinLength) {
         (storedPin ? checkPin : setPin)(text);
