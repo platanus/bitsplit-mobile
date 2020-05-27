@@ -17,6 +17,7 @@ function *loginRequest(action) {
       yield put(authActions.loginRejected('Usuario y contraseña no coinciden'));
     }
   } catch (err) {
+    console.log(err.response);
     if (err.response.status.toString() === '500') {
       yield put(authActions.loginRejected('Estamos experimentando problemas internos'));
     } else {

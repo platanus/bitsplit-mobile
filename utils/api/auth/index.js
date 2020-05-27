@@ -1,5 +1,6 @@
 import axios from 'axios';
 import env from '../../../env';
+import authedAxios from '../authedAxios';
 
 function loginApi(payload) {
   return axios.post(
@@ -14,7 +15,8 @@ function loginApi(payload) {
   );
 }
 
-function logoutApi({ email, token }) {
+const logoutApi = () => authedAxios.delete('/api/v1/sessions');
+function logoutApiOld({ email, token }) {
   return axios.delete(
     `${env.url}/api/v1/sessions/`,
     {

@@ -12,6 +12,11 @@ expo publish
 ```
 App de prueba: https://expo.io/@isavega/Bitsplit
 
+### Requier Cycle Warning
+
+Existe un warning debido a una pedida de requerimientos circular. Aunque que esta bien manejado, el warning puede aparecer de todas formas.
+Si desena eliminar este warning acá hay una forma de hacerlo. 
+https://stackoverflow.com/questions/55391879/prevent-require-cycle-warnings-on-terminal 
 
 ## Autores ✒️
 

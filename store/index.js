@@ -6,9 +6,8 @@ import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
-// create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
-// mount it on the Store
+
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
