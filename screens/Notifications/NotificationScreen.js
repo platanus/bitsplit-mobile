@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles';
 import { FIREBASE_NOTIFICATIONS } from '../../store/types';
 import { database } from '../../utils/firebase/database/config';
+import Header from '../../components/Header';
 
 function NotificationScreen() {
   const {
@@ -25,40 +26,35 @@ function NotificationScreen() {
   }
 
   return (
-    <ScrollView>
-      <View>
-        {!loading &&
-          notifications &&
-          notifications.map(({ seen, data, token }) => (
-            <ListItem
-              key={data.id}
-              title={
-                <Text style={seen ? styles.old : styles.new}>
-                  Haz recibido un nuevo pago de {data.amount}
-                </Text>
-              }
-              onPress={() => handleSeen(token)}
-              bottomDivider
-            />
-          ))}
+    <>
+      <Header title='Notificationes' />
+      <ScrollView>
+        <View>
+          {!loading &&
+            notifications &&
+            notifications.map(({ seen, data, token }) => (
+              <ListItem
+                key={data.id}
+                title={
+                  <Text style={seen ? styles.old : styles.new}>
+                    Haz recibido un nuevo pago de {data.amount}
+                  </Text>
+                }
+                onPress={() => handleSeen(token)}
+                bottomDivider
+              />
+            ))}
 
-        {!loading && (
-          <Text style={styles.text}> Por ahora, no tienes notificaciones</Text>
-        )}
-      </View>
-    </ScrollView>
+          {!loading && (
+            <Text style={styles.text}>
+              {' '}
+              Por ahora, no tienes notificaciones
+            </Text>
+          )}
+        </View>
+      </ScrollView>
+    </>
   );
 }
-
-NotificationScreen.navigationOptions = navData => ({
-  headerTitle: 'Notificaciones',
-  headerLeft: () => (
-    <Button
-      onPress={() => {
-        navData.navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
 
 export default NotificationScreen;
