@@ -452,6 +452,6 @@
         "args": "after-used"
       }
     ],
-    "no-use-before-define": 2
+    "no-use-before-define": 0
   }
 }
