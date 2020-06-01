@@ -8,6 +8,7 @@ import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
+import Header from '../../components/Header';
 
 const minTrxAmount = 100;
 
@@ -76,75 +77,65 @@ function PaymentScreen() {
     handleBudaPayment(state.receptor, totalBitcoins, toggleDisplay);
 
   return (
-    <ScrollView>
-      <View style={styles.screen}>
-        <Text h2>{'Transferencia'}</Text>
+    <>
+      <Header title='Transferencia' />
+      <ScrollView>
+        <View style={styles.screen}>
+          <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
+          <Input
+            {...bind('receptor')}
+            autoCapitalize='none'
+            placeholder='receptor email'
+            leftIcon={<Icon name='user' size={24} color='black' />}
+          />
+          <Input
+            {...bind('transferAmount')}
+            label='Monto a transferir'
+            autoCapitalize='none'
+            placeholder='Monto de llegada en CLP'
+            leftIcon={<Icon name='user' size={24} color='black' />}
+          />
+          <View style={styles.quotationContainer}>
+            {isValidQuotation ? (
+              <View>
+                <Text h4>Cotizacion</Text>
+                <Text>Monto total CLP: ${totalClp}</Text>
+                <Text>Monto total BTC: ${totalBitcoins}</Text>
+                <Text>Costo por servicio: ${fee}</Text>
+              </View>
+            ) : (
+              <Text h4>La transferencia minima es $100 CLP</Text>
+            )}
+          </View>
 
-        <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
-        <Input
-          {...bind('receptor')}
-          autoCapitalize='none'
-          placeholder='receptor email'
-          leftIcon={<Icon name='user' size={24} color='black' />}
-        />
-        <Input
-          {...bind('transferAmount')}
-          label='Monto a transferir'
-          autoCapitalize='none'
-          placeholder='Monto de llegada en CLP'
-          leftIcon={<Icon name='user' size={24} color='black' />}
-        />
-        <View style={styles.quotationContainer}>
-          {isValidQuotation ? (
-            <View>
-              <Text h4>Cotizacion</Text>
-              <Text>Monto total CLP: ${totalClp}</Text>
-              <Text>Monto total BTC: ${totalBitcoins}</Text>
-              <Text>Costo por servicio: ${fee}</Text>
-            </View>
-          ) : (
-            <Text h4>La transferencia minima es $100 CLP</Text>
+          <Button
+            title='Pagar'
+            type='solid'
+            onPress={onPayPress}
+            loading={loading}
+            disabled={isPayDisabled}
+          />
+          {lastPayment && (
+            <Overlay
+              isVisible={isDisplayVisible}
+              overlayStyle={styles.overlayContainer}
+              windowBackgroundColor='rgba(255, 255, 255, .5)'
+              onBackdropPress={toggleDisplay}
+            >
+              <View style={styles.screen}>
+                <Text h4>Pago Exitoso</Text>
+                <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+                <Text
+                  h5
+                >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+                <Button title='Listo' type='solid' onPress={toggleDisplay} />
+              </View>
+            </Overlay>
           )}
         </View>
-
-        <Button
-          title='Pagar'
-          type='solid'
-          onPress={onPayPress}
-          loading={loading}
-          disabled={isPayDisabled}
-        />
-        {lastPayment && (
-          <Overlay
-            isVisible={isDisplayVisible}
-            overlayStyle={styles.overlayContainer}
-            windowBackgroundColor='rgba(255, 255, 255, .5)'
-            onBackdropPress={toggleDisplay}
-          >
-            <View style={styles.screen}>
-              <Text h4>Pago Exitoso</Text>
-              <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
-              <Text
-                h5
-              >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-              <Button title='Listo' type='solid' onPress={toggleDisplay} />
-            </View>
-          </Overlay>
-        )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 }
-
-PaymentScreen.navigationOptions = navData => ({
-  headerTitle: 'Transferencia',
-  headerLeft: () => (
-    <Button
-      onPress={() => {
-        navData.navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
 
 export default PaymentScreen;
