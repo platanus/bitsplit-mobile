@@ -12,9 +12,10 @@ function budaGetQuotationApi(payload) {
 }
 
 function budaPaymentApi(payload) {
-  return authedAxios.getInstance().post(`${env.url}/api/v1/payments`, {
-    payment_amount: payload.amountBtc,
+  return authedAxios.getInstance().post(`${env.url}/api/v2/transfers`, {
+    amount: payload.amountBtc,
     receiver_email: payload.receptor,
+    wallet_origin: payload.wallet,
   });
 }
 
