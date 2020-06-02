@@ -2,11 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text } from 'react-native-elements';
+import { Input, Button, Text, ThemeProvider } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_AUTH_REQUEST } from '../../store/types';
 import style from './styles';
 import Header from '../../components/Header';
+import Theme from '../../styles/Theme';
 
 function BudaAuthScreen(props) {
   const { error, loading, balance } = useSelector(state => state.buda);
@@ -30,54 +31,56 @@ function BudaAuthScreen(props) {
   return (
     <>
       <Header title='Autentificación Buda' />
-      <View style={style.screen}>
-        <ScrollView style={{ flex: 1 }}>
-          <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
-          <Input
-            id='API_KEY'
-            label='API KEY'
-            required
-            secureTextEntry
-            autoCapitalize='none'
-            value={apiKey}
-            onChangeText={text => setApiKey(text)}
-            placeholder='buda api key'
-            leftIcon={<Icon name='key' size={24} color='black' />}
-          />
-          <Input
-            id='API_SECRET'
-            label='API SECRET'
-            required
-            secureTextEntry
-            autoCapitalize='none'
-            value={apiSecret}
-            onChangeText={text => setApiSecret(text)}
-            placeholder='buda api secret'
-            leftIcon={<Icon name='user-secret' size={24} color='black' />}
-          />
+      <ThemeProvider theme={Theme}>
+        <View style={style.screen}>
+          <ScrollView style={{ flex: 1 }}>
+            <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
+            <Input
+              id='API_KEY'
+              label='API KEY'
+              required
+              secureTextEntry
+              autoCapitalize='none'
+              value={apiKey}
+              onChangeText={text => setApiKey(text)}
+              placeholder='buda api key'
+              leftIcon={<Icon name='key' size={24} color='black' />}
+            />
+            <Input
+              id='API_SECRET'
+              label='API SECRET'
+              required
+              secureTextEntry
+              autoCapitalize='none'
+              value={apiSecret}
+              onChangeText={text => setApiSecret(text)}
+              placeholder='buda api secret'
+              leftIcon={<Icon name='user-secret' size={24} color='black' />}
+            />
 
-          <Input
-            id='password'
-            label='Bitsplit Password'
-            keyboardType='default'
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize='none'
-            errorMessage='Ingrese un contrasena valida'
-            value={password}
-            onChangeText={text => setPassword(text)}
-            placeholder='password'
-            leftIcon={<Icon name='lock' size={24} color='black' />}
-          />
-          <Button
-            title='send'
-            type='solid'
-            onPress={() => handleBudaAuth()}
-            loading={loading}
-          />
-        </ScrollView>
-      </View>
+            <Input
+              id='password'
+              label='Bitsplit Password'
+              keyboardType='default'
+              secureTextEntry
+              required
+              minLength={5}
+              autoCapitalize='none'
+              errorMessage='Ingrese un contrasena valida'
+              value={password}
+              onChangeText={text => setPassword(text)}
+              placeholder='password'
+              leftIcon={<Icon name='lock' size={24} color='black' />}
+            />
+            <Button
+              title='send'
+              type='solid'
+              onPress={() => handleBudaAuth()}
+              loading={loading}
+            />
+          </ScrollView>
+        </View>
+      </ThemeProvider>
     </>
   );
 }

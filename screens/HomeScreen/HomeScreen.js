@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Avatar, Button, Badge } from 'react-native-elements';
+import { Avatar, Button, Badge, ThemeProvider } from 'react-native-elements';
 import { BUDA_GET_BALANCE } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
+import Theme from '../../styles/Theme';
+import { useNavigation } from '@react-navigation/native';
 
 function HomeScreen(props) {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {
     auth: {
@@ -24,45 +27,48 @@ function HomeScreen(props) {
   return (
     <>
       <Header title='Inicio' />
-      <View style={styles.screen}>
-        <Avatar
-          size='large'
-          rounded
-          source={{
-            uri:
-              'https://www.nicepng.com/png/detail/804-8049853_med-boukrima-specialist-webmaster-php-e-commerce-web.png',
-          }}
-        />
-        <Badge
-          value={apiKey ? 'Sincronizado con Buda' : 'Falta Sincronizar'}
-          status={apiKey ? 'success' : 'error'}
-        />
-        <Text>{`Hola ${email}!`}</Text>
+      <ThemeProvider theme={Theme}>
+        <View style={styles.screen}>
+          <Avatar
+            size='large'
+            source={{
+              uri:
+                'https://www.nicepng.com/png/detail/804-8049853_med-boukrima-specialist-webmaster-php-e-commerce-web.png',
+            }}
+          />
+          <Badge
+            value={apiKey ? 'Sincronizado con Buda' : 'Falta Sincronizar'}
+            status={apiKey ? 'success' : 'error'}
+          />
+          <Text>{`Hola ${email}!`}</Text>
 
-        {balance ? (
-          <View>
-            <Text
-              style={styles.saldoText}
-            >{`Saldo \n${balance.BTC.amount} BTC\n${balance.CLP.amount} CLP `}</Text>
-            <Button
-              title='Generar Pago'
-              type='solid'
-              onPress={() => props.navigation.navigate({ routeName: 'Pagar' })}
-            />
-          </View>
-        ) : (
-          <View>
-            <Text style={styles.saldoText}>
-              {loading || 'Debes sincronizar con Buda'}
-            </Text>
-            <Button
-              title='Sincronizar'
-              type='solid'
-              onPress={() => props.navigation.navigate({ routeName: 'Buda' })}
-            />
-          </View>
-        )}
-      </View>
+          {balance ? (
+            <View>
+              <Text
+                style={styles.saldoText}
+              >{`Saldo \n${balance.BTC.amount} BTC\n${balance.CLP.amount} CLP `}</Text>
+              <Button
+                title='Generar Pago'
+                type='solid'
+                onPress={() =>
+                  props.navigation.navigate({ routeName: 'Pagar' })
+                }
+              />
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.saldoText}>
+                {loading || 'Debes sincronizar con Buda'}
+              </Text>
+              <Button
+                title='Sincronizar'
+                type='solid'
+                onPress={() => navigation.navigate({ routeName: 'Buda' })}
+              />
+            </View>
+          )}
+        </View>
+      </ThemeProvider>
     </>
   );
 }
