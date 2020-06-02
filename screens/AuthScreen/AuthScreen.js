@@ -36,7 +36,7 @@ function AuthScreen(props) {
   }
 
   const goHome = () => {
-    props.navigation.navigate({ routeName: 'Home' });
+    props.navigation.navigate('Home');
   };
   const togglePin = () => setShowPin(!showPin);
   useEffect(() => {
