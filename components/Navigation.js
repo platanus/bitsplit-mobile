@@ -71,8 +71,7 @@ const Logout = props => {
   const onPress = () => {
     dispatch({
       type: LOGOUT_REQUEST,
-      callback: () =>
-        props.navigation.navigate({ routeName: 'Authentication' }),
+      callback: () => props.navigation.navigate('Authentication'),
     });
   };
   const { loading, token } = useSelector(state => state.auth);
