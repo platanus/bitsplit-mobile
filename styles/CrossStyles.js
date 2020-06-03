@@ -4,9 +4,10 @@ import color from './colors';
 const crossStyles = StyleSheet.create({
   screen: {
     flex: 1,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 5,
     backgroundColor: color.lightpurple,
   },
 

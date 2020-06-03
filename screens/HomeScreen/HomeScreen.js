@@ -6,10 +6,8 @@ import { BUDA_GET_BALANCE } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
-import { useNavigation } from '@react-navigation/native';
 
 function HomeScreen(props) {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {
     auth: {

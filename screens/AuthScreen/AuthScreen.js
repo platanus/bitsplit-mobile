@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Input,
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
 import styles from './styles';
+import color from '../../styles/colors';
 import Theme from '../../styles/Theme';
 
 function AuthScreen(props) {
@@ -53,27 +54,30 @@ function AuthScreen(props) {
 
   return (
     <ThemeProvider theme={Theme}>
-      <View style={styles.inputContainer}>
+      <View style={styles.screen}>
         <ScrollView>
-          <Text h2>{isSignup ? 'Register' : 'Login'}</Text>
+          <Image
+            style={styles.image}
+            resizeMode='cover'
+            source={require('../../assets/logo.png')}
+          />
 
           <Text h4>{error}</Text>
           <Input
+            inputContainerStyle={styles.inputOff}
             id='email'
-            label='E-mail'
             keyboardType='email-address'
             required
             email
             autoCapitalize='none'
             value={email}
             onChangeText={text => setEmail(text)}
-            placeholder=' Usuario'
-            leftIcon={<Icon name='user' size={24} color='black' />}
+            placeholder='Correo'
           />
 
           <Input
+            inputContainerStyle={styles.inputOff}
             id='password'
-            label='Password'
             keyboardType='default'
             secureTextEntry
             required
@@ -81,8 +85,8 @@ function AuthScreen(props) {
             autoCapitalize='none'
             value={password}
             onChangeText={text => setPassword(text)}
-            placeholder=' password'
-            leftIcon={<Icon name='lock' size={24} color='black' />}
+            placeholder='Contraseña'
+            rightIcon={<Icon name='eye-slash' size={24} color={color.purple} />}
           />
           {isSignup && (
             <Input
@@ -100,10 +104,11 @@ function AuthScreen(props) {
             />
           )}
           <Button
-            title={isSignup ? 'Register' : 'Login'}
+            title={isSignup ? 'Register' : 'Ingresar'}
             type='solid'
             onPress={() => authHandler()}
             loading={loading}
+            buttonStyle={isSignup ? styles.register : styles.login}
           />
           <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }} />
           <Text>
