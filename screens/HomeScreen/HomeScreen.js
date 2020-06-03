@@ -38,7 +38,12 @@ function HomeScreen(props) {
           <Text style={styles.nameText}>Astronaut Monkey</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
           <Text style={styles.walletText}>Wallet BitSplit</Text>
-          <Button title='Editar' type='outline' buttonStyle={styles.button} />
+          <Button
+            title='Editar'
+            type='outline'
+            buttonStyle={styles.button}
+            titleStyle={styles.buttonText}
+          />
 
           {balance ? (
             <View style={styles.wallet}>
@@ -55,8 +60,36 @@ function HomeScreen(props) {
           )}
 
           {balance ? (
-            <View style={styles.budaWallet}>
-              <Text style={styles.saldoText}>Sync Buda</Text>
+            <View style={styles.appWallet}>
+              <Avatar
+                containerStyle={styles.walletAvatar}
+                source={require('../../assets/Images/buda.png')}
+              />
+              <Text style={styles.titleText}>Balance</Text>
+              <Text style={styles.coinText}>BTC</Text>
+              <Text style={styles.moneyText}>${balance.BTC.amount}</Text>
+              <Text style={styles.coinText}>CLP</Text>
+              <Text style={styles.moneyText}>${balance.CLP.amount}</Text>
+            </View>
+          ) : (
+            <View style={styles.syncBuda}>
+              <Text style={styles.saldoText}>
+                {loading || 'Debes sincronizar con Buda'}
+              </Text>
+            </View>
+          )}
+
+          {balance ? (
+            <View style={styles.appWallet}>
+              <Avatar
+                containerStyle={styles.walletAvatar}
+                source={require('../../assets/Images/split.jpg')}
+              />
+              <Text style={styles.titleText}>Balance</Text>
+              <Text style={styles.coinText}>BTC</Text>
+              <Text style={styles.moneyText}>${balance.BTC.amount}</Text>
+              <Text style={styles.coinText}>CLP</Text>
+              <Text style={styles.moneyText}>${balance.CLP.amount}</Text>
             </View>
           ) : (
             <View style={styles.syncBuda}>

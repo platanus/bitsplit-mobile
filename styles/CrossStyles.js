@@ -11,9 +11,15 @@ const crossStyles = StyleSheet.create({
     backgroundColor: color.lightpurple,
   },
 
-  header: {
+  androidHeader: {
     backgroundColor: color.purple,
-    height: 60,
+    height: 60, // 100 para iphone
+    padding: 10,
+  },
+
+  iosHeader: {
+    backgroundColor: color.purple,
+    height: 100,
     padding: 10,
   },
 
