@@ -79,61 +79,72 @@ function PaymentScreen() {
   return (
     <>
       <Header title='Transferencia' />
-      <ScrollView>
-        <View style={styles.screen}>
-          <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
-          <Input
-            {...bind('receptor')}
-            autoCapitalize='none'
-            placeholder='receptor email'
-            leftIcon={<Icon name='user' size={24} color='black' />}
-          />
-          <Input
-            {...bind('transferAmount')}
-            label='Monto a transferir'
-            autoCapitalize='none'
-            placeholder='Monto de llegada en CLP'
-            leftIcon={<Icon name='user' size={24} color='black' />}
-          />
-          <View style={styles.quotationContainer}>
-            {isValidQuotation ? (
-              <View>
-                <Text h4>Cotizacion</Text>
-                <Text>Monto total CLP: ${totalClp}</Text>
-                <Text>Monto total BTC: ${totalBitcoins}</Text>
-                <Text>Costo por servicio: ${fee}</Text>
-              </View>
-            ) : (
-              <Text h4>La transferencia minima es $100 CLP</Text>
-            )}
-          </View>
 
-          <Button
-            title='Pagar'
-            type='solid'
-            onPress={onPayPress}
-            loading={loading}
-            disabled={isPayDisabled}
-          />
-          {lastPayment && (
-            <Overlay
-              isVisible={isDisplayVisible}
-              overlayStyle={styles.overlayContainer}
-              windowBackgroundColor='rgba(255, 255, 255, .5)'
-              onBackdropPress={toggleDisplay}
-            >
-              <View style={styles.screen}>
-                <Text h4>Pago Exitoso</Text>
-                <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
-                <Text
-                  h5
-                >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-                <Button title='Listo' type='solid' onPress={toggleDisplay} />
-              </View>
-            </Overlay>
+      <View style={styles.screen}>
+        <View style={styles.wallet}>
+          <Text style={styles.saldoText}>Saldo: 0.000115065 BTC</Text>
+        </View>
+        <Input
+          {...bind('receptor')}
+          inputContainerStyle={styles.inputOff}
+          autoCapitalize='none'
+          placeholder='Receptor email'
+        />
+        <Input
+          {...bind('transferAmount')}
+          keyboardType='numeric'
+          inputContainerStyle={styles.inputOff}
+          autoCapitalize='none'
+          placeholder='Monto de llegada en CLP'
+        />
+        <Text style={styles.errorText}>
+          Ha ocurrido un error!{' '}
+          {(error && error.message) || JSON.stringify(error)}
+        </Text>
+        <View style={styles.quotationContainer}>
+          {isValidQuotation ? (
+            <View>
+              <Text style={styles.titleText}>Cotizacion</Text>
+              <Text style={styles.moneyText}>Monto total CLP: ${totalClp}</Text>
+              <Text style={styles.moneyText}>
+                Monto total BTC: ${totalBitcoins}
+              </Text>
+              <Text style={styles.moneyText}>Costo por servicio: ${fee}</Text>
+            </View>
+          ) : (
+            <Text style={styles.titleText}>
+              La transferencia minima es $100 CLP
+            </Text>
           )}
         </View>
-      </ScrollView>
+
+        <Button
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
+          title='Pagar'
+          type='solid'
+          onPress={onPayPress}
+          loading={loading}
+          disabled={isPayDisabled}
+        />
+        {lastPayment && (
+          <Overlay
+            isVisible={isDisplayVisible}
+            overlayStyle={styles.overlayContainer}
+            windowBackgroundColor='rgba(255, 255, 255, .5)'
+            onBackdropPress={toggleDisplay}
+          >
+            <View style={styles.screen}>
+              <Text h4>Pago Exitoso</Text>
+              <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+              <Text
+                h5
+              >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+              <Button title='Listo' type='solid' onPress={toggleDisplay} />
+            </View>
+          </Overlay>
+        )}
+      </View>
     </>
   );
 }
