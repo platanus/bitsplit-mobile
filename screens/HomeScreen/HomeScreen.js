@@ -28,39 +28,41 @@ function HomeScreen(props) {
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           <Avatar
-            size='large'
-            source={{
-              uri:
-                'https://www.nicepng.com/png/detail/804-8049853_med-boukrima-specialist-webmaster-php-e-commerce-web.png',
-            }}
+            containerStyle={styles.avatar}
+            source={require('../../assets/Images/spacemonkey.png')}
           />
-          <Badge
+          {/* <Badge
             value={apiKey ? 'Sincronizado con Buda' : 'Falta Sincronizar'}
             status={apiKey ? 'success' : 'error'}
-          />
-          <Text>{`Hola ${email}!`}</Text>
+          /> */}
+          <Text style={styles.nameText}>Astronaut Monkey</Text>
+          <Text style={styles.emailText}>{`${email}`}</Text>
+          <Text style={styles.walletText}>Wallet BitSplit</Text>
+          <Button title='Editar' type='outline' buttonStyle={styles.button} />
 
           {balance ? (
-            <View>
-              <Text
-                style={styles.saldoText}
-              >{`Saldo \n${balance.BTC.amount} BTC\n${balance.CLP.amount} CLP `}</Text>
-              <Button
-                title='Generar Pago'
-                type='solid'
-                onPress={() => props.navigation.navigate('Pagar')}
-              />
+            <View style={styles.wallet}>
+              <Text style={styles.saldoText}>
+                Saldo: ${balance.BTC.amount} BTC
+              </Text>
             </View>
           ) : (
-            <View>
+            <View style={styles.wallet}>
               <Text style={styles.saldoText}>
                 {loading || 'Debes sincronizar con Buda'}
               </Text>
-              <Button
-                title='Sincronizar'
-                type='solid'
-                onPress={() => props.navigation.navigate('Buda')}
-              />
+            </View>
+          )}
+
+          {balance ? (
+            <View style={styles.budaWallet}>
+              <Text style={styles.saldoText}>Sync Buda</Text>
+            </View>
+          ) : (
+            <View style={styles.syncBuda}>
+              <Text style={styles.saldoText}>
+                {loading || 'Debes sincronizar con Buda'}
+              </Text>
             </View>
           )}
         </View>

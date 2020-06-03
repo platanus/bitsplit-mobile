@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   inputOff: {
     backgroundColor: color.middlepurple,
     padding: 10,
+    paddingLeft: 15,
     marginBottom: 30,
     borderStyle: 'solid',
     borderRadius: 15,

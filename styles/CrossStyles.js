@@ -11,17 +11,23 @@ const crossStyles = StyleSheet.create({
     backgroundColor: color.lightpurple,
   },
 
-  primaryButton: {
-    padding: 10,
-    marginLeft: 50,
-    marginRight: 50,
-    borderRadius: 15,
+  header: {
     backgroundColor: color.purple,
+    height: 60,
+    padding: 10,
   },
 
-  menuButtonButton: {
-    backgroundColor: color.red,
-  },
+  // primaryButton: {
+  //   padding: 10,
+  //   marginLeft: 50,
+  //   marginRight: 50,
+  //   borderRadius: 15,
+  //   backgroundColor: color.purple,
+  // },
+
+  // menuButtonButton: {
+  //   backgroundColor: color.red,
+  // },
 });
 
 export default crossStyles;
