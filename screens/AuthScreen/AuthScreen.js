@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Input,
   Button,
-  Divider,
   Text,
   ThemeProvider,
+  CheckBox,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
@@ -22,6 +22,13 @@ function AuthScreen(props) {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+
+  // const [setColor] = useState(styles.inputOn);
+
+  // const handleColor = e => {
+  //   setColor(e.target.inputContainerStyle);
+  // };
+
   const dispatch = useDispatch();
   const {
     auth: { token, error, loading },
@@ -55,14 +62,14 @@ function AuthScreen(props) {
   return (
     <ThemeProvider theme={Theme}>
       <View style={styles.screen}>
+        <Image
+          style={styles.image}
+          resizeMode='cover'
+          source={require('../../assets/logo.png')}
+        />
         <ScrollView>
-          <Image
-            style={styles.image}
-            resizeMode='cover'
-            source={require('../../assets/logo.png')}
-          />
-
-          <Text h4>{error}</Text>
+          <Text h2>{isSignup ? 'Crea tu cuenta' : ''}</Text>
+          <Text h4>{isSignup ? 'Es gratis y rápido' : ''}</Text>
           <Input
             inputContainerStyle={styles.inputOff}
             id='email'
@@ -72,6 +79,10 @@ function AuthScreen(props) {
             autoCapitalize='none'
             value={email}
             onChangeText={text => setEmail(text)}
+            // onChange={handleColor}
+            // onClick={() => { setColor(styles.inputOn); } }
+            // onPress={() => { setColor(styles.inputOn); } }
+            // onSelectionChange={() => { setColor(styles.inputOn); } }
             placeholder='Correo'
           />
 
@@ -90,8 +101,8 @@ function AuthScreen(props) {
           />
           {isSignup && (
             <Input
+              inputContainerStyle={styles.inputOff}
               id='passwordConfirmation'
-              label='Confirm Password'
               keyboardType='default'
               secureTextEntry
               required
@@ -99,27 +110,36 @@ function AuthScreen(props) {
               autoCapitalize='none'
               value={passwordConfirmation}
               onChangeText={text => setPasswordConfirmation(text)}
-              placeholder=' password'
-              leftIcon={<Icon name='lock' size={24} color='black' />}
+              placeholder='Confirmar Contraseña'
+              rightIcon={
+                <Icon name='eye-slash' size={24} color={color.purple} />
+              }
             />
           )}
+
+          {isSignup && (
+            <CheckBox
+              center
+              title='Acepto los términos de privacidad'
+              containerStyle={styles.checkBox}
+            />
+          )}
+
           <Button
-            title={isSignup ? 'Register' : 'Ingresar'}
-            type='solid'
+            title={isSignup ? 'Crear cuenta' : 'Ingresar'}
+            type='outline'
             onPress={() => authHandler()}
             loading={loading}
-            buttonStyle={isSignup ? styles.register : styles.login}
+            // buttonStyle={isSignup ? styles.register : styles.login}
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
           />
-          <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }} />
-          <Text>
-            {isSignup
-              ? 'New to Bitsplit?\nGo ahead and register!'
-              : 'Already have an account?'}
-          </Text>
+
           <Button
-            title={isSignup ? 'Login' : 'Register'}
-            type='outline'
+            title={isSignup ? 'Login' : 'Crear cuenta'}
+            type='clear'
             onPress={() => setIsSignup(!isSignup)}
+            titleStyle={styles.linkText}
           />
         </ScrollView>
         {showPin && (

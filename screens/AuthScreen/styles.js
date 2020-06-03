@@ -4,7 +4,7 @@ import color from '../../styles/colors';
 
 const styles = StyleSheet.create({
   screen: {
-    marginTop: 100,
+    marginTop: 90,
     margin: 30,
   },
 
@@ -12,28 +12,46 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 
-  inputContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // padding: 50,
-    marginVertical: 100,
-  },
   inputOff: {
-    backgroundColor: '#EEEDFB',
+    backgroundColor: color.middlepurple,
     padding: 10,
     marginBottom: 30,
     borderStyle: 'solid',
     borderRadius: 15,
     borderBottomWidth: 0,
   },
-  register: {
-    backgroundColor: '#EEEDFB',
+  inputOn: {
+    backgroundColor: color.red,
     padding: 10,
     marginBottom: 30,
+    borderStyle: 'solid',
+    borderRadius: 15,
+    borderBottomWidth: 0,
   },
-  login: {
-    backgroundColor: color.purple,
+  button: {
+    backgroundColor: color.white,
+    padding: 10,
+    marginBottom: 30,
+    borderColor: color.black,
+    borderRadius: 10,
+    borderWidth: 1.5,
+  },
+
+  linkText: {
+    padding: 10,
+    marginBottom: 30,
+    textDecorationLine: 'underline',
+    color: color.black,
+  },
+
+  textButton: {
+    padding: 10,
+    color: color.black,
+  },
+
+  checkBox: {
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
   },
 });
 
