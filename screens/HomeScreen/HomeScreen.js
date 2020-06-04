@@ -47,7 +47,7 @@ function HomeScreen(props) {
             <Button
               title='Generar Pago'
               type='solid'
-              onPress={() => props.navigation.navigate({ routeName: 'Pagar' })}
+              onPress={() => props.navigation.navigate('Pagar')}
             />
           </View>
         ) : (
@@ -58,7 +58,7 @@ function HomeScreen(props) {
             <Button
               title='Sincronizar'
               type='solid'
-              onPress={() => props.navigation.navigate({ routeName: 'Buda' })}
+              onPress={() => props.navigation.navigate('Buda')}
             />
           </View>
         )}
