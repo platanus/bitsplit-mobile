@@ -1,13 +1,6 @@
 import { StyleSheet } from 'react-native';
 import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
-// import * as Font from 'expo-font';
-
-// const getFonts = () => {
-//   Font.loadAsync({
-//     'space-mono': require('../../assets/font/SpaceMono-Regular.ttf'),
-//   });
-// };
 
 const styles = StyleSheet.create({
   screen: {
@@ -68,7 +61,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     fontSize: 20,
-    // fontFamily: 'space-mono',
   },
 
   appWallet: {
@@ -99,7 +91,6 @@ const styles = StyleSheet.create({
     marginLeft: 150,
     marginTop: -120,
     marginBottom: 2,
-    // fontFamily: 'space-mono',
   },
 
   coinText: {
@@ -107,7 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 150,
     marginBottom: 2,
-    // fontFamily: 'space-mono',
   },
 
   moneyText: {
@@ -115,7 +105,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 150,
     marginBottom: 2,
-    // fontFamily: 'space-mono',
   },
 
   syncBuda: {
@@ -147,7 +136,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 120,
     marginLeft: 10,
-    // fontFamily: 'space-mono',
   },
 
   syncTextBody: {
@@ -158,7 +146,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 120,
     marginLeft: 10,
-    // fontFamily: 'space-mono',
   },
 });
 

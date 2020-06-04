@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     fontSize: 20,
-    // fontFamily: 'space-mono',
   },
 
   inputOff: {
@@ -49,14 +48,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
     textAlign: 'center',
-    // fontFamily: 'space-mono',
   },
 
   moneyText: {
     color: colors.purple,
     fontSize: 15,
     marginBottom: 2,
-    // fontFamily: 'space-mono',
   },
 
   errorText: {
@@ -64,7 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     margin: 3,
-    // fontFamily: 'space-mono',
   },
 
   quotationContainer: {

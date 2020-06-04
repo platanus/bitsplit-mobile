@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Input,
@@ -22,16 +22,9 @@ function AuthScreen(props) {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
-
-  // const [setColor] = useState(styles.inputOn);
-
-  // const handleColor = e => {
-  //   setColor(e.target.inputContainerStyle);
-  // };
-
   const dispatch = useDispatch();
   const {
-    auth: { token, error, loading },
+    auth: { token, loading },
   } = useSelector(state => state);
 
   function authHandler() {
@@ -67,81 +60,72 @@ function AuthScreen(props) {
           resizeMode='cover'
           source={require('../../assets/logo.png')}
         />
-        <ScrollView>
-          <Text h2>{isSignup ? 'Crea tu cuenta' : ''}</Text>
-          <Text h4>{isSignup ? 'Es gratis y rápido' : ''}</Text>
-          <Input
-            inputContainerStyle={styles.inputOff}
-            id='email'
-            keyboardType='email-address'
-            required
-            email
-            autoCapitalize='none'
-            value={email}
-            onChangeText={text => setEmail(text)}
-            // onChange={handleColor}
-            // onClick={() => { setColor(styles.inputOn); } }
-            // onPress={() => { setColor(styles.inputOn); } }
-            // onSelectionChange={() => { setColor(styles.inputOn); } }
-            placeholder='Correo'
-          />
+        <Text h2>{isSignup ? 'Crea tu cuenta' : ''}</Text>
+        <Text h4>{isSignup ? 'Es gratis y rápido' : ''}</Text>
+        <Input
+          inputContainerStyle={styles.inputOff}
+          id='email'
+          keyboardType='email-address'
+          required
+          email
+          autoCapitalize='none'
+          value={email}
+          onChangeText={text => setEmail(text)}
+          placeholder='Correo'
+        />
 
+        <Input
+          inputContainerStyle={styles.inputOff}
+          id='password'
+          keyboardType='default'
+          secureTextEntry
+          required
+          minLength={5}
+          autoCapitalize='none'
+          value={password}
+          onChangeText={text => setPassword(text)}
+          placeholder='Contraseña'
+          rightIcon={<Icon name='eye-slash' size={24} color={color.purple} />}
+        />
+        {isSignup && (
           <Input
             inputContainerStyle={styles.inputOff}
-            id='password'
+            id='passwordConfirmation'
             keyboardType='default'
             secureTextEntry
             required
             minLength={5}
             autoCapitalize='none'
-            value={password}
-            onChangeText={text => setPassword(text)}
-            placeholder='Contraseña'
+            value={passwordConfirmation}
+            onChangeText={text => setPasswordConfirmation(text)}
+            placeholder='Confirmar Contraseña'
             rightIcon={<Icon name='eye-slash' size={24} color={color.purple} />}
           />
-          {isSignup && (
-            <Input
-              inputContainerStyle={styles.inputOff}
-              id='passwordConfirmation'
-              keyboardType='default'
-              secureTextEntry
-              required
-              minLength={5}
-              autoCapitalize='none'
-              value={passwordConfirmation}
-              onChangeText={text => setPasswordConfirmation(text)}
-              placeholder='Confirmar Contraseña'
-              rightIcon={
-                <Icon name='eye-slash' size={24} color={color.purple} />
-              }
-            />
-          )}
+        )}
 
-          {isSignup && (
-            <CheckBox
-              center
-              title='Acepto los términos de privacidad'
-              containerStyle={styles.checkBox}
-            />
-          )}
-
-          <Button
-            title={isSignup ? 'Crear cuenta' : 'Ingresar'}
-            type='outline'
-            onPress={() => authHandler()}
-            loading={loading}
-            // buttonStyle={isSignup ? styles.register : styles.login}
-            buttonStyle={styles.button}
-            titleStyle={styles.textButton}
+        {isSignup && (
+          <CheckBox
+            center
+            title='Acepto los términos de privacidad'
+            containerStyle={styles.checkBox}
           />
+        )}
 
-          <Button
-            title={isSignup ? 'Login' : 'Crear cuenta'}
-            type='clear'
-            onPress={() => setIsSignup(!isSignup)}
-            titleStyle={styles.linkText}
-          />
-        </ScrollView>
+        <Button
+          title={isSignup ? 'Crear cuenta' : 'Ingresar'}
+          type='outline'
+          onPress={() => authHandler()}
+          loading={loading}
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
+        />
+
+        <Button
+          title={isSignup ? 'Login' : 'Crear cuenta'}
+          type='clear'
+          onPress={() => setIsSignup(!isSignup)}
+          titleStyle={styles.linkText}
+        />
         {showPin && (
           <PinOverlay
             onSuccess={goHome}

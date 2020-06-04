@@ -38,12 +38,6 @@ function BudaAuthScreen(props) {
     }
   }, [balance, props]);
 
-  const [errorVisible, setErrorVisible] = useState(false);
-
-  const overlayError = () => {
-    setErrorVisible(!errorVisible);
-  };
-
   return (
     <>
       <Header title='Autentificación Buda' />

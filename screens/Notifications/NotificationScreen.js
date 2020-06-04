@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, Text, ListItem, ThemeProvider } from 'react-native-elements';
+import { Text, ListItem, ThemeProvider } from 'react-native-elements';
 import { useListVals } from 'react-firebase-hooks/database';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles';

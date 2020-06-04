@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     margin: 3,
-    // fontFamily: 'space-mono',
   },
 
   overlayError: {
