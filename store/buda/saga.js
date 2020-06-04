@@ -99,7 +99,7 @@ function* postBudaPayment(action) {
       yield put(budaActions.syncBudaRejected(error));
     }
   } catch (err) {
-    yield put(budaActions.syncBudaRejected('payment invalido'));
+    yield put(budaActions.syncBudaRejected('Hubo un error en el pago'));
   }
   yield put(budaActions.finish());
 }
