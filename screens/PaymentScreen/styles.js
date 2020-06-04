@@ -109,5 +109,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginVertical: 30,
   },
+
+  groupButtonContainer: {
+    backgroundColor: colors.middlepurple,
+    borderRadius: 5,
+    maxWidth: 300,
+  },
+
+  groupButton: {
+    backgroundColor: colors.purple,
+  },
 });
 export default { ...crossStyles, ...styles };

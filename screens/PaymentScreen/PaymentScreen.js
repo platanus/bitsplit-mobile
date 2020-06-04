@@ -121,6 +121,8 @@ function PaymentScreen() {
           onPress={e => setSelectedIndex({ selectedIndex: e })}
           selectedIndex={buttonState.selectedIndex}
           buttons={buttons}
+          containerStyle={styles.groupButtonContainer}
+          selectedButtonStyle={styles.groupButton}
         />
 
         <View style={styles.quotationContainer}>
