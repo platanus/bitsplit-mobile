@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
+import {
+  BUDA_QUOTATION,
+  BUDA_PAYMENT,
+  BUDA_GET_BALANCE,
+} from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
@@ -79,6 +83,20 @@ function PaymentScreen() {
 
   const onPayPress = () =>
     handleBudaPayment(state.receptor, totalBitcoins, toggleDisplay);
+
+  // const dispatch = useDispatch();
+  // const {
+  //   auth: {
+  //     user: { email },
+  //   },
+  //   buda: { apiKey, balance },
+  // } = useSelector(state => state);
+
+  // useEffectBalance(() => {
+  //   if (apiKey) {
+  //     dispatch({ type: BUDA_GET_BALANCE });
+  //   }
+  // }, [apiKey, dispatch]);
 
   return (
     <>

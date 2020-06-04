@@ -119,21 +119,46 @@ const styles = StyleSheet.create({
   },
 
   syncBuda: {
+    width: 110,
+    height: 110,
     backgroundColor: colors.purple,
-    width: 300,
-    height: 50,
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 50,
+    borderRadius: 20,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    marginLeft: 180,
+    marginTop: -100,
+    marginBottom: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  syncSplitwise: {
-    backgroundColor: colors.purple,
-    width: 300,
-    height: 50,
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 50,
+  syncAvatar: {
+    width: 90,
+    height: 90,
+  },
+
+  syncText: {
+    color: colors.gray,
+    fontSize: 18,
+    marginTop: 10,
+    textAlign: 'center',
+    width: 120,
+    marginLeft: 10,
+    // fontFamily: 'space-mono',
+  },
+
+  syncTextBody: {
+    color: colors.purple,
+    fontSize: 15,
+    marginTop: 10,
+    marginBottom: 2,
+    textAlign: 'center',
+    width: 120,
+    marginLeft: 10,
+    // fontFamily: 'space-mono',
   },
 });
 

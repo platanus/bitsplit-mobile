@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Avatar, Button, Badge, ThemeProvider } from 'react-native-elements';
+import { Avatar, Button, ThemeProvider } from 'react-native-elements';
 import { BUDA_GET_BALANCE } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
@@ -31,10 +31,6 @@ function HomeScreen(props) {
             containerStyle={styles.avatar}
             source={require('../../assets/Images/spacemonkey.png')}
           />
-          {/* <Badge
-            value={apiKey ? 'Sincronizado con Buda' : 'Falta Sincronizar'}
-            status={apiKey ? 'success' : 'error'}
-          /> */}
           <Text style={styles.nameText}>Astronaut Monkey</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
           <Text style={styles.walletText}>Wallet BitSplit</Text>
@@ -45,7 +41,7 @@ function HomeScreen(props) {
             titleStyle={styles.buttonText}
           />
 
-          {balance ? (
+          {apiKey ? (
             <View style={styles.wallet}>
               <Text style={styles.saldoText}>
                 Saldo: ${balance.BTC.amount} BTC
@@ -59,7 +55,7 @@ function HomeScreen(props) {
             </View>
           )}
 
-          {balance ? (
+          {apiKey ? (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}
@@ -72,14 +68,26 @@ function HomeScreen(props) {
               <Text style={styles.moneyText}>${balance.CLP.amount}</Text>
             </View>
           ) : (
-            <View style={styles.syncBuda}>
-              <Text style={styles.saldoText}>
-                {loading || 'Debes sincronizar con Buda'}
-              </Text>
+            <View>
+              <View style={styles.syncBudaLeft}>
+                <Text style={styles.syncText}>{loading || 'Sync Buda'}</Text>
+                <Text style={styles.syncTextBody}>
+                  Enviar y recibe Bitcoins!
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.syncBuda}
+                onPress={() => props.navigation.navigate('Buda')}
+              >
+                <Avatar
+                  containerStyle={styles.syncAvatar}
+                  source={require('../../assets/Images/buda.png')}
+                />
+              </TouchableOpacity>
             </View>
           )}
 
-          {balance ? (
+          {apiKey ? (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}
@@ -92,10 +100,18 @@ function HomeScreen(props) {
               <Text style={styles.moneyText}>${balance.CLP.amount}</Text>
             </View>
           ) : (
-            <View style={styles.syncBuda}>
-              <Text style={styles.saldoText}>
-                {loading || 'Debes sincronizar con Buda'}
+            <View>
+              <Text style={styles.syncText}>{loading || 'Sync SplitWise'}</Text>
+              <Text style={styles.syncTextBody}>
+                Paga tus deudas de forma fácil y rápida!
               </Text>
+
+              <TouchableOpacity style={styles.syncBuda}>
+                <Avatar
+                  containerStyle={styles.syncAvatar}
+                  source={require('../../assets/Images/split.jpg')}
+                />
+              </TouchableOpacity>
             </View>
           )}
         </View>
