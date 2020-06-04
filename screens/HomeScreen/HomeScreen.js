@@ -72,7 +72,7 @@ function HomeScreen(props) {
               <View style={styles.syncBudaLeft}>
                 <Text style={styles.syncText}>{loading || 'Sync Buda'}</Text>
                 <Text style={styles.syncTextBody}>
-                  Enviar y recibe Bitcoins!
+                  Envia y recibe Bitcoins!
                 </Text>
               </View>
               <TouchableOpacity
