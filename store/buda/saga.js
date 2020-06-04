@@ -79,21 +79,15 @@ function* postBudaPayment(action) {
   yield put(budaActions.start());
   try {
     const {
-      user: { email },
-    } = yield select(state => state.auth);
-    const {
-      data: {
-        data: { error, id, attributes },
-      },
+      data: { error, payment },
     } = yield call(api.budaPaymentApi, { ...action.payload });
-    if (attributes) {
-      yield put(budaActions.setLastPayment(attributes));
-      const newPayment = {
-        id,
-        ...attributes,
-        received: attributes.receiver_email === email,
-      };
-      yield put(budaActions.addPayment(newPayment));
+    if (payment) {
+      yield put(
+        budaActions.setLastPayment({
+          receiver_email: action.payload.receptor,
+          amount: action.payload.amountBtc,
+        })
+      );
       action.callback();
     } else if (error) {
       yield put(budaActions.syncBudaRejected(error));
