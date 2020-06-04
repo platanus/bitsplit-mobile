@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
-import React from 'react';
-import { View, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
@@ -66,6 +65,11 @@ function PaymentScreen() {
   );
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
+  const [errorVisible, setErrorVisible] = useState(false);
+
+  const overlayError = () => {
+    setErrorVisible(!errorVisible);
+  };
 
   const transferAmount = parseInt(state.transferAmount);
   const evalFee = totalClp - transferAmount;
@@ -97,10 +101,7 @@ function PaymentScreen() {
           autoCapitalize='none'
           placeholder='Monto de llegada en CLP'
         />
-        <Text style={styles.errorText}>
-          Ha ocurrido un error!{' '}
-          {(error && error.message) || JSON.stringify(error)}
-        </Text>
+
         <View style={styles.quotationContainer}>
           {isValidQuotation ? (
             <View>
@@ -131,7 +132,6 @@ function PaymentScreen() {
           <Overlay
             isVisible={isDisplayVisible}
             overlayStyle={styles.overlayContainer}
-            windowBackgroundColor='rgba(255, 255, 255, .5)'
             onBackdropPress={toggleDisplay}
           >
             <View style={styles.screen}>
@@ -141,6 +141,21 @@ function PaymentScreen() {
                 h5
               >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
               <Button title='Listo' type='solid' onPress={toggleDisplay} />
+            </View>
+          </Overlay>
+        )}
+
+        {error && error.message && (
+          <Overlay
+            isVisible={errorVisible}
+            overlayStyle={styles.overlayError}
+            onBackdropPress={overlayError}
+          >
+            <View style={styles.screen}>
+              <Text style={styles.errorText}>
+                Houston tenemos un problema, mensaje de error:{' '}
+                {(error && error.message) || JSON.stringify(error)}
+              </Text>
             </View>
           </Overlay>
         )}

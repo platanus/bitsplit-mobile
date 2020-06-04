@@ -1,13 +1,21 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text, ThemeProvider } from 'react-native-elements';
+import {
+  Input,
+  Button,
+  Text,
+  ThemeProvider,
+  Overlay,
+  Avatar,
+} from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_AUTH_REQUEST } from '../../store/types';
-import style from './styles';
+import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
+import colors from '../../styles/colors';
 
 function BudaAuthScreen(props) {
   const { error, loading, balance } = useSelector(state => state.buda);
@@ -28,57 +36,84 @@ function BudaAuthScreen(props) {
     }
   }, [balance, props]);
 
+  const [errorVisible, setErrorVisible] = useState(false);
+
+  const overlayError = () => {
+    setErrorVisible(!errorVisible);
+  };
+
   return (
     <>
       <Header title='Autentificación Buda' />
       <ThemeProvider theme={Theme}>
-        <View style={style.screen}>
-          <ScrollView style={{ flex: 1 }}>
-            <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
-            <Input
-              id='API_KEY'
-              label='API KEY'
-              required
-              secureTextEntry
-              autoCapitalize='none'
-              value={apiKey}
-              onChangeText={text => setApiKey(text)}
-              placeholder='buda api key'
-              leftIcon={<Icon name='key' size={24} color='black' />}
-            />
-            <Input
-              id='API_SECRET'
-              label='API SECRET'
-              required
-              secureTextEntry
-              autoCapitalize='none'
-              value={apiSecret}
-              onChangeText={text => setApiSecret(text)}
-              placeholder='buda api secret'
-              leftIcon={<Icon name='user-secret' size={24} color='black' />}
-            />
+        <View style={styles.screen}>
+          <Avatar
+            rounded
+            size='large'
+            containerStyle={styles.avatar}
+            source={require('../../assets/Images/buda.png')}
+          />
+          <Input
+            inputContainerStyle={styles.inputOff}
+            id='API_KEY'
+            required
+            secureTextEntry
+            autoCapitalize='none'
+            value={apiKey}
+            onChangeText={text => setApiKey(text)}
+            placeholder='Buda API Key'
+          />
+          <Input
+            inputContainerStyle={styles.inputOff}
+            id='API_SECRET'
+            required
+            secureTextEntry
+            autoCapitalize='none'
+            value={apiSecret}
+            onChangeText={text => setApiSecret(text)}
+            placeholder='Buda API Secret'
+            rightIcon={
+              <Icon name='user-secret' size={24} color={colors.purple} />
+            }
+          />
 
-            <Input
-              id='password'
-              label='Bitsplit Password'
-              keyboardType='default'
-              secureTextEntry
-              required
-              minLength={5}
-              autoCapitalize='none'
-              errorMessage='Ingrese un contrasena valida'
-              value={password}
-              onChangeText={text => setPassword(text)}
-              placeholder='password'
-              leftIcon={<Icon name='lock' size={24} color='black' />}
-            />
-            <Button
-              title='send'
-              type='solid'
-              onPress={() => handleBudaAuth()}
-              loading={loading}
-            />
-          </ScrollView>
+          <Input
+            inputContainerStyle={styles.inputOff}
+            id='password'
+            keyboardType='default'
+            secureTextEntry
+            required
+            minLength={5}
+            autoCapitalize='none'
+            value={password}
+            onChangeText={text => setPassword(text)}
+            placeholder='Contraseña de BitSplit'
+            rightIcon={
+              <Icon name='eye-slash' size={24} color={colors.purple} />
+            }
+          />
+          <Button
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
+            title='send'
+            type='solid'
+            onPress={() => handleBudaAuth()}
+            loading={loading}
+          />
+          {error && error.message && (
+            <Overlay
+              isVisible={errorVisible}
+              overlayStyle={styles.overlayError}
+              onBackdropPress={overlayError}
+            >
+              <View style={styles.screen}>
+                <Text style={styles.errorText}>
+                  Houston tenemos un problema, mensaje de error:{' '}
+                  {(error && error.message) || JSON.stringify(error)}
+                </Text>
+              </View>
+            </Overlay>
+          )}
         </View>
       </ThemeProvider>
     </>
