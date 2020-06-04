@@ -95,7 +95,7 @@ function PaymentScreen() {
       <Header title='Transferencia' />
       <ScrollView>
         <View style={styles.screen}>
-          <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
+          <Text h4>{(error && error.message) || error}</Text>
           <Input
             {...bind('receptor')}
             autoCapitalize='none'
