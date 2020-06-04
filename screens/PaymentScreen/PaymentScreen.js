@@ -7,6 +7,7 @@ import {
   BUDA_QUOTATION,
   BUDA_PAYMENT,
   BUDA_GET_BALANCE,
+  BUDA_CLEAN_ERROR,
 } from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
@@ -27,8 +28,9 @@ function useBudaPayments() {
       callback,
     });
   }
+  const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
 
-  const { error, quotation, lastPayment, loading } = useSelector(
+  const { error, quotation, lastPayment, balance, loading } = useSelector(
     state => state.buda
   );
 
@@ -36,6 +38,8 @@ function useBudaPayments() {
   const totalBitcoins = parseFloat(quotation ? quotation.amount_btc[0] : '0');
 
   return {
+    balance,
+    cleanError,
     error,
     totalClp,
     totalBitcoins,
@@ -48,6 +52,8 @@ function useBudaPayments() {
 
 function PaymentScreen() {
   const {
+    balance,
+    cleanError,
     error,
     totalClp,
     totalBitcoins,
@@ -69,12 +75,6 @@ function PaymentScreen() {
   );
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
-  const [errorVisible, setErrorVisible] = useState(false);
-
-  const overlayError = () => {
-    setErrorVisible(!errorVisible);
-  };
-
   const transferAmount = parseInt(state.transferAmount);
   const evalFee = totalClp - transferAmount;
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
@@ -104,7 +104,7 @@ function PaymentScreen() {
 
       <View style={styles.screen}>
         <View style={styles.wallet}>
-          <Text style={styles.saldoText}>Saldo: 0.000115065 BTC</Text>
+          <Text style={styles.saldoText}>Saldo: {balance.BTC.amount} BTC</Text>
         </View>
         <Input
           {...bind('receptor')}
@@ -162,21 +162,18 @@ function PaymentScreen() {
             </View>
           </Overlay>
         )}
-
-        {error && error.message && (
-          <Overlay
-            isVisible={errorVisible}
-            overlayStyle={styles.overlayError}
-            onBackdropPress={overlayError}
-          >
-            <View style={styles.screen}>
-              <Text style={styles.errorText}>
-                Houston tenemos un problema, mensaje de error:{' '}
-                {(error && error.message) || JSON.stringify(error)}
-              </Text>
-            </View>
-          </Overlay>
-        )}
+        <Overlay
+          isVisible={!!error}
+          overlayStyle={styles.overlayError}
+          onBackdropPress={cleanError}
+        >
+          <View style={styles.screen}>
+            <Text style={styles.errorText}>
+              Houston tenemos un problema, mensaje de error:{' '}
+              {(error && error.message) || JSON.stringify(error)}
+            </Text>
+          </View>
+        </Overlay>
       </View>
     </>
   );

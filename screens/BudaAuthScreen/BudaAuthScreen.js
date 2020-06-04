@@ -11,7 +11,7 @@ import {
   Avatar,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_AUTH_REQUEST } from '../../store/types';
+import { BUDA_AUTH_REQUEST, BUDA_CLEAN_ERROR } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
@@ -29,6 +29,8 @@ function BudaAuthScreen(props) {
       payload: { apiKey, apiSecret, password },
     });
   }
+
+  const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
 
   useEffect(() => {
     if (balance) {
@@ -100,20 +102,19 @@ function BudaAuthScreen(props) {
             onPress={() => handleBudaAuth()}
             loading={loading}
           />
-          {error && error.message && (
-            <Overlay
-              isVisible={errorVisible}
-              overlayStyle={styles.overlayError}
-              onBackdropPress={overlayError}
-            >
-              <View style={styles.screen}>
-                <Text style={styles.errorText}>
-                  Houston tenemos un problema, mensaje de error:{' '}
-                  {(error && error.message) || JSON.stringify(error)}
-                </Text>
-              </View>
-            </Overlay>
-          )}
+
+          <Overlay
+            isVisible={!!error}
+            overlayStyle={styles.overlayError}
+            onBackdropPress={cleanError}
+          >
+            <View style={styles.screen}>
+              <Text style={styles.errorText}>
+                Houston tenemos un problema, mensaje de error:{' '}
+                {(error && error.message) || JSON.stringify(error)}
+              </Text>
+            </View>
+          </Overlay>
         </View>
       </ThemeProvider>
     </>
