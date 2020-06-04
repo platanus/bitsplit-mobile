@@ -1,7 +1,13 @@
 /* eslint-disable max-statements */
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Input, Button, Text, Overlay } from 'react-native-elements';
+import {
+  Input,
+  Button,
+  Text,
+  Overlay,
+  ButtonGroup,
+} from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   BUDA_QUOTATION,
@@ -20,10 +26,10 @@ function useBudaPayments() {
   function handleBudaQuotation(amount) {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
-  function handleBudaPayment(receptor, amountBtc, callback) {
+  function handleBudaPayment(receptor, amountBtc, wallet, callback) {
     dispatch({
       type: BUDA_PAYMENT,
-      payload: { amountBtc, receptor },
+      payload: { amountBtc, receptor, wallet },
       callback,
     });
   }
@@ -73,6 +79,9 @@ function PaymentScreen() {
     }
   );
 
+  const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
+  const buttons = ['BitSplit', 'Buda'];
+
   const [isDisplayVisible, toggleDisplay] = useToggle();
   const transferAmount = parseInt(state.transferAmount);
   const evalFee = totalClp - transferAmount;
@@ -81,12 +90,16 @@ function PaymentScreen() {
   const isPayDisabled = !transferAmount || transferAmount <= minTrxAmount;
 
   const onPayPress = () =>
-    handleBudaPayment(state.receptor, totalBitcoins, toggleDisplay);
+    handleBudaPayment(
+      state.receptor,
+      totalBitcoins,
+      buttons[buttonState.selectedIndex].toLowerCase(),
+      toggleDisplay
+    );
 
   return (
     <>
       <Header title='Transferencia' />
-
       <View style={styles.screen}>
         <View style={styles.wallet}>
           <Text style={styles.saldoText}>Saldo: {balance.BTC.amount} BTC</Text>
@@ -103,6 +116,11 @@ function PaymentScreen() {
           inputContainerStyle={styles.inputOff}
           autoCapitalize='none'
           placeholder='Monto de llegada en CLP'
+        />
+        <ButtonGroup
+          onPress={e => setSelectedIndex({ selectedIndex: e })}
+          selectedIndex={buttonState.selectedIndex}
+          buttons={buttons}
         />
 
         <View style={styles.quotationContainer}>
