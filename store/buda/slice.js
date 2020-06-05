@@ -7,6 +7,7 @@ const initialState = {
   balance: null,
   quotation: null,
   lastPayment: null,
+  lastWithdrawal: null,
   payments: [],
 };
 const slice = createSlice({
@@ -33,6 +34,9 @@ const slice = createSlice({
     },
     setLastPayment(state, action) {
       state.lastPayment = action.payload;
+    },
+    setLastWithdrawal(state, action) {
+      state.lastWithdrawal = action.payload;
     },
     setPayments(state, action) {
       state.payments = action.payload;
