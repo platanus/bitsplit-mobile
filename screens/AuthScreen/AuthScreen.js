@@ -60,8 +60,12 @@ function AuthScreen(props) {
           resizeMode='cover'
           source={require('../../assets/logo.png')}
         />
-        <Text h2>{isSignup ? 'Crea tu cuenta' : ''}</Text>
-        <Text h4>{isSignup ? 'Es gratis y rápido' : ''}</Text>
+        {isSignup && (
+          <>
+            <Text h2>Crea tu cuenta</Text>
+            <Text h4>Es gratis y rápido!</Text>
+          </>
+        )}
         <Input
           inputContainerStyle={styles.inputOff}
           id='email'

@@ -50,7 +50,7 @@ function HomeScreen(props) {
           ) : (
             <View style={styles.wallet}>
               <Text style={styles.saldoText}>
-                {loading || 'Debes sincronizar con Buda'}
+                {loading ? 'Cargando...' : 'Debes sincronizar con Buda'}
               </Text>
             </View>
           )}
@@ -86,6 +86,8 @@ function HomeScreen(props) {
               </TouchableOpacity>
             </View>
           )}
+
+          {/* Cambiar por apiKey de splitwise cuando este implementado */}
 
           {apiKey ? (
             <View style={styles.appWallet}>

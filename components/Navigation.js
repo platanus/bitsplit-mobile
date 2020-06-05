@@ -31,15 +31,7 @@ const Navigation = () => {
       >
         {token ? (
           <>
-            <Drawer.Screen
-              name='Inicio'
-              component={HomeScreen}
-              options={{
-                headerStyle: {
-                  backgroundColor: colors.purple,
-                },
-              }}
-            />
+            <Drawer.Screen name='Inicio' component={HomeScreen} />
             <Drawer.Screen name='Buda' component={BudaAuthScreen} />
             <Drawer.Screen name='Pagar' component={PaymentScreen} />
             <Drawer.Screen

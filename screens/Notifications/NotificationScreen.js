@@ -28,7 +28,7 @@ function NotificationScreen() {
 
   return (
     <>
-      <Header title='Notificationes' />
+      <Header title='Notificaciones' />
       <ThemeProvider theme={Theme}>
         <ScrollView>
           <View>
