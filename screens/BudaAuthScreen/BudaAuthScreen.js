@@ -1,12 +1,21 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text } from 'react-native-elements';
+import {
+  Input,
+  Button,
+  Text,
+  ThemeProvider,
+  Overlay,
+  Avatar,
+} from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_AUTH_REQUEST } from '../../store/types';
-import style from './styles';
+import { BUDA_AUTH_REQUEST, BUDA_CLEAN_ERROR } from '../../store/types';
+import styles from './styles';
 import Header from '../../components/Header';
+import Theme from '../../styles/Theme';
+import colors from '../../styles/colors';
 
 function BudaAuthScreen(props) {
   const { error, loading, balance } = useSelector(state => state.buda);
@@ -21,6 +30,8 @@ function BudaAuthScreen(props) {
     });
   }
 
+  const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
+
   useEffect(() => {
     if (balance) {
       props.navigation.navigate('Inicio');
@@ -30,54 +41,76 @@ function BudaAuthScreen(props) {
   return (
     <>
       <Header title='Autentificación Buda' />
-      <View style={style.screen}>
-        <ScrollView style={{ flex: 1 }}>
-          <Text h4>{(error && error.message) || JSON.stringify(error)}</Text>
+      <ThemeProvider theme={Theme}>
+        <View style={styles.screen}>
+          <Avatar
+            rounded
+            size='large'
+            containerStyle={styles.avatar}
+            source={require('../../assets/Images/buda.png')}
+          />
           <Input
+            inputContainerStyle={styles.inputOff}
             id='API_KEY'
-            label='API KEY'
             required
             secureTextEntry
             autoCapitalize='none'
             value={apiKey}
             onChangeText={text => setApiKey(text)}
-            placeholder='buda api key'
-            leftIcon={<Icon name='key' size={24} color='black' />}
+            placeholder='Buda API Key'
           />
           <Input
+            inputContainerStyle={styles.inputOff}
             id='API_SECRET'
-            label='API SECRET'
             required
             secureTextEntry
             autoCapitalize='none'
             value={apiSecret}
             onChangeText={text => setApiSecret(text)}
-            placeholder='buda api secret'
-            leftIcon={<Icon name='user-secret' size={24} color='black' />}
+            placeholder='Buda API Secret'
+            rightIcon={
+              <Icon name='user-secret' size={24} color={colors.purple} />
+            }
           />
 
           <Input
+            inputContainerStyle={styles.inputOff}
             id='password'
-            label='Bitsplit Password'
             keyboardType='default'
             secureTextEntry
             required
             minLength={5}
             autoCapitalize='none'
-            errorMessage='Ingrese un contrasena valida'
             value={password}
             onChangeText={text => setPassword(text)}
-            placeholder='password'
-            leftIcon={<Icon name='lock' size={24} color='black' />}
+            placeholder='Contraseña de BitSplit'
+            rightIcon={
+              <Icon name='eye-slash' size={24} color={colors.purple} />
+            }
           />
           <Button
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
             title='send'
             type='solid'
             onPress={() => handleBudaAuth()}
             loading={loading}
           />
-        </ScrollView>
-      </View>
+
+          <Overlay
+            isVisible={!!error}
+            overlayStyle={styles.overlayError}
+            onBackdropPress={cleanError}
+          >
+            <View style={styles.screen}>
+              <Text style={styles.errorText}>
+                Houston tenemos un problema, mensaje de error:{' '}
+                {(error && error.message) || JSON.stringify(error)}
+              </Text>
+            </View>
+          </Overlay>
+        </View>
+      </ThemeProvider>
     </>
   );
 }

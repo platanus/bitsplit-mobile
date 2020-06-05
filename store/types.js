@@ -7,6 +7,7 @@ export const SET_PIN = 'auth/setPin';
 // BUDA MIDDLEWARE
 export const BUDA_AUTH_REQUEST = 'BUDA_AUTH_REQUEST';
 export const BUDA_GET_BALANCE = 'BUDA_GET_BALANCE';
+export const BUDA_CLEAN_ERROR = 'buda/cleanError';
 
 // PAYMENT MIDDLEWARE
 

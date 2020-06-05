@@ -40,6 +40,9 @@ const slice = createSlice({
     addPayment(state, action) {
       state.payments.unshift(action.payload);
     },
+    cleanError(state) {
+      state.error = null;
+    },
     reset() {
       return initialState;
     },

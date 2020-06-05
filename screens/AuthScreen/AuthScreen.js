@@ -1,13 +1,20 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Divider, Text } from 'react-native-elements';
-import PinOverlay from '../../components/PinOverlay/PinOverlay';
+import {
+  Input,
+  Button,
+  Text,
+  ThemeProvider,
+  CheckBox,
+} from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
+import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
 import styles from './styles';
-import colors from '../../styles/colors';
+import color from '../../styles/colors';
+import Theme from '../../styles/Theme';
 
 function AuthScreen(props) {
   const [email, setEmail] = useState('');
@@ -17,7 +24,7 @@ function AuthScreen(props) {
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const {
-    auth: { token, error, loading },
+    auth: { token, loading },
   } = useSelector(state => state);
 
   function authHandler() {
@@ -46,27 +53,34 @@ function AuthScreen(props) {
   }, [token]);
 
   return (
-    <View style={styles.inputContainer}>
-      <ScrollView>
-        <Text h2>{isSignup ? 'Register' : 'Login'}</Text>
-
-        <Text h4>{error}</Text>
+    <ThemeProvider theme={Theme}>
+      <View style={styles.screen}>
+        <Image
+          style={styles.image}
+          resizeMode='cover'
+          source={require('../../assets/logo.png')}
+        />
+        {isSignup && (
+          <>
+            <Text h2>Crea tu cuenta</Text>
+            <Text h4>Es gratis y rápido!</Text>
+          </>
+        )}
         <Input
+          inputContainerStyle={styles.inputOff}
           id='email'
-          label='E-mail'
           keyboardType='email-address'
           required
           email
           autoCapitalize='none'
           value={email}
           onChangeText={text => setEmail(text)}
-          placeholder=' Usuario'
-          leftIcon={<Icon name='user' size={24} color='black' />}
+          placeholder='Correo'
         />
 
         <Input
+          inputContainerStyle={styles.inputOff}
           id='password'
-          label='Password'
           keyboardType='default'
           secureTextEntry
           required
@@ -74,13 +88,13 @@ function AuthScreen(props) {
           autoCapitalize='none'
           value={password}
           onChangeText={text => setPassword(text)}
-          placeholder=' password'
-          leftIcon={<Icon name='lock' size={24} color='black' />}
+          placeholder='Contraseña'
+          rightIcon={<Icon name='eye-slash' size={24} color={color.purple} />}
         />
         {isSignup && (
           <Input
+            inputContainerStyle={styles.inputOff}
             id='passwordConfirmation'
-            label='Confirm Password'
             keyboardType='default'
             secureTextEntry
             required
@@ -88,37 +102,44 @@ function AuthScreen(props) {
             autoCapitalize='none'
             value={passwordConfirmation}
             onChangeText={text => setPasswordConfirmation(text)}
-            placeholder=' password'
-            leftIcon={<Icon name='lock' size={24} color='black' />}
+            placeholder='Confirmar Contraseña'
+            rightIcon={<Icon name='eye-slash' size={24} color={color.purple} />}
           />
         )}
+
+        {isSignup && (
+          <CheckBox
+            center
+            title='Acepto los términos de privacidad'
+            containerStyle={styles.checkBox}
+          />
+        )}
+
         <Button
-          title={isSignup ? 'Register' : 'Login'}
-          type='solid'
+          title={isSignup ? 'Crear cuenta' : 'Ingresar'}
+          type='outline'
           onPress={() => authHandler()}
           loading={loading}
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
         />
-        <Divider style={{ backgroundColor: 'gray', marginVertical: 15 }} />
-        <Text>
-          {isSignup
-            ? 'New to Bitsplit?\nGo ahead and register!'
-            : 'Already have an account?'}
-        </Text>
+
         <Button
-          title={isSignup ? 'Login' : 'Register'}
-          type='outline'
+          title={isSignup ? 'Login' : 'Crear cuenta'}
+          type='clear'
           onPress={() => setIsSignup(!isSignup)}
+          titleStyle={styles.linkText}
         />
-      </ScrollView>
-      {showPin && (
-        <PinOverlay
-          onSuccess={goHome}
-          onFailure={togglePin}
-          pinLength={4}
-          maxTries={3}
-        />
-      )}
-    </View>
+        {showPin && (
+          <PinOverlay
+            onSuccess={goHome}
+            onFailure={togglePin}
+            pinLength={4}
+            maxTries={3}
+          />
+        )}
+      </View>
+    </ThemeProvider>
   );
 }
 

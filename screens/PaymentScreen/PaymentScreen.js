@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { View } from 'react-native';
 import {
   Input,
   Button,
@@ -10,7 +9,11 @@ import {
   ButtonGroup,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_QUOTATION, BUDA_PAYMENT } from '../../store/types';
+import {
+  BUDA_QUOTATION,
+  BUDA_PAYMENT,
+  BUDA_CLEAN_ERROR,
+} from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
@@ -30,8 +33,9 @@ function useBudaPayments() {
       callback,
     });
   }
+  const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
 
-  const { error, quotation, lastPayment, loading } = useSelector(
+  const { error, quotation, lastPayment, balance, loading } = useSelector(
     state => state.buda
   );
 
@@ -39,6 +43,8 @@ function useBudaPayments() {
   const totalBitcoins = parseFloat(quotation ? quotation.amount_btc[0] : '0');
 
   return {
+    balance,
+    cleanError,
     error,
     totalClp,
     totalBitcoins,
@@ -51,6 +57,8 @@ function useBudaPayments() {
 
 function PaymentScreen() {
   const {
+    balance,
+    cleanError,
     error,
     totalClp,
     totalBitcoins,
@@ -75,7 +83,6 @@ function PaymentScreen() {
   const buttons = ['BitSplit', 'Buda'];
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
-
   const transferAmount = parseInt(state.transferAmount);
   const evalFee = totalClp - transferAmount;
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
@@ -93,66 +100,86 @@ function PaymentScreen() {
   return (
     <>
       <Header title='Transferencia' />
-      <ScrollView>
-        <View style={styles.screen}>
-          <Text h4>{(error && error.message) || error}</Text>
-          <Input
-            {...bind('receptor')}
-            autoCapitalize='none'
-            placeholder='receptor email'
-            leftIcon={<Icon name='user' size={24} color='black' />}
-          />
-          <Input
-            {...bind('transferAmount')}
-            label='Monto a transferir'
-            autoCapitalize='none'
-            placeholder='Monto de llegada en CLP'
-            leftIcon={<Icon name='user' size={24} color='black' />}
-          />
-          <ButtonGroup
-            onPress={e => setSelectedIndex({ selectedIndex: e })}
-            selectedIndex={buttonState.selectedIndex}
-            buttons={buttons}
-          />
-          <View style={styles.quotationContainer}>
-            {isValidQuotation ? (
-              <View>
-                <Text h4>Cotizacion</Text>
-                <Text>Monto total CLP: ${totalClp}</Text>
-                <Text>Monto total BTC: ${totalBitcoins}</Text>
-                <Text>Costo por servicio: ${fee}</Text>
-              </View>
-            ) : (
-              <Text h4>La transferencia minima es $100 CLP</Text>
-            )}
-          </View>
+      <View style={styles.screen}>
+        <View style={styles.wallet}>
+          <Text style={styles.saldoText}>Saldo: {balance.BTC.amount} BTC</Text>
+        </View>
+        <Input
+          {...bind('receptor')}
+          inputContainerStyle={styles.inputOff}
+          autoCapitalize='none'
+          placeholder='Receptor email'
+        />
+        <Input
+          {...bind('transferAmount')}
+          keyboardType='numeric'
+          inputContainerStyle={styles.inputOff}
+          autoCapitalize='none'
+          placeholder='Monto de llegada en CLP'
+        />
+        <ButtonGroup
+          onPress={e => setSelectedIndex({ selectedIndex: e })}
+          selectedIndex={buttonState.selectedIndex}
+          buttons={buttons}
+          containerStyle={styles.groupButtonContainer}
+          selectedButtonStyle={styles.groupButton}
+        />
 
-          <Button
-            title='Pagar'
-            type='solid'
-            onPress={onPayPress}
-            loading={loading}
-            disabled={isPayDisabled}
-          />
-          {lastPayment && (
-            <Overlay
-              isVisible={isDisplayVisible}
-              overlayStyle={styles.overlayContainer}
-              windowBackgroundColor='rgba(255, 255, 255, .5)'
-              onBackdropPress={toggleDisplay}
-            >
-              <View style={styles.screen}>
-                <Text h4>Pago Exitoso</Text>
-                <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
-                <Text
-                  h5
-                >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-                <Button title='Listo' type='solid' onPress={toggleDisplay} />
-              </View>
-            </Overlay>
+        <View style={styles.quotationContainer}>
+          {isValidQuotation ? (
+            <View>
+              <Text style={styles.titleText}>Cotizacion</Text>
+              <Text style={styles.moneyText}>Monto total CLP: ${totalClp}</Text>
+              <Text style={styles.moneyText}>
+                Monto total BTC: ${totalBitcoins}
+              </Text>
+              <Text style={styles.moneyText}>Costo por servicio: ${fee}</Text>
+            </View>
+          ) : (
+            <Text style={styles.titleText}>
+              La transferencia minima es $100 CLP
+            </Text>
           )}
         </View>
-      </ScrollView>
+
+        <Button
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
+          title='Pagar'
+          type='solid'
+          onPress={onPayPress}
+          loading={loading}
+          disabled={isPayDisabled}
+        />
+        {lastPayment && (
+          <Overlay
+            isVisible={isDisplayVisible}
+            overlayStyle={styles.overlayContainer}
+            onBackdropPress={toggleDisplay}
+          >
+            <View style={styles.screen}>
+              <Text h4>Pago Exitoso</Text>
+              <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+              <Text
+                h5
+              >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+              <Button title='Listo' type='solid' onPress={toggleDisplay} />
+            </View>
+          </Overlay>
+        )}
+        <Overlay
+          isVisible={!!error}
+          overlayStyle={styles.overlayError}
+          onBackdropPress={cleanError}
+        >
+          <View style={styles.screen}>
+            <Text style={styles.errorText}>
+              Houston tenemos un problema, mensaje de error:{' '}
+              {(error && error.message) || JSON.stringify(error)}
+            </Text>
+          </View>
+        </Overlay>
+      </View>
     </>
   );
 }
