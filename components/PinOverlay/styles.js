@@ -14,10 +14,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     height: '15%',
   },
-  contenContainer: {
-    height: '85%',
-  },
   pinContainer: {
+    height: '85%',
     backgroundColor: colors.middlepurple,
     alignItems: 'center',
     flex: 1,

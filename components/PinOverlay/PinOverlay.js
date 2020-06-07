@@ -38,7 +38,7 @@ function PinOverlay({ onSuccess = () => {}, onFailure, pinLength, maxTries }) {
             {message}
           </Text>
         </View>
-        <View style={(styles.contentContainer, styles.pinContainer)}>
+        <View style={styles.pinContainer}>
           {closingSession ? (
             <ActivityIndicator size={'large'} />
           ) : (
