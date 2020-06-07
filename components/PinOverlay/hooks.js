@@ -24,7 +24,7 @@ export default function usePin(
 
   // will show the keyboard on mount.
   useEffect(() => {
-    if (!closingSession) compRef.input.focus();
+    if (compRef.input && !closingSession) compRef.input.focus();
   }, [compRef.input, closingSession]);
 
   const setPin = newPin => {
