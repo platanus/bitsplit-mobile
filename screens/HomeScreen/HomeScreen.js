@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, Button, ThemeProvider } from 'react-native-elements';
-import { BUDA_GET_BALANCE } from '../../store/types';
+import { BUDA_GET_BALANCE, START_SETUP } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
@@ -24,7 +24,7 @@ function HomeScreen(props) {
     }
   }, [apiKey, dispatch]);
 
-  const startSetup = () => dispatch({ type: 'onstart/finishStart' });
+  const startSetup = () => dispatch({ type: START_SETUP });
 
   return (
     <>

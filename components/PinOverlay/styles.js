@@ -10,6 +10,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
   },
+  titleContainer: {
+    paddingVertical: 10,
+    height: '15%',
+  },
+  contenContainer: {
+    height: '85%',
+  },
   pinContainer: {
     backgroundColor: colors.middlepurple,
     alignItems: 'center',
@@ -17,12 +24,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  myOverlayContainer: {
+  pinOverlayContainer: {
     alignItems: 'center',
     width: '100%',
     height: '100%',
     backgroundColor: colors.middlepurple,
     paddingVertical: '10%',
+  },
+  screen: {
+    ...crossStyles.screen,
+    backgroundColor: colors.middlepurple,
   },
 });
 export default { ...crossStyles, ...styles };
