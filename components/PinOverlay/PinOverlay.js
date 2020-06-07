@@ -6,7 +6,7 @@ import { Text, Overlay } from 'react-native-elements';
 import styles from './styles';
 import usePin from './hooks';
 
-function PinOverlay({ onSuccess, onFailure, pinLength, maxTries }) {
+function PinOverlay({ onSuccess = () => {}, onFailure, pinLength, maxTries }) {
   const {
     isDisplayVisible,
     inputPin,
@@ -26,7 +26,7 @@ function PinOverlay({ onSuccess, onFailure, pinLength, maxTries }) {
   return (
     <Overlay
       isVisible={isDisplayVisible}
-      overlayStyle={styles.overlayContainer}
+      overlayStyle={styles.myOverlayContainer}
       windowBackgroundColor='rgba(255, 255, 255, .5)'
     >
       <View style={styles.screen}>
