@@ -157,7 +157,6 @@ function* postWithdrawal(action) {
       yield put(budaActions.syncBudaRejected(response.message));
     }
   } catch (err) {
-    console.log(err);
     yield put(budaActions.syncBudaRejected('Hubo un error en el retiro'));
   }
   yield put(budaActions.finish());
@@ -201,7 +200,6 @@ function* postDeposit(action) {
       yield put(budaActions.syncBudaRejected(response.message));
     }
   } catch (err) {
-    console.log(err);
     yield put(budaActions.syncBudaRejected('Hubo un error en el retiro'));
   }
   yield put(budaActions.finish());
