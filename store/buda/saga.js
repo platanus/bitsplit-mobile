@@ -8,6 +8,7 @@ import {
   BUDA_PAYMENT,
   BUDA_GET_PAYMENT_HISTORY,
   BITSPLIT_WITHDRAWAL,
+  BITSPLIT_DEPOSIT,
 } from '../types';
 import api from '../../utils/api';
 
@@ -162,6 +163,50 @@ function* postWithdrawal(action) {
   yield put(budaActions.finish());
 }
 
+function* postDeposit(action) {
+  const JS_MILISEC = 1000;
+  const BTC_TO_SAT = 100000000; // 1 BTC = 100,000,000 SAT
+  const DATE_OPTIONS = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
+
+  yield put(budaActions.start());
+  try {
+    const {
+      data: {
+        data: { response },
+      },
+    } = yield call(api.bitSplitDepositApi, { ...action.payload });
+    if (response.data) {
+      yield put(
+        budaActions.setLastDeposit({
+          amount: response.data.amount / BTC_TO_SAT,
+          processed_at: new Date(
+            response.data.processed_at * JS_MILISEC
+          ).toLocaleDateString('es-ES', DATE_OPTIONS),
+          expires_at: new Date(
+            response.data.lightning_invoice.expires_at * JS_MILISEC
+          ).toLocaleDateString('es-ES', DATE_OPTIONS),
+          payreq: response.data.lightning_invoice.payreq,
+        })
+      );
+      yield put(budaActions.syncBudaRejected('Transacción en proceso'));
+      action.callback();
+    } else {
+      yield put(budaActions.syncBudaRejected(response.message));
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(budaActions.syncBudaRejected('Hubo un error en el retiro'));
+  }
+  yield put(budaActions.finish());
+}
+
 export default function* budaSaga() {
   yield takeLatest(BUDA_AUTH_REQUEST, syncBudaRequest);
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
@@ -169,4 +214,5 @@ export default function* budaSaga() {
   yield takeLatest(BUDA_PAYMENT, postBudaPayment);
   yield takeLatest(BUDA_GET_PAYMENT_HISTORY, getBudaPaymentHistory);
   yield takeLatest(BITSPLIT_WITHDRAWAL, postWithdrawal);
+  yield takeLatest(BITSPLIT_DEPOSIT, postDeposit);
 }

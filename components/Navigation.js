@@ -14,6 +14,7 @@ import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';
 import WithdrawalScreen from '../screens/WithdrawalScreen/WithdrawalScreen';
+import DepositScreen from '../screens/DepositScreen/DepositScreen';
 import NotificationScreen from '../screens/Notifications/NotificationScreen';
 import { LOGOUT_REQUEST } from '../store/types';
 
@@ -40,6 +41,7 @@ const Navigation = () => {
               component={PaymentHistoryScreen}
             />
             <Drawer.Screen name='Retirar' component={WithdrawalScreen} />
+            <Drawer.Screen name='Depositar' component={DepositScreen} />
             <Drawer.Screen
               name='Notificaciones'
               component={NotificationScreen}

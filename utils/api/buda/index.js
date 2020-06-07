@@ -29,11 +29,19 @@ function bitSplitWithdrawalApi(payload) {
   });
 }
 
+function bitSplitDepositApi(payload) {
+  return authedAxios.getInstance().post(`${env.url}/api/v2/charges`, {
+    amount: payload.amountBtc,
+    currency: 'BTC',
+  });
+}
+
 const budaApi = {
   budaBalance,
   budaGetQuotationApi,
   budaPaymentApi,
   budaPaymentHistoryApi,
   bitSplitWithdrawalApi,
+  bitSplitDepositApi,
 };
 export default budaApi;
