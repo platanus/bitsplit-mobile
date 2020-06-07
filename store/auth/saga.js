@@ -3,6 +3,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
+import { actions as onstartActions } from '../onstart/slice';
 import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
 import authedAxios from '../../utils/api/authedAxios';
@@ -92,6 +93,7 @@ function* logoutRequest(action) {
       action.callback();
       yield put(authActions.reset());
       yield put(budaActions.reset());
+      yield put(onstartActions.resetStartFlag());
       authedAxios.clear();
     }
   } catch (err) {

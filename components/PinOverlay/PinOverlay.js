@@ -6,7 +6,7 @@ import { Text, Overlay } from 'react-native-elements';
 import styles from './styles';
 import usePin from './hooks';
 
-function PinOverlay({ onSuccess, onFailure, pinLength, maxTries }) {
+function PinOverlay({ onSuccess = () => {}, onFailure, pinLength, maxTries }) {
   const {
     isDisplayVisible,
     inputPin,
@@ -26,18 +26,22 @@ function PinOverlay({ onSuccess, onFailure, pinLength, maxTries }) {
   return (
     <Overlay
       isVisible={isDisplayVisible}
-      overlayStyle={styles.overlayContainer}
+      overlayStyle={styles.pinOverlayContainer}
       windowBackgroundColor='rgba(255, 255, 255, .5)'
     >
       <View style={styles.screen}>
-        <Text h4>{storedPin ? 'Ingresar PIN' : 'Crear tu PIN'}</Text>
-        <Text h6 style={{ color: 'red' }}>
-          {message}
-        </Text>
-        {closingSession ? (
-          <ActivityIndicator size={'large'} />
-        ) : (
-          <ScrollView contentContainerStyle={styles.pinContainer}>
+        <View style={styles.titleContainer}>
+          <Text h4 style={styles.title}>
+            {storedPin ? 'Ingresar PIN' : 'Crear tu PIN'}
+          </Text>
+          <Text h6 style={{ color: 'red' }}>
+            {message}
+          </Text>
+        </View>
+        <View style={styles.pinContainer}>
+          {closingSession ? (
+            <ActivityIndicator size={'large'} />
+          ) : (
             <TextInput
               ref={ele => {
                 this.input = ele;
@@ -49,8 +53,8 @@ function PinOverlay({ onSuccess, onFailure, pinLength, maxTries }) {
               secureTextEntry={true}
               maxLength={pinLength}
             />
-          </ScrollView>
-        )}
+          )}
+        </View>
       </View>
     </Overlay>
   );

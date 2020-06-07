@@ -10,7 +10,6 @@ import {
   CheckBox,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import { LOGIN_REQUEST, REGISTER_REQUEST } from '../../store/types';
 import styles from './styles';
 import color from '../../styles/colors';
@@ -20,11 +19,10 @@ function AuthScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [showPin, setShowPin] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const {
-    auth: { token, loading },
+    auth: { loading },
   } = useSelector(state => state);
 
   function authHandler() {
@@ -41,16 +39,6 @@ function AuthScreen(props) {
       dispatch({ type: LOGIN_REQUEST, payload: { email, password } });
     }
   }
-
-  const goHome = () => {
-    props.navigation.navigate('Home');
-  };
-  const togglePin = () => setShowPin(!showPin);
-  useEffect(() => {
-    if (token) {
-      togglePin();
-    }
-  }, [token]);
 
   return (
     <ThemeProvider theme={Theme}>
@@ -130,14 +118,6 @@ function AuthScreen(props) {
           onPress={() => setIsSignup(!isSignup)}
           titleStyle={styles.linkText}
         />
-        {showPin && (
-          <PinOverlay
-            onSuccess={goHome}
-            onFailure={togglePin}
-            pinLength={4}
-            maxTries={3}
-          />
-        )}
       </View>
     </ThemeProvider>
   );

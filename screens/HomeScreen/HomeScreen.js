@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, Button, ThemeProvider } from 'react-native-elements';
-import { BUDA_GET_BALANCE } from '../../store/types';
+import { BUDA_GET_BALANCE, START_SETUP } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
+import PinOverlay from '../../components/PinOverlay/PinOverlay';
 
 function HomeScreen(props) {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function HomeScreen(props) {
       user: { email },
     },
     buda: { apiKey, balance, loading },
+    onstart: { startFlag },
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -22,9 +24,14 @@ function HomeScreen(props) {
     }
   }, [apiKey, dispatch]);
 
+  const startSetup = () => dispatch({ type: START_SETUP });
+
   return (
     <>
       <Header title='Inicio' />
+      {startFlag && (
+        <PinOverlay onFailure={startSetup} pinLength={4} maxTries={3} />
+      )}
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           <Avatar
@@ -41,7 +48,7 @@ function HomeScreen(props) {
             titleStyle={styles.buttonText}
           />
 
-          {apiKey ? (
+          {balance ? (
             <View style={styles.wallet}>
               <Text style={styles.saldoText}>
                 Saldo: ${balance.BTC.amount} BTC
@@ -55,7 +62,7 @@ function HomeScreen(props) {
             </View>
           )}
 
-          {apiKey ? (
+          {balance ? (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}
@@ -87,9 +94,9 @@ function HomeScreen(props) {
             </View>
           )}
 
-          {/* Cambiar por apiKey de splitwise cuando este implementado */}
+          {/* Cambiar por balance de splitwise cuando este implementado */}
 
-          {apiKey ? (
+          {balance ? (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}

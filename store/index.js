@@ -11,6 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['onstart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
