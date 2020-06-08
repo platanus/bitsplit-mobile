@@ -13,6 +13,7 @@ import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';
+import SplitwiseDebtsScreen from '../screens/SplitwiseDebtsScreen';
 import NotificationScreen from '../screens/Notifications/NotificationScreen';
 import { LOGOUT_REQUEST } from '../store/types';
 
@@ -38,6 +39,7 @@ const Navigation = () => {
               name='Historial de Pagos'
               component={PaymentHistoryScreen}
             />
+            <Drawer.Screen name='Splitwise' component={SplitwiseDebtsScreen} />
             <Drawer.Screen
               name='Notificaciones'
               component={NotificationScreen}
