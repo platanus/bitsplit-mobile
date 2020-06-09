@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   error: null,
   loading: false,
+  authUrl: null,
   debts: { friends_to_user: null, user_to_friends: null },
 };
 const slice = createSlice({
@@ -20,6 +21,9 @@ const slice = createSlice({
     },
     setDebts(state, action) {
       state.debts = action.payload;
+    },
+    setAuthUrl(state, action) {
+      state.authUrl = action.payload;
     },
     cleanError(state) {
       state.error = null;

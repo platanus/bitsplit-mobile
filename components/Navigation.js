@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
+import SplitwiseAuthScreen from '../screens/SplitwiseAuthScreen/SplitwiseAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';
@@ -36,6 +37,10 @@ const Navigation = () => {
           <>
             <Drawer.Screen name='Inicio' component={HomeScreen} />
             <Drawer.Screen name='Buda' component={BudaAuthScreen} />
+            <Drawer.Screen
+              name='Auth Splitwise'
+              component={SplitwiseAuthScreen}
+            />
             <Drawer.Screen name='Pagar' component={PaymentScreen} />
             <Drawer.Screen
               name='Historial de Pagos'
