@@ -15,6 +15,7 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
+import QuotationComponent from '../../components/QuotationComponent';
 
 const minTrxAmount = 100;
 
@@ -114,18 +115,13 @@ function PaymentScreen() {
             selectedIndex={buttonState.selectedIndex}
             buttons={buttons}
           />
-          <View style={styles.quotationContainer}>
-            {isValidQuotation ? (
-              <View>
-                <Text h4>Cotizacion</Text>
-                <Text>Monto total CLP: ${totalClp}</Text>
-                <Text>Monto total BTC: ${totalBitcoins}</Text>
-                <Text>Costo por servicio: ${fee}</Text>
-              </View>
-            ) : (
-              <Text h4>La transferencia minima es $100 CLP</Text>
-            )}
-          </View>
+          <QuotationComponent
+            style={styles.quotationContainer}
+            isValidQuotation={isValidQuotation}
+            totalClp={totalClp}
+            totalBitcoins={totalBitcoins}
+            fee={fee}
+          />
 
           <Button
             title='Pagar'

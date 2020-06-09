@@ -9,6 +9,7 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
+import QuotationComponent from '../../components/QuotationComponent';
 
 const minTrxAmount = 100;
 
@@ -89,19 +90,12 @@ function DepostitScreen() {
             placeholder='Monto a transferir en CLP'
             leftIcon={<Icon name='user' size={24} color='black' />}
           />
-          <View style={styles.quotationContainer}>
-            {isValidQuotation ? (
-              <View>
-                <Text h4>Cotizacion</Text>
-                <Text>Monto total CLP: ${totalClp}</Text>
-                <Text>Monto total BTC: ${totalBitcoins}</Text>
-              </View>
-            ) : (
-              <Text h4>
-                Para poder hacer una conversión, lo mínimo es $100 CLP
-              </Text>
-            )}
-          </View>
+          <QuotationComponent
+            style={styles.quotationContainer}
+            isValidQuotation={isValidQuotation}
+            totalClp={totalClp}
+            totalBitcoins={totalBitcoins}
+          />
 
           <Button
             title='Crear depósito'
