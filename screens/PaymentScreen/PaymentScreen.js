@@ -18,6 +18,7 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
+import QuotationComponent from '../../components/QuotationComponent';
 
 const minTrxAmount = 100;
 
@@ -108,7 +109,7 @@ function PaymentScreen() {
           {...bind('receptor')}
           inputContainerStyle={styles.inputOff}
           autoCapitalize='none'
-          placeholder='Receptor email'
+          placeholder='Correo de quien recibe'
         />
         <Input
           {...bind('transferAmount')}
@@ -124,23 +125,13 @@ function PaymentScreen() {
           containerStyle={styles.groupButtonContainer}
           selectedButtonStyle={styles.groupButton}
         />
-
-        <View style={styles.quotationContainer}>
-          {isValidQuotation ? (
-            <View>
-              <Text style={styles.titleText}>Cotizacion</Text>
-              <Text style={styles.moneyText}>Monto total CLP: ${totalClp}</Text>
-              <Text style={styles.moneyText}>
-                Monto total BTC: ${totalBitcoins}
-              </Text>
-              <Text style={styles.moneyText}>Costo por servicio: ${fee}</Text>
-            </View>
-          ) : (
-            <Text style={styles.titleText}>
-              La transferencia minima es $100 CLP
-            </Text>
-          )}
-        </View>
+          <QuotationComponent
+            style={styles.quotationContainer}
+            isValidQuotation={isValidQuotation}
+            totalClp={totalClp}
+            totalBitcoins={totalBitcoins}
+            fee={fee}
+          />
 
         <Button
           buttonStyle={styles.button}
