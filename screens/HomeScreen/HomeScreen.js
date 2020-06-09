@@ -115,7 +115,10 @@ function HomeScreen(props) {
                 Paga tus deudas de forma fácil y rápida!
               </Text>
 
-              <TouchableOpacity style={styles.syncBuda}>
+              <TouchableOpacity
+                style={styles.syncBuda}
+                onPress={() => props.navigation.navigate('Auth Splitwise')}
+              >
                 <Avatar
                   containerStyle={styles.syncAvatar}
                   source={require('../../assets/Images/split.jpg')}
