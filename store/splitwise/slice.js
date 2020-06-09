@@ -4,6 +4,7 @@ const initialState = {
   error: null,
   loading: false,
   debts: { friends_to_user: null, user_to_friends: null },
+  isSync: false,
 };
 const slice = createSlice({
   name: 'splitwise',
@@ -20,6 +21,7 @@ const slice = createSlice({
     },
     setDebts(state, action) {
       state.debts = action.payload;
+      state.isSync = true;
     },
     cleanError(state) {
       state.error = null;
