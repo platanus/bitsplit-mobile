@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, Text, ListItem } from 'react-native-elements';
+import { Text, ListItem } from 'react-native-elements';
+import moment from 'moment';
 import styles from './styles';
 import { usePaymentHistory } from './hooks';
-import moment from 'moment';
 import Header from '../../components/Header';
 
 function PaymentHistoryScreen() {

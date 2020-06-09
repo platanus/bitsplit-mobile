@@ -7,6 +7,7 @@ export const SET_PIN = 'auth/setPin';
 // BUDA MIDDLEWARE
 export const BUDA_AUTH_REQUEST = 'BUDA_AUTH_REQUEST';
 export const BUDA_GET_BALANCE = 'BUDA_GET_BALANCE';
+export const BUDA_CLEAN_ERROR = 'buda/cleanError';
 
 // PAYMENT MIDDLEWARE
 
@@ -20,3 +21,9 @@ export const BITSPLIT_DEPOSIT = 'BITSPLIT_DEPOSIT';
 // FIREBASE MIDDLEWARE
 
 export const FIREBASE_NOTIFICATIONS = 'FIREBASE_NOTIFICATIONS';
+
+export const START_SETUP = 'onstart/finishStart';
+
+// SPLITWISE MIDDLEWARE
+
+export const SPLITWISE_GET_DEBTS = 'SPLITWISE_GET_DEBTS';
