@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 
 import React from 'react';
-import { View, TextInput, ScrollView, ActivityIndicator } from 'react-native';
+import { View, TextInput, ActivityIndicator, Image } from 'react-native';
 import { Text, Overlay } from 'react-native-elements';
 import styles from './styles';
 import usePin from './hooks';
@@ -26,19 +26,23 @@ function PinOverlay({ onSuccess = () => {}, onFailure, pinLength, maxTries }) {
   return (
     <Overlay
       isVisible={isDisplayVisible}
-      overlayStyle={styles.pinOverlayContainer}
-      windowBackgroundColor='rgba(255, 255, 255, .5)'
+      containerStyle={styles.pinOverlayContainer}
+      overlayStyle={styles.pinView}
+      // windowBackgroundColor='rgba(255, 255, 255, .5)'
     >
-      <View style={styles.screen}>
-        <View style={styles.titleContainer}>
-          <Text h4 style={styles.title}>
-            {storedPin ? 'Ingresar PIN' : 'Crear tu PIN'}
-          </Text>
-          <Text h6 style={{ color: 'red' }}>
-            {message}
-          </Text>
-        </View>
-        <View style={styles.pinContainer}>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          resizeMode='cover'
+          source={require('../../assets/logo_blanco.png')}
+        />
+
+        <Text style={styles.titleText}>
+          {storedPin ? 'Ingresar PIN' : 'Crear tu PIN'}
+        </Text>
+        <Text style={styles.errorText}>{message}</Text>
+
+        <View>
           {closingSession ? (
             <ActivityIndicator size={'large'} />
           ) : (
@@ -49,7 +53,7 @@ function PinOverlay({ onSuccess = () => {}, onFailure, pinLength, maxTries }) {
               onChangeText={onChangePin}
               value={inputPin}
               keyboardType='numeric'
-              style={styles.pinInput}
+              style={styles.inputText}
               secureTextEntry={true}
               maxLength={pinLength}
             />
