@@ -1,9 +1,7 @@
 /* eslint-disable max-statements */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Linking } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
-  Input,
   Button,
   Text,
   ThemeProvider,
@@ -12,19 +10,13 @@ import {
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { postSplitwiseAuthUrl } from './hooks';
-import {
-  BUDA_AUTH_REQUEST,
-  BUDA_CLEAN_ERROR,
-  SPLITWISE_POST_AUTH,
-} from '../../store/types';
+import { BUDA_CLEAN_ERROR } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
-import colors from '../../styles/colors';
 
-function SplitwiseAuthScreen(props) {
+function SplitwiseAuthScreen() {
   const { error, loading } = useSelector(state => state.buda);
-  const { user } = useSelector(state => state.auth);
   const authUrl = postSplitwiseAuthUrl();
   const dispatch = useDispatch();
 
