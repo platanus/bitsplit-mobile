@@ -18,17 +18,10 @@ export default function useSplitwiseSummary() {
   } = useSelector(state => state.splitwise);
 
   const sumByCurrency = (accumulator, current) => {
-    if (!accumulator[current.currency_code])
+    if (!accumulator[current.currency_code]) {
       accumulator[current.currency_code] = 0;
-    accumulator[current.currency_code] += parseFloat(current.amount);
-    if (current.currency_code === 'USD') {
-      console.log(
-        'string',
-        current.amount,
-        'float',
-        parseFloat(current.amount)
-      );
     }
+    accumulator[current.currency_code] += parseFloat(current.amount);
 
     return accumulator;
   };
