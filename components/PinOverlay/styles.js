@@ -3,35 +3,56 @@ import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
-  pinInput: {
-    borderWidth: 1,
-    width: '90%',
-    fontSize: 60,
-    borderRadius: 10,
-    textAlign: 'center',
-  },
-  titleContainer: {
-    paddingVertical: 10,
-    height: '15%',
-  },
-  pinContainer: {
-    height: '85%',
-    backgroundColor: colors.middlepurple,
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
   pinOverlayContainer: {
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    backgroundColor: colors.middlepurple,
-    paddingVertical: '10%',
+    backgroundColor: '#25035A',
   },
-  screen: {
-    ...crossStyles.screen,
+
+  pinView: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+
+  container: {
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  titleText: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    color: colors.white,
+    fontSize: 30,
+  },
+
+  inputText: {
     backgroundColor: colors.middlepurple,
+    width: 250,
+    height: 60,
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 30,
+    color: colors.black,
+    fontSize: 30,
+    fontWeight: 'bold',
+    borderRadius: 30,
+  },
+
+  errorText: {
+    color: colors.red,
+    fontSize: 15,
+    marginTop: 200,
+  },
+
+  image: {
+    width: 250,
+    height: 60,
   },
 });
+
 export default { ...crossStyles, ...styles };
