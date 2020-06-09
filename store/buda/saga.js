@@ -182,16 +182,25 @@ function* postDeposit(action) {
       },
     } = yield call(api.bitSplitDepositApi, { ...action.payload });
     if (response.data) {
+      const {
+        data: {
+          amount,
+          processed_at,
+          lightning_invoice: { expires_at, payreq },
+        },
+      } = response.data;
       yield put(
         budaActions.setLastDeposit({
-          amount: response.data.amount / BTC_TO_SAT,
-          processed_at: new Date(
-            response.data.processed_at * JS_MILISEC
-          ).toLocaleDateString('es-ES', DATE_OPTIONS),
-          expires_at: new Date(
-            response.data.lightning_invoice.expires_at * JS_MILISEC
-          ).toLocaleDateString('es-ES', DATE_OPTIONS),
-          payreq: response.data.lightning_invoice.payreq,
+          amount: amount / BTC_TO_SAT,
+          processed_at: new Date(processed_at * JS_MILISEC).toLocaleDateString(
+            'es-ES',
+            DATE_OPTIONS
+          ),
+          expires_at: new Date(expires_at * JS_MILISEC).toLocaleDateString(
+            'es-ES',
+            DATE_OPTIONS
+          ),
+          payreq,
         })
       );
       yield put(budaActions.syncBudaRejected('Transacción en proceso'));
