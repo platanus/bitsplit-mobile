@@ -13,7 +13,7 @@ function useProfile() {
     auth: {
       user: { email },
     },
-    buda: { balance, loading: budaLoading },
+    buda: { apiKey, loading: budaLoading },
     splitwise: { isSync: isSplitSync, loading: splitwiseLoading },
   } = useSelector(state => state);
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function useProfile() {
 
   return {
     email,
-    balance,
+    apiKey,
     budaLoading,
     isSplitSync,
     splitwiseLoading,
@@ -39,7 +39,7 @@ function useProfile() {
 function ProfileScreen() {
   const {
     email,
-    balance,
+    apiKey,
     budaLoading,
     splitwiseLoading,
     isSplitSync,
@@ -65,7 +65,7 @@ function ProfileScreen() {
             titleStyle={styles.buttonText}
           />
 
-          {balance ? (
+          {apiKey ? (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}

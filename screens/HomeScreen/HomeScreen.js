@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, ThemeProvider } from 'react-native-elements';
-import { BUDA_GET_BALANCE, START_SETUP } from '../../store/types';
+import { GET_WALLETS_BALANCES, START_SETUP } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
@@ -12,16 +12,18 @@ import SplitwiseSummary from '../../components/SplitwiseSummary/SplitwiseSummary
 function HomeScreen() {
   const dispatch = useDispatch();
   const {
-    buda: { apiKey, balance, loading },
+    buda: { balance: budaBalance, apiKey },
+    bitsplitWallet: {
+      balance: bitsplitBalance,
+      loading: bitsplitWalletLoading,
+    },
     onstart: { startFlag },
     splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
 
   useEffect(() => {
-    if (apiKey) {
-      dispatch({ type: BUDA_GET_BALANCE });
-    }
-  }, [apiKey, dispatch]);
+    dispatch({ type: GET_WALLETS_BALANCES });
+  }, []);
 
   const startSetup = () => dispatch({ type: START_SETUP });
 
@@ -33,21 +35,23 @@ function HomeScreen() {
       )}
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
-          {balance ? (
+          {bitsplitBalance ? (
             <View style={styles.wallet}>
               <Text style={styles.saldoText}>
-                Saldo: ${balance.BTC.amount} BTC
+                Saldo: ${bitsplitBalance.BTC.amount} BTC
               </Text>
             </View>
           ) : (
             <View style={styles.wallet}>
               <Text style={styles.saldoText}>
-                {loading ? 'Cargando...' : 'Debes sincronizar con Buda'}
+                {bitsplitWalletLoading
+                  ? 'Cargando...'
+                  : 'Tenemos problemas con tu salgo'}
               </Text>
             </View>
           )}
 
-          {balance && (
+          {apiKey && (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}
@@ -55,9 +59,9 @@ function HomeScreen() {
               />
               <Text style={styles.titleText}>Balance</Text>
               <Text style={styles.coinText}>BTC</Text>
-              <Text style={styles.moneyText}>${balance.BTC.amount}</Text>
+              <Text style={styles.moneyText}>${budaBalance.BTC.amount}</Text>
               <Text style={styles.coinText}>CLP</Text>
-              <Text style={styles.moneyText}>${balance.CLP.amount}</Text>
+              <Text style={styles.moneyText}>${budaBalance.CLP.amount}</Text>
             </View>
           )}
 
