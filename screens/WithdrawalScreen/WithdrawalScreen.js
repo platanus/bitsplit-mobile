@@ -78,7 +78,7 @@ function WithdrawalScreen() {
 
   return (
     <>
-      <Header title='Transferencia' />
+      <Header title='Retiro' />
       <ScrollView>
         <View style={styles.screen}>
           <Text h4>{(error && error.message) || error}</Text>
@@ -86,7 +86,7 @@ function WithdrawalScreen() {
             {...bind('invoiceCode')}
             autoCapitalize='characters'
             placeholder='Código lightning'
-            leftIcon={<Icon name='user' size={24} color='black' />}
+            leftIcon={<Icon name='code' size={24} color='black' />}
           />
           <Button
             title='Retirar'

@@ -13,7 +13,7 @@ import QuotationComponent from '../../components/QuotationComponent';
 
 const minTrxAmount = 100;
 
-function useBudaPayments() {
+function useBitSplitDeposit() {
   const dispatch = useDispatch();
   function handleBudaQuotation(amount) {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
@@ -53,7 +53,7 @@ function DepostitScreen() {
     loading,
     handleBudaQuotation,
     handleBitSplitDeposit,
-  } = useBudaPayments();
+  } = useBitSplitDeposit();
   const [state, bind] = useForm(
     { transferAmount: '' },
     {
@@ -85,10 +85,10 @@ function DepostitScreen() {
           <Text h4>{(error && error.message) || error}</Text>
           <Input
             {...bind('transferAmount')}
-            label='Monto a transferir'
+            label='Monto a depositar'
             autoCapitalize='none'
-            placeholder='Monto a transferir en CLP'
-            leftIcon={<Icon name='user' size={24} color='black' />}
+            placeholder='Monto a depositar en CLP'
+            leftIcon={<Icon name='dollar' size={24} color='black' />}
           />
           <QuotationComponent
             style={styles.quotationContainer}

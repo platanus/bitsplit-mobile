@@ -100,7 +100,7 @@ function PaymentScreen() {
           <Input
             {...bind('receptor')}
             autoCapitalize='none'
-            placeholder='receptor email'
+            placeholder='Correo de quien recibe'
             leftIcon={<Icon name='user' size={24} color='black' />}
           />
           <Input
@@ -108,7 +108,7 @@ function PaymentScreen() {
             label='Monto a transferir'
             autoCapitalize='none'
             placeholder='Monto de llegada en CLP'
-            leftIcon={<Icon name='user' size={24} color='black' />}
+            leftIcon={<Icon name='dollar' size={24} color='black' />}
           />
           <ButtonGroup
             onPress={e => setSelectedIndex({ selectedIndex: e })}
