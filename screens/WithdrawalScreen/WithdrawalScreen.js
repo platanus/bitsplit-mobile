@@ -21,10 +21,13 @@ function useBitSplitWithdrawal() {
       callback,
     });
   }
-  const { error, lastWithdrawal, loading } = useSelector(state => state.buda);
+  const { error, returnMessage, lastWithdrawal, loading } = useSelector(
+    state => state.buda
+  );
 
   return {
     error,
+    returnMessage,
     lastWithdrawal,
     loading,
     handleBitSplitWithdrawal,
@@ -53,6 +56,7 @@ function validateLnCode(lnCode) {
 function WithdrawalScreen() {
   const {
     error,
+    returnMessage,
     lastWithdrawal,
     loading,
     handleBitSplitWithdrawal,
@@ -82,8 +86,12 @@ function WithdrawalScreen() {
       <ScrollView>
         <View style={styles.screen}>
           <Text h4>{(error && error.message) || error}</Text>
+          <Text h4>
+            {(returnMessage && returnMessage.message) || returnMessage}
+          </Text>
           <Input
             {...bind('invoiceCode')}
+            label='Código invoice'
             autoCapitalize='characters'
             placeholder='Código lightning'
             leftIcon={<Icon name='code' size={24} color='black' />}

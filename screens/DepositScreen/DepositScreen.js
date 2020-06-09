@@ -26,7 +26,7 @@ function useBitSplitDeposit() {
     });
   }
 
-  const { error, quotation, lastDeposit, loading } = useSelector(
+  const { error, returnMessage, quotation, lastDeposit, loading } = useSelector(
     state => state.buda
   );
 
@@ -35,6 +35,7 @@ function useBitSplitDeposit() {
 
   return {
     error,
+    returnMessage,
     totalClp,
     totalBitcoins,
     lastDeposit,
@@ -47,6 +48,7 @@ function useBitSplitDeposit() {
 function DepostitScreen() {
   const {
     error,
+    returnMessage,
     totalClp,
     totalBitcoins,
     lastDeposit,
@@ -83,6 +85,9 @@ function DepostitScreen() {
       <ScrollView>
         <View style={styles.screen}>
           <Text h4>{(error && error.message) || error}</Text>
+          <Text h4>
+            {(returnMessage && returnMessage.message) || returnMessage}
+          </Text>
           <Input
             {...bind('transferAmount')}
             label='Monto a depositar'

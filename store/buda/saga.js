@@ -151,7 +151,8 @@ function* postWithdrawal(action) {
           ).toLocaleDateString('es-ES', DATE_OPTIONS),
         })
       );
-      yield put(budaActions.syncBudaRejected('Transacción en proceso'));
+      yield put(budaActions.syncReturnMessage('Transacción en proceso'));
+      yield put(budaActions.syncBudaRejected(null));
       action.callback();
     } else {
       yield put(budaActions.syncBudaRejected(response.message));
@@ -182,12 +183,11 @@ function* postDeposit(action) {
       },
     } = yield call(api.bitSplitDepositApi, { ...action.payload });
     if (response.data) {
+      console.log(response.data);
       const {
-        data: {
-          amount,
-          processed_at,
-          lightning_invoice: { expires_at, payreq },
-        },
+        amount,
+        processed_at,
+        lightning_invoice: { expires_at, payreq },
       } = response.data;
       yield put(
         budaActions.setLastDeposit({
@@ -203,13 +203,19 @@ function* postDeposit(action) {
           payreq,
         })
       );
-      yield put(budaActions.syncBudaRejected('Transacción en proceso'));
+      yield put(budaActions.syncReturnMessage('Transacción en proceso'));
+      yield put(budaActions.syncBudaRejected(null));
       action.callback();
     } else {
       yield put(budaActions.syncBudaRejected(response.message));
     }
   } catch (err) {
-    yield put(budaActions.syncBudaRejected('Hubo un error en el retiro'));
+    console.log(err);
+    yield put(
+      budaActions.syncBudaRejected(
+        'Hubo un error al crear la solicitud de depósito'
+      )
+    );
   }
   yield put(budaActions.finish());
 }

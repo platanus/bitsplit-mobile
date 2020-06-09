@@ -9,6 +9,7 @@ const initialState = {
   lastPayment: null,
   lastWithdrawal: null,
   lastDeposit: null,
+  returnMessage: null,
   payments: [],
 };
 const slice = createSlice({
@@ -26,6 +27,9 @@ const slice = createSlice({
     },
     syncBudaRejected(state, action) {
       state.error = action.payload;
+    },
+    syncReturnMessage(state, action) {
+      state.returnMessage = action.payload;
     },
     budaBalance(state, action) {
       state.balance = action.payload;
