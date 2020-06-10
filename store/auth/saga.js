@@ -96,7 +96,7 @@ function* logoutRequest(action) {
       authedAxios.clear();
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
   yield put(authActions.finish());
 }
