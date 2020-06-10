@@ -9,10 +9,7 @@ export default function useSplitwiseSummary() {
   }, []);
 
   const {
-    debts: {
-      friends_to_user: friendsToUser = [],
-      user_to_friends: userToFriends = [],
-    },
+    debts: { friends_to_user: friendsToUser, user_to_friends: userToFriends },
     loading,
     isSync: isSplitSync,
   } = useSelector(state => state.splitwise);
@@ -27,8 +24,8 @@ export default function useSplitwiseSummary() {
   };
 
   const debtsSummary = {
-    toPay: userToFriends.reduce(sumByCurrency, {}),
-    toCollect: friendsToUser.reduce(sumByCurrency, {}),
+    toPay: userToFriends ? userToFriends.reduce(sumByCurrency, {}) : {},
+    toCollect: friendsToUser ? friendsToUser.reduce(sumByCurrency, {}) : {},
   };
 
   return { debtsSummary, loading, isSplitSync };
