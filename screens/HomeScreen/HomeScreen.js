@@ -7,13 +7,14 @@ import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
-import { useNavigation } from '@react-navigation/native';
+import authedAxios from '../../utils/api/authedAxios';
 
 function HomeScreen(props) {
   const dispatch = useDispatch();
   const {
     auth: {
       user: { email },
+      token,
     },
     buda: { apiKey, balance, loading },
     onstart: { startFlag },
@@ -24,6 +25,8 @@ function HomeScreen(props) {
       dispatch({ type: BUDA_GET_BALANCE });
     }
   }, [apiKey, dispatch]);
+
+  useEffect(() => authedAxios.createInstance({ email, token }), []);
 
   const startSetup = () => dispatch({ type: START_SETUP });
 
