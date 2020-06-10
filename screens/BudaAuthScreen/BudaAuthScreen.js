@@ -30,7 +30,6 @@ function BudaAuthScreen() {
       type: BUDA_AUTH_REQUEST,
       payload: { apiKey, apiSecret, password },
       callback: () => {
-        console.log('here');
         navegation.goBack();
       },
     });

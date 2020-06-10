@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
   },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   titleText: {
     color: colors.gray,
     fontSize: 18,

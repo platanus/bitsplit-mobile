@@ -14,7 +14,7 @@ function SplitwiseSummary() {
   return (
     <View style={styles.componentContainer}>
       <Text style={styles.titleText}>Resumen Splitwise</Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={styles.rowContainer}>
         <View>
           <Text style={styles.toCollectTitle}>x Cobrar</Text>
           {Object.keys(toCollect)
