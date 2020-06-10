@@ -21,7 +21,6 @@ export function* getBalance() {
 
     if (error) yield put(transactionsActions.setError(error.message));
     else {
-      console.log(balance);
       yield put(budaActions.budaBalance(budaBalance));
       yield put(bitsplitWalletActions.setBalance(bitsplitBalance));
     }
