@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useToggle from '../../utils/hooks/useToggle';
 import { SET_PIN, LOGOUT_REQUEST } from '../../store/types';
@@ -36,9 +36,9 @@ export default function usePin(
         message: 'Confirme el PIN previo',
       }));
     } else if (newPin === state.previousPin) {
-      toggleDisplay();
       dispatch({ type: SET_PIN, payload: newPin });
       onSuccess();
+      toggleDisplay();
     } else {
       setState(prevState => ({
         ...prevState,
@@ -56,7 +56,8 @@ export default function usePin(
     } else {
       setState(prevState => ({ ...prevState, message: 'PIN no coincide' }));
       if (state.currentTries === maxTries - 1) {
-        dispatch({ type: LOGOUT_REQUEST, callback: onFailure });
+        onFailure();
+        dispatch({ type: LOGOUT_REQUEST });
       }
     }
     setState(prevState => ({
