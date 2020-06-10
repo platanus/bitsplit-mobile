@@ -8,10 +8,15 @@ import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import SplitwiseSummary from '../../components/SplitwiseSummary/SplitwiseSummary';
+import authedAxios from '../../utils/api/authedAxios';
 
 function HomeScreen() {
   const dispatch = useDispatch();
   const {
+    auth: {
+      user: { email },
+      token,
+    },
     buda: { apiKey, balance, loading },
     onstart: { startFlag },
     splitwise: { isSync: isSplitwiseSync },
@@ -23,13 +28,15 @@ function HomeScreen() {
     }
   }, [apiKey, dispatch]);
 
+  useEffect(() => authedAxios.createInstance({ email, token }), []);
+
   const startSetup = () => dispatch({ type: START_SETUP });
 
   return (
     <>
       <Header title='Inicio' />
       {startFlag && (
-        <PinOverlay onFailure={startSetup} pinLength={4} maxTries={3} />
+        <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
       )}
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>

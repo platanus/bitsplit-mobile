@@ -90,14 +90,13 @@ function* logoutRequest(action) {
     const { status } = yield call(api.logoutApi);
     if (success_status.includes(status)) {
       yield put(authActions.logout());
-      action.callback();
       yield put(authActions.reset());
       yield put(budaActions.reset());
       yield put(onstartActions.resetStartFlag());
       authedAxios.clear();
     }
   } catch (err) {
-    console.log(err.response);
+    console.error(err);
   }
   yield put(authActions.finish());
 }
