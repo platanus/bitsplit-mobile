@@ -7,6 +7,7 @@ import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
+import { useNavigation } from '@react-navigation/native';
 
 function HomeScreen(props) {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function HomeScreen(props) {
     <>
       <Header title='Inicio' />
       {startFlag && (
-        <PinOverlay onFailure={startSetup} pinLength={4} maxTries={3} />
+        <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
       )}
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>

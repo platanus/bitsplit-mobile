@@ -34,7 +34,7 @@ const authedAxios = (() => {
   }
 
   function clear() {
-    axiosObject = undefined;
+    if (axiosObject) axiosObject = null;
   }
 
   return { getInstance, clear };
