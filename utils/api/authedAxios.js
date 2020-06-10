@@ -22,7 +22,6 @@ const authedAxios = (() => {
   }
 
   function getInstance() {
-
     return axiosObject;
   }
 

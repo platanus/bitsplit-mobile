@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as splitwiseActions } from './slice';
 import { SPLITWISE_GET_DEBTS } from '../types';
 import api from '../../utils/api';

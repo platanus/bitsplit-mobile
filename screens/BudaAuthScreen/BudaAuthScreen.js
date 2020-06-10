@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -10,37 +10,36 @@ import {
   Overlay,
   Avatar,
 } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUDA_AUTH_REQUEST, BUDA_CLEAN_ERROR } from '../../store/types';
 import styles from './styles';
-import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import colors from '../../styles/colors';
 
-function BudaAuthScreen(props) {
-  const { error, loading, balance } = useSelector(state => state.buda);
+function BudaAuthScreen() {
+  const { error, loading } = useSelector(state => state.buda);
   const [apiKey, setApiKey] = useState('');
   const [apiSecret, setApiSecret] = useState('');
   const [password, setPassword] = useState('');
+
   const dispatch = useDispatch();
+  const navegation = useNavigation();
   function handleBudaAuth() {
     dispatch({
       type: BUDA_AUTH_REQUEST,
       payload: { apiKey, apiSecret, password },
+      callback: () => {
+        console.log('here');
+        navegation.goBack();
+      },
     });
   }
 
   const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
 
-  useEffect(() => {
-    if (balance) {
-      props.navigation.navigate('Inicio');
-    }
-  }, [balance, props]);
-
   return (
     <>
-      <Header title='Autentificación Buda' />
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           <Avatar
