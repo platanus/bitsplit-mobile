@@ -8,10 +8,14 @@ import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import SplitwiseSummary from '../../components/SplitwiseSummary/SplitwiseSummary';
+import Wallet from '../../components/Wallet/Wallet';
 
 function HomeScreen() {
   const dispatch = useDispatch();
   const {
+    auth: {
+      user: { wallet: defaultWallet },
+    },
     buda: { balance: budaBalance, apiKey },
     bitsplitWallet: {
       balance: bitsplitBalance,
@@ -36,11 +40,11 @@ function HomeScreen() {
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           {bitsplitBalance ? (
-            <View style={styles.wallet}>
-              <Text style={styles.saldoText}>
-                Saldo: ${bitsplitBalance.BTC.amount} BTC
-              </Text>
-            </View>
+            <Wallet
+              name={'Bitsplit'}
+              isDefault={defaultWallet === 'bitsplit'}
+              balance={bitsplitBalance}
+            />
           ) : (
             <View style={styles.wallet}>
               <Text style={styles.saldoText}>
@@ -52,17 +56,11 @@ function HomeScreen() {
           )}
 
           {apiKey && (
-            <View style={styles.appWallet}>
-              <Avatar
-                containerStyle={styles.walletAvatar}
-                source={require('../../assets/Images/buda.png')}
-              />
-              <Text style={styles.titleText}>Balance</Text>
-              <Text style={styles.coinText}>BTC</Text>
-              <Text style={styles.moneyText}>${budaBalance.BTC.amount}</Text>
-              <Text style={styles.coinText}>CLP</Text>
-              <Text style={styles.moneyText}>${budaBalance.CLP.amount}</Text>
-            </View>
+            <Wallet
+              name={'Buda'}
+              balance={budaBalance}
+              isDefault={defaultWallet === 'buda'}
+            />
           )}
 
           {isSplitwiseSync && <SplitwiseSummary />}
