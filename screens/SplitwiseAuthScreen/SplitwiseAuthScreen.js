@@ -1,9 +1,8 @@
 /* eslint-disable max-statements */
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import Constants from 'expo-constants';
 import {
   Button,
   Text,
@@ -26,17 +25,10 @@ function SplitwiseAuthScreen() {
   const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
   const fetchUser = () => dispatch({ type: FETCH_USER });
 
-  // openAuthSessionAsync doesn't require that you add Linking listeners, it
-  // returns the redirect URL in the resulting Promise
   async function openAuthSessionAsync() {
     try {
-      await WebBrowser.openAuthSessionAsync(
-        // We add `?` at the end of the URL since the test backend that is used
-        // just appends `authToken=<token>` to the URL provided.
-        authUrl
-      );
+      await WebBrowser.openAuthSessionAsync(authUrl);
       fetchUser();
-      // this.setState({ result, redirectData });
     } catch (err) {
       console.log(err);
     }
