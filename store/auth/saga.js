@@ -7,6 +7,7 @@ import { actions as onstartActions } from '../onstart/slice';
 import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
 import api from '../../utils/api';
 import authedAxios from '../../utils/api/authedAxios';
+import { registerForPushNotifications } from '../../utils/api/notifications';
 
 function* fetchUser() {
   yield put(authActions.start());
@@ -49,6 +50,7 @@ function* loginRequest(action) {
       yield put(authActions.loginRejected('Tus credenciales son invalidas'));
     }
   }
+  yield call(registerForPushNotifications);
   yield put(authActions.finish());
 }
 
@@ -80,6 +82,7 @@ function* register(action) {
       );
     }
   }
+  yield call(registerForPushNotifications);
   yield put(authActions.finish());
 }
 
