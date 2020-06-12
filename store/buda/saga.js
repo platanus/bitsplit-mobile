@@ -185,7 +185,6 @@ function* postDeposit(action) {
       },
     } = yield call(api.bitSplitDepositApi, { ...action.payload });
     if (response.data) {
-      console.log(response.data);
       const {
         amount,
         processed_at,
@@ -212,7 +211,6 @@ function* postDeposit(action) {
       yield put(budaActions.syncBudaRejected(response.message));
     }
   } catch (err) {
-    console.log(err);
     yield put(
       budaActions.syncBudaRejected(
         'Hubo un error al crear la solicitud de depósito'
