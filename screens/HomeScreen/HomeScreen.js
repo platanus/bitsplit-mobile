@@ -70,7 +70,7 @@ function HomeScreen() {
               <Text style={styles.saldoText}>
                 {bitsplitWalletLoading
                   ? 'Cargando...'
-                  : 'Tenemos problemas con tu salgo'}
+                  : 'Tenemos problemas con tu saldo'}
               </Text>
             </View>
           )}
