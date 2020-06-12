@@ -10,8 +10,7 @@ function Wallet({ isDefault = false, name, balance }) {
   const showCoin = () =>
     showIn === 'BTC'
       ? balance[showIn].amount
-      : // el slice es porque el formateo le agrega otro signo $
-        formatCurrency(parseInt(balance[showIn].amount), 'CLP').slice(1);
+      : formatCurrency(parseInt(balance[showIn].amount), 'CLP').slice(1);
 
   return (
     <TouchableOpacity
@@ -28,7 +27,7 @@ function Wallet({ isDefault = false, name, balance }) {
       </View>
       <Text style={styles.coinText}>
         {`Saldo ${showIn.replace('_', ' > ')}
-                $${showCoin()} `}
+                ${showCoin()} `}
       </Text>
     </TouchableOpacity>
   );
