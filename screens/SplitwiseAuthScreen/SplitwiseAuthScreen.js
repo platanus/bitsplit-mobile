@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import {
   Button,
@@ -19,16 +18,20 @@ import Theme from '../../styles/Theme';
 
 function SplitwiseAuthScreen() {
   const { error, loading } = useSelector(state => state.buda);
-  const authUrl = postSplitwiseAuthUrl();
-  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
 
+  const [connected, setConnected] = useState(user.picture_url !== null);
+  const authUrl = postSplitwiseAuthUrl();
+
+  const dispatch = useDispatch();
   const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
   const fetchUser = () => dispatch({ type: FETCH_USER });
 
   async function openAuthSessionAsync() {
     try {
       await WebBrowser.openAuthSessionAsync(authUrl);
-      fetchUser();
+      await fetchUser();
+      setConnected(user.picture_url !== null);
     } catch (err) {
       console.log(err);
     }
@@ -48,20 +51,12 @@ function SplitwiseAuthScreen() {
           <Button
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
-            title='Autorizar'
+            title={connected ? 'Splitwise ya está autorizado' : 'Autorizar'}
             type='solid'
-            onPress={() => Linking.openURL(authUrl)}
+            onPress={async () => await openAuthSessionAsync()}
+            disabled={connected}
             loading={loading}
           />
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.textButton}
-            title='F'
-            type='solid'
-            onPress={openAuthSessionAsync}
-            loading={loading}
-          />
-          <Text>{Linking.makeUrl()}</Text>
           <Overlay
             isVisible={!!error}
             overlayStyle={styles.overlayError}
