@@ -15,24 +15,22 @@ function SplitwiseSummary() {
     <View style={styles.componentContainer}>
       <Text style={styles.titleText}>Resumen Splitwise</Text>
       <View style={styles.rowContainer}>
-        <View>
-          <Text style={styles.toCollectTitle}>x Cobrar</Text>
-          {Object.keys(toCollect)
-            .sort()
-            .map(currency => (
-              <Text key={currency} style={styles.coinText}>{` ${formatCurrency(
-                toCollect[currency],
-                currency
-              )}`}</Text>
-            ))}
-        </View>
-        <View>
-          <Text style={styles.toPayTitle}>x Pagar</Text>
+        <View style={styles.less}>
           {Object.keys(toPay)
             .sort()
             .map(currency => (
               <Text key={currency} style={styles.coinText}>{`${formatCurrency(
                 toPay[currency],
+                currency
+              )}`}</Text>
+            ))}
+        </View>
+        <View style={styles.plus}>
+          {Object.keys(toCollect)
+            .sort()
+            .map(currency => (
+              <Text key={currency} style={styles.coinText}>{` ${formatCurrency(
+                toCollect[currency],
                 currency
               )}`}</Text>
             ))}

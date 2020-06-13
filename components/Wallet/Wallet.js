@@ -5,24 +5,23 @@ import formatCurrency from '../../utils/formatCurrency';
 import styles from './styles';
 
 function Wallet({ isDefault = false, name, balance }) {
-  const [showIn, setShowIn] = useState('BTC');
+  const [showIn, setShowIn] = useState(true);
 
   const showCoin = () =>
-    showIn === 'BTC'
-      ? balance[showIn].amount
-      : formatCurrency(parseInt(balance[showIn].amount), 'CLP').slice(1);
+    showIn
+      ? balance.BTC.amount
+      : formatCurrency(parseInt(balance.BTC_CLP.amount), 'CLP').slice(3);
 
   return (
     <TouchableOpacity
       activeOpacity={100}
-      onPressIn={() => setShowIn(() => 'BTC_CLP')}
-      onPressOut={() => setShowIn(() => 'BTC')}
-      // style={styles.defaultWallet}
+      onPressIn={() => setShowIn(!showIn)}
+      onPressOut={() => setShowIn(!showIn)}
       style={isDefault ? styles.defaultWallet : styles.secondWallet}
     >
       <Text style={styles.titleWallet}>{name}</Text>
       <Text style={styles.coinText}>
-        {`${showCoin()} ${showIn.replace('_', ' > ')}`}
+        {showCoin()} {showIn ? 'BTC' : 'CLP'}
       </Text>
       {isDefault && (
         <Text style={styles.defaultWalletText}>{'Wallet predeterminada'}</Text>

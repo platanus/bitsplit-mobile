@@ -6,21 +6,41 @@ const styles = StyleSheet.create({
   componentContainer: {
     backgroundColor: colors.middlepurple,
     borderRadius: 20,
-    padding: '10%',
-    paddingTop: '5%',
+    padding: '8%',
+    margin: 10,
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowOpacity: 1,
+    shadowRadius: 3,
+    elevation: 10,
   },
+
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+
+  plus: {
+    backgroundColor: colors.lightgreen,
+    width: '50%',
+    padding: 5,
+    borderColor: colors.green,
+    borderWidth: 2,
+  },
+
+  less: {
+    backgroundColor: colors.lightred,
+    width: '50%',
+    padding: 5,
+    borderColor: colors.red,
+    borderWidth: 1,
+  },
+
   titleText: {
-    color: colors.gray,
+    color: colors.darkpurple,
     fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 15,
   },
 
   toCollectTitle: {
@@ -32,8 +52,9 @@ const styles = StyleSheet.create({
     color: colors.red,
   },
   coinText: {
-    color: colors.gray,
+    color: colors.black,
     fontSize: 15,
+    textAlign: 'center',
   },
 });
 export default { ...crossStyles, ...styles };
