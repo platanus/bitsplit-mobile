@@ -43,14 +43,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  toCollectTitle: {
-    fontSize: 18,
-    color: colors.green,
-  },
-  toPayTitle: {
-    fontSize: 18,
-    color: colors.red,
-  },
   coinText: {
     color: colors.black,
     fontSize: 15,
