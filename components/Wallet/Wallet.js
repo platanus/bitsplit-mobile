@@ -16,6 +16,7 @@ function Wallet({ isDefault = false, name, balance }) {
 
   const [fontsLoaded] = useFonts({
     SpaceMonoItalic: require('../../assets/fonts/SpaceMono-BoldItalic.ttf'),
+    SpaceMonoRegular: require('../../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -29,16 +30,29 @@ function Wallet({ isDefault = false, name, balance }) {
       onPressOut={() => setShowIn(!showIn)}
       style={isDefault ? styles.defaultWallet : styles.secondWallet}
     >
+      {/* <Text style={{ fontFamily: 'SpaceMonoItalic'}}>
+        {name}
+      </Text> */}
       <Text
-        style={{ fontFamily: 'SpaceMonoItalic', fontSize: 20, color: 'white' }}
+        style={{ ...styles.titleWallet, ...{ fontFamily: 'SpaceMonoItalic' } }}
       >
         {name}
       </Text>
-      <Text style={styles.coinText}>
+      <Text
+        style={{ ...styles.coinText, ...{ fontFamily: 'SpaceMonoRegular' } }}
+      >
         {showCoin()} {showIn ? 'BTC' : 'CLP'}
       </Text>
       {isDefault && (
-        <Text style={styles.defaultWalletText}>{'Wallet predeterminada'}</Text>
+        <Text
+          style={{
+            fontFamily: 'SpaceMonoRegular',
+            textAlign: 'center',
+            color: 'white',
+          }}
+        >
+          {'Wallet predeterminada'}
+        </Text>
       )}
     </TouchableOpacity>
   );

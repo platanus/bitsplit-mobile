@@ -25,7 +25,6 @@ const walletStyles = StyleSheet.create({
   },
 
   titleWallet: {
-    fontWeight: 'bold',
     color: colors.lightpurple,
     fontSize: 18,
     marginTop: '-5%',
@@ -42,7 +41,7 @@ const walletStyles = StyleSheet.create({
   defaultWalletText: {
     textAlign: 'center',
     fontSize: 15,
-    color: colors.purple,
+    color: colors.red,
   },
 });
 export default { ...crossStyles, ...walletStyles };
