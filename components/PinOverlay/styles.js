@@ -5,7 +5,7 @@ import colors from '../../styles/colors';
 const styles = StyleSheet.create({
   pinOverlayContainer: {
     alignItems: 'center',
-    backgroundColor: '#25035A',
+    backgroundColor: colors.darkpurple,
   },
 
   pinView: {

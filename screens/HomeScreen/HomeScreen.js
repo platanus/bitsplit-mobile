@@ -66,13 +66,11 @@ function HomeScreen() {
               balance={bitsplitBalance}
             />
           ) : (
-            <View style={styles.wallet}>
-              <Text style={styles.saldoText}>
-                {bitsplitWalletLoading
-                  ? 'Cargando...'
-                  : 'Tenemos problemas con tu saldo'}
-              </Text>
-            </View>
+            <Text style={styles.saldoText}>
+              {bitsplitWalletLoading
+                ? 'Cargando...'
+                : 'Tenemos problemas con tu saldo'}
+            </Text>
           )}
 
           {apiKey && (
