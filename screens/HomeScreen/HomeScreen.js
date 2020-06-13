@@ -72,7 +72,6 @@ function HomeScreen() {
                 : 'Tenemos problemas con tu saldo'}
             </Text>
           )}
-
           {apiKey && (
             <Wallet
               name={'Buda'}
