@@ -1,10 +1,11 @@
 import { Text } from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import formatCurrency from '../../utils/formatCurrency';
-import styles from './styles';
 import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
+import formatCurrency from '../../utils/formatCurrency';
+import styles from './styles';
+import colors from '../../styles/colors';
 
 function Wallet({ isDefault = false, name, balance }) {
   const [showIn, setShowIn] = useState(true);
@@ -43,17 +44,16 @@ function Wallet({ isDefault = false, name, balance }) {
       >
         {showCoin()} {showIn ? 'BTC' : 'CLP'}
       </Text>
-      {isDefault && (
-        <Text
-          style={{
-            fontFamily: 'SpaceMonoRegular',
-            textAlign: 'center',
-            color: 'white',
-          }}
-        >
-          {'Wallet predeterminada'}
-        </Text>
-      )}
+
+      <Text
+        style={{
+          fontFamily: 'SpaceMonoRegular',
+          textAlign: 'center',
+          color: colors.lightpurple,
+        }}
+      >
+        {isDefault ? 'Wallet Principal' : 'Wallet Secundaria'}
+      </Text>
     </TouchableOpacity>
   );
 }

@@ -20,7 +20,7 @@ const walletStyles = StyleSheet.create({
     backgroundColor: colors.purple,
     borderRadius: 20,
     padding: '8%',
-    marginBottom: '10%',
+    marginBottom: '5%',
     margin: 10,
   },
 

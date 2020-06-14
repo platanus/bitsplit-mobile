@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
-    shadowRadius: 3,
-    elevation: 10,
+    shadowRadius: 2,
+    elevation: 1,
   },
 
   rowContainer: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width: '50%',
     padding: 5,
     borderColor: colors.red,
-    borderWidth: 1,
+    borderWidth: 2,
   },
 
   titleText: {
