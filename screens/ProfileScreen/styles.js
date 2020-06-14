@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
 
   walletAvatar: {
     marginLeft: '40%',
-    textAlign: 'center',
   },
 
   titleText: {
