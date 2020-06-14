@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
+import TouchableScale from 'react-native-touchable-scale';
 import moment from 'moment';
 import styles from './styles';
 import { usePaymentHistory } from './hooks';
@@ -39,6 +40,10 @@ function PaymentHistoryScreen() {
                     receiver_email
                   )}
                   bottomDivider
+                  Component={TouchableScale}
+                  friction={90}
+                  tension={100}
+                  activeScale={0.95}
                 />
               )
             )}
