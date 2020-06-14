@@ -6,6 +6,7 @@ import moment from 'moment';
 import styles from './styles';
 import { usePaymentHistory } from './hooks';
 import Header from '../../components/Header';
+import colors from '../../styles/colors';
 
 function PaymentHistoryScreen() {
   const [payments, loading] = usePaymentHistory();
@@ -28,11 +29,8 @@ function PaymentHistoryScreen() {
               }) => (
                 <ListItem
                   key={id}
-                  title={
-                    <Text style={received ? styles.received : styles.sent}>
-                      {amount} BTC
-                    </Text>
-                  }
+                  title={amount}
+                  titleStyle={received ? styles.received : styles.sent}
                   subtitle={getSubtitle(
                     received,
                     created_at,
@@ -44,6 +42,12 @@ function PaymentHistoryScreen() {
                   friction={90}
                   tension={100}
                   activeScale={0.95}
+                  containerStyle={received ? styles.received : styles.sent}
+                  subtitleStyle={{
+                    fontFamily: 'SpaceMonoRegular',
+                    color: colors.darkpurple,
+                    fontSize: 15,
+                  }}
                 />
               )
             )}
