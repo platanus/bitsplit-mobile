@@ -37,20 +37,6 @@ const styles = StyleSheet.create({
     padding: 10,
     color: color.lightpurple,
   },
-
-  //   quotationContainer: {
-  //     backgroundColor: color.middlepurple,
-  //     margin: 22,
-  //     height: '30%',
-  //     borderRadius: 20,
-  //     shadowColor: color.black,
-  //     shadowOffset: { width: 0, height: 2 },
-  //     shadowOpacity: 0.8,
-  //     shadowRadius: 2,
-  //     elevation: 1,
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //   },
 });
 
 export default { ...crossStyles, ...styles };
