@@ -15,43 +15,41 @@ function PaymentHistoryScreen() {
     <>
       <Header title='Historial de pagos' />
       <ScrollView>
-        <View>
-          {!loading &&
-            payments &&
-            payments.map(
-              ({
-                id,
-                amount,
-                received,
-                created_at,
-                sender_email,
-                receiver_email,
-              }) => (
-                <ListItem
-                  key={id}
-                  title={amount}
-                  titleStyle={received ? styles.received : styles.sent}
-                  subtitle={getSubtitle(
-                    received,
-                    created_at,
-                    sender_email,
-                    receiver_email
-                  )}
-                  bottomDivider
-                  Component={TouchableScale}
-                  friction={90}
-                  tension={100}
-                  activeScale={0.95}
-                  containerStyle={received ? styles.received : styles.sent}
-                  subtitleStyle={{
-                    fontFamily: 'SpaceMonoRegular',
-                    color: colors.darkpurple,
-                    fontSize: 15,
-                  }}
-                />
-              )
-            )}
-        </View>
+        {!loading &&
+          payments &&
+          payments.map(
+            ({
+              id,
+              amount,
+              received,
+              created_at,
+              sender_email,
+              receiver_email,
+            }) => (
+              <ListItem
+                key={id}
+                title={amount}
+                titleStyle={received ? styles.received : styles.sent}
+                subtitle={getSubtitle(
+                  received,
+                  created_at,
+                  sender_email,
+                  receiver_email
+                )}
+                bottomDivider
+                Component={TouchableScale}
+                friction={90}
+                tension={100}
+                activeScale={0.95}
+                containerStyle={received ? styles.received : styles.sent}
+                subtitleStyle={{
+                  fontFamily: 'SpaceMonoRegular',
+                  color: colors.darkpurple,
+                  fontSize: 15,
+                }}
+              />
+            )
+          )}
       </ScrollView>
     </>
   );

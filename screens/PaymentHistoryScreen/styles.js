@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   sent: {
     color: colors.lightred,
     fontSize: 18,
+    fontFamily: 'SpaceMonoRegular',
   },
 });
 export default { ...styles, ...crossStyles };
