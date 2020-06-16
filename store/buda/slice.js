@@ -4,7 +4,26 @@ const initialState = {
   apiKey: null,
   error: null,
   loading: false,
-  balance: null,
+  balance: {
+    BTC: {
+      amount: 0,
+      available_amount: 0,
+      frozen_amount: 0,
+      pending_withdraw_amount: 0,
+    },
+    BTC_CLP: {
+      amount: 0,
+      available_amount: 0,
+      frozen_amount: 0,
+      pending_withdraw_amount: 0,
+    },
+    CLP: {
+      amount: 0,
+      available_amount: 0,
+      frozen_amount: 0,
+      pending_withdraw_amount: 0,
+    },
+  },
   quotation: null,
   lastPayment: null,
   lastWithdrawal: null,

@@ -3,9 +3,16 @@ import authSaga from './auth/saga';
 import budaSaga from './buda/saga';
 import firebaseSaga from './firebase/saga';
 import splitwiseSaga from './splitwise/saga';
+import transactionsSaga from './transactions/saga';
 
 export default function* rootSaga() {
-  const sagas = [authSaga, budaSaga, firebaseSaga, splitwiseSaga];
+  const sagas = [
+    authSaga,
+    budaSaga,
+    firebaseSaga,
+    splitwiseSaga,
+    transactionsSaga,
+  ];
 
   yield all(
     sagas.map(saga =>

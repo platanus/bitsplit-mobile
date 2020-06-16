@@ -4,6 +4,8 @@ import {
   DrawerItemList,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
+import { enableScreens } from 'react-native-screens';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { Button, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,9 +19,27 @@ import WithdrawalScreen from '../screens/WithdrawalScreen/WithdrawalScreen';
 import DepositScreen from '../screens/DepositScreen/DepositScreen';
 import SplitwiseDebtsScreen from '../screens/SplitwiseDebtsScreen';
 import NotificationScreen from '../screens/Notifications/NotificationScreen';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
+
 import { LOGOUT_REQUEST } from '../store/types';
 
 const Drawer = createDrawerNavigator();
+
+enableScreens();
+const Stack = createNativeStackNavigator();
+
+function profileStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name='Settings'
+        component={ProfileScreen}
+      />
+      <Stack.Screen name='Buda' component={BudaAuthScreen} />
+    </Stack.Navigator>
+  );
+}
 
 const Navigation = () => {
   const token = useSelector(state => state.auth.token);
@@ -35,7 +55,6 @@ const Navigation = () => {
         {token ? (
           <>
             <Drawer.Screen name='Inicio' component={HomeScreen} />
-            <Drawer.Screen name='Buda' component={BudaAuthScreen} />
             <Drawer.Screen name='Pagar' component={PaymentScreen} />
             <Drawer.Screen
               name='Historial de Pagos'
@@ -48,6 +67,7 @@ const Navigation = () => {
               name='Notificaciones'
               component={NotificationScreen}
             />
+            <Drawer.Screen name='Perfil' component={profileStack} />
           </>
         ) : (
           <Drawer.Screen name='Authentication' component={AuthScreen} />
@@ -69,7 +89,6 @@ const Logout = props => {
   const onPress = () => {
     dispatch({
       type: LOGOUT_REQUEST,
-      callback: () => props.navigation.navigate('Authentication'),
     });
   };
   const { loading, token } = useSelector(state => state.auth);
