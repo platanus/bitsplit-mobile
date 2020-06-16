@@ -4,7 +4,12 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as authActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
 import { actions as onstartActions } from '../onstart/slice';
-import { LOGIN_REQUEST, REGISTER_REQUEST, LOGOUT_REQUEST } from '../types';
+import {
+  LOGIN_REQUEST,
+  REGISTER_REQUEST,
+  LOGOUT_REQUEST,
+  FETCH_USER,
+} from '../types';
 import api from '../../utils/api';
 import authedAxios from '../../utils/api/authedAxios';
 import { registerForPushNotifications } from '../../utils/api/notifications';
@@ -108,4 +113,5 @@ export default function* loginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(REGISTER_REQUEST, register);
   yield takeLatest(LOGOUT_REQUEST, logoutRequest);
+  yield takeLatest(FETCH_USER, fetchUser);
 }

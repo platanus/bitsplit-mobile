@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
+import SplitwiseAuthScreen from '../screens/SplitwiseAuthScreen/SplitwiseAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';

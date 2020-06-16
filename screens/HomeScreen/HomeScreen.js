@@ -82,7 +82,6 @@ function HomeScreen() {
               isDefault={defaultWallet === 'buda'}
             />
           )}
-
           {isSplitwiseSync && <SplitwiseSummary />}
         </View>
       </ThemeProvider>
