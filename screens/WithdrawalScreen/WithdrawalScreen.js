@@ -1,6 +1,7 @@
 /* eslint-disable max-statements */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,6 +73,22 @@ function WithdrawalScreen() {
     }
   );
 
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    state.invoiceCode = data.replace('lightning:', '');
+    alert(`¡Lightning escandeado!`);
+  };
+
   const [isDisplayVisible, toggleDisplay] = useToggle();
 
   const invoiceCode = state.invoiceCode.toUpperCase();
@@ -96,6 +113,23 @@ function WithdrawalScreen() {
             placeholder='Código lightning'
             leftIcon={<Icon name='code' size={24} color='black' />}
           />
+          {hasPermission === null || hasPermission === false ? (
+            <Text>Se debe autorizar a la app para utilizar la cámara</Text>
+          ) : (
+            <>
+              {scanned && (
+                <Button
+                  title={'Escanear de nuevo'}
+                  type='solid'
+                  onPress={() => setScanned(false)}
+                />
+              )}
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={{ height: 250, width: 250 }}
+              />
+            </>
+          )}
           <Button
             title='Retirar'
             type='solid'
