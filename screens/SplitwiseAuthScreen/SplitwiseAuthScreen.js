@@ -10,8 +10,8 @@ import {
   Avatar,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { postSplitwiseAuthUrl } from './hooks';
 import { BUDA_CLEAN_ERROR, FETCH_USER } from '../../store/types';
+import api from '../../utils/api';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
@@ -21,7 +21,6 @@ function SplitwiseAuthScreen() {
   const { user } = useSelector(state => state.auth);
 
   const [connected, setConnected] = useState(user.picture_url !== null);
-  const authUrl = postSplitwiseAuthUrl();
 
   const dispatch = useDispatch();
   const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
@@ -29,11 +28,18 @@ function SplitwiseAuthScreen() {
 
   async function openAuthSessionAsync() {
     try {
-      await WebBrowser.openAuthSessionAsync(authUrl);
+      const {
+        data: {
+          data: {
+            attributes: { authorize_url },
+          },
+        },
+      } = await api.splitwiseAuth();
+      await WebBrowser.openAuthSessionAsync(authorize_url);
       await fetchUser();
       setConnected(user.picture_url !== null);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -53,7 +59,7 @@ function SplitwiseAuthScreen() {
             titleStyle={styles.textButton}
             title={connected ? 'Splitwise ya está autorizado' : 'Autorizar'}
             type='solid'
-            onPress={async () => await openAuthSessionAsync()}
+            onPress={openAuthSessionAsync}
             disabled={connected}
             loading={loading}
           />
