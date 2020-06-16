@@ -39,17 +39,15 @@ const styles = StyleSheet.create({
   },
 
   cameraContainer: {
-    marginLeft: '30%',
     backgroundColor: color.black,
-    padding: 5,
     alignItems: 'center',
-    width: '35%',
-    borderRadius: 10,
+    width: '100%',
+    height: '100%',
   },
 
   camera: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: '100%',
   },
 });
 

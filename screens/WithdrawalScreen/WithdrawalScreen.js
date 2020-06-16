@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Modal } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
@@ -76,6 +76,7 @@ function WithdrawalScreen() {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -86,6 +87,7 @@ function WithdrawalScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    setModalVisible(!modalVisible);
     state.invoiceCode = data.replace('lightning:', '');
     alert('¡Invoice escandeado!');
   };
@@ -127,39 +129,38 @@ function WithdrawalScreen() {
             <Text>Se debe autorizar a la app para utilizar la cámara</Text>
           ) : (
             <>
-              {scanned && (
-                <Button
-                  title={'Escanear de nuevo'}
-                  type='solid'
-                  onPress={clearLN}
-                  loading={loading}
-                  buttonStyle={styles.button}
-                  titleStyle={{
-                    ...styles.textButton,
-                    ...{ fontFamily: 'SpaceMonoRegular' },
-                  }}
-                />
-              )}
-              <View style={styles.cameraContainer}>
-                <BarCodeScanner
-                  onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                  style={styles.camera}
-                />
-              </View>
+              <Modal
+                visible={modalVisible}
+                animationType={'slide'}
+                onRequestClose={() => setModalVisible(!modalVisible)}
+              >
+                <View style={styles.cameraContainer}>
+                  <BarCodeScanner
+                    onBarCodeScanned={
+                      scanned ? undefined : handleBarCodeScanned
+                    }
+                    style={styles.camera}
+                  />
+                </View>
+              </Modal>
             </>
           )}
+
           <Button
-            title='Scanear QR'
+            title='Escanear QR'
             type='solid'
-            onPress={onWithdrawalPress}
+            onPress={() => {
+              clearLN();
+              setModalVisible(!modalVisible);
+            }}
             loading={loading}
-            disabled={isWithdrawDisabled}
             buttonStyle={styles.button}
             titleStyle={{
               ...styles.textButton,
               ...{ fontFamily: 'SpaceMonoRegular' },
             }}
           />
+
           <Button
             title='Retirar'
             type='solid'
