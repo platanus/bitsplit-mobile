@@ -94,6 +94,11 @@ function WithdrawalScreen() {
   const invoiceCode = state.invoiceCode.toUpperCase();
   const isWithdrawDisabled = !invoiceCode || invoiceCode.length < minLnLength;
 
+  const clearLN = () => {
+    setScanned(false);
+    state.invoiceCode = 'LN';
+  };
+
   const onWithdrawalPress = () =>
     handleBitSplitWithdrawal(state.invoiceCode.toUpperCase(), toggleDisplay);
 
@@ -121,7 +126,7 @@ function WithdrawalScreen() {
                 <Button
                   title={'Escanear de nuevo'}
                   type='solid'
-                  onPress={() => setScanned(false)}
+                  onPress={clearLN}
                 />
               )}
               <BarCodeScanner
