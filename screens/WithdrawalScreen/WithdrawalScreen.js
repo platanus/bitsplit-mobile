@@ -87,7 +87,7 @@ function WithdrawalScreen() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     state.invoiceCode = data.replace('lightning:', '');
-    alert(`¡Invoice escandeado!`);
+    alert('¡Invoice escandeado!');
   };
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
@@ -132,26 +132,22 @@ function WithdrawalScreen() {
                   title={'Escanear de nuevo'}
                   type='solid'
                   onPress={clearLN}
+                  loading={loading}
+                  buttonStyle={styles.button}
+                  titleStyle={{
+                    ...styles.textButton,
+                    ...{ fontFamily: 'SpaceMonoRegular' },
+                  }}
                 />
               )}
-              <BarCodeScanner
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                style={{ height: 250, width: 250 }}
-              />
+              <View style={styles.cameraContainer}>
+                <BarCodeScanner
+                  onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                  style={styles.camera}
+                />
+              </View>
             </>
           )}
-          <Button
-            title='Retirar'
-            type='solid'
-            onPress={onWithdrawalPress}
-            loading={loading}
-            disabled={isWithdrawDisabled}
-            buttonStyle={styles.button}
-            titleStyle={{
-              ...styles.textButton,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
-          />
           <Button
             title='Scanear QR'
             type='solid'
@@ -164,6 +160,19 @@ function WithdrawalScreen() {
               ...{ fontFamily: 'SpaceMonoRegular' },
             }}
           />
+          <Button
+            title='Retirar'
+            type='solid'
+            onPress={onWithdrawalPress}
+            loading={loading}
+            disabled={isWithdrawDisabled}
+            buttonStyle={styles.button}
+            titleStyle={{
+              ...styles.textButton,
+              ...{ fontFamily: 'SpaceMonoRegular' },
+            }}
+          />
+
           {lastWithdrawal && (
             <Overlay
               isVisible={isDisplayVisible}

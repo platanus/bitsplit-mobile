@@ -18,24 +18,12 @@ function PaymentHistoryScreen() {
         {!loading &&
           payments &&
           payments.map(
-            ({
-              id,
-              amount,
-              received,
-              created_at,
-              sender_email,
-              receiver_email,
-            }) => (
+            ({ id, amount_btc, received, created_at, sender, email }) => (
               <ListItem
                 key={id}
-                title={amount}
+                title={amount_btc}
                 titleStyle={received ? styles.received : styles.sent}
-                subtitle={getSubtitle(
-                  received,
-                  created_at,
-                  sender_email,
-                  receiver_email
-                )}
+                subtitle={getSubtitle(received, created_at, sender, email)}
                 bottomDivider
                 Component={TouchableScale}
                 friction={90}

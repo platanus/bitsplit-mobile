@@ -37,6 +37,20 @@ const styles = StyleSheet.create({
     padding: 10,
     color: color.lightpurple,
   },
+
+  cameraContainer: {
+    marginLeft: '30%',
+    backgroundColor: color.black,
+    padding: 5,
+    alignItems: 'center',
+    width: '35%',
+    borderRadius: 10,
+  },
+
+  camera: {
+    width: 200,
+    height: 200,
+  },
 });
 
 export default { ...crossStyles, ...styles };

@@ -92,10 +92,15 @@ function DepostitScreen() {
           </Text>
           <Input
             {...bind('transferAmount')}
-            label='Monto a depositar'
+            inputContainerStyle={styles.inputOff}
+            inputStyle={{
+              ...styles.inputText,
+              ...{ fontFamily: 'SpaceMonoRegular' },
+            }}
             autoCapitalize='none'
-            placeholder='Monto a depositar en CLP'
-            leftIcon={<Icon name='dollar' size={24} color='black' />}
+            keyboardType='numeric'
+            placeholder='Monto en CLP'
+            leftIcon={<Icon name='dollar' size={24} color={color.purple} />}
           />
           <QuotationComponent
             style={styles.quotationContainer}
@@ -105,11 +110,16 @@ function DepostitScreen() {
           />
 
           <Button
-            title='Crear depósito'
+            title='Crear Depósito'
             type='solid'
             onPress={onDepositPress}
             loading={loading}
             disabled={isPayDisabled}
+            buttonStyle={styles.button}
+            titleStyle={{
+              ...styles.textButton,
+              ...{ fontFamily: 'SpaceMonoRegular' },
+            }}
           />
           {lastDeposit && (
             <Overlay
