@@ -86,7 +86,7 @@ function WithdrawalScreen() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     state.invoiceCode = data.replace('lightning:', '');
-    alert(`¡Lightning escandeado!`);
+    alert(`¡Invoice escandeado!`);
   };
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
