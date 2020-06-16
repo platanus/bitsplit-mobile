@@ -2,38 +2,46 @@ import { StyleSheet } from 'react-native';
 import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
-const styles = StyleSheet.create({
-  componentContainer: {
-    backgroundColor: colors.middlepurple,
+const walletStyles = StyleSheet.create({
+  defaultWallet: {
+    backgroundColor: colors.darkpurple,
     borderRadius: 20,
-    padding: '10%',
+    padding: '8%',
     marginBottom: '10%',
-    marginVertical: 5,
-    paddingTop: '5%',
+    margin: 10,
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowOpacity: 1,
+    shadowRadius: 3,
+    elevation: 10,
   },
-  titleContainer: {
+
+  secondWallet: {
+    backgroundColor: colors.purple,
+    borderRadius: 20,
+    padding: '8%',
     marginBottom: '5%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    margin: 10,
   },
-  titleText: {
-    fontWeight: 'bold',
-    color: colors.gray,
+
+  titleWallet: {
+    color: colors.lightpurple,
     fontSize: 18,
+    marginTop: '-5%',
+  },
+
+  coinText: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: colors.lightpurple,
+    textAlign: 'center',
+    padding: '10%',
   },
 
   defaultWalletText: {
-    fontSize: 18,
-    color: colors.purple,
-  },
-  coinText: {
-    fontWeight: 'bold',
-    fontSize: 18,
+    textAlign: 'center',
+    fontSize: 15,
+    color: colors.red,
   },
 });
-export default { ...crossStyles, ...styles };
+export default { ...crossStyles, ...walletStyles };

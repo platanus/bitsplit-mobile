@@ -1,10 +1,12 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
 import styles from './styles';
 import { useSplitwiseDebts } from './hooks';
 import Header from '../../components/Header';
 import formatCurrency from '../../utils/formatCurrency';
+import colors from '../../styles/colors';
+import TouchableScale from 'react-native-touchable-scale';
 
 function SplitwiseDebtsScreen() {
   const [debts, loading] = useSplitwiseDebts();
@@ -37,7 +39,8 @@ const DebtList = ({ title, debts }) => {
 
   return (
     <>
-      <Text>{title}</Text>
+      <Text style={styles.titleText}>{title}</Text>
+
       {friendsToUser &&
         friendsToUser.map(debt => <Debt key={debt.id} {...debt} from />)}
       {userToFriends &&
@@ -54,6 +57,18 @@ const Debt = ({ id, first_name, last_name, amount, from, currency_code }) => (
         last_name || ''
       }`}</Text>
     }
+    // title={{ first_name }}
+    // titleStyle={from ? styles.from : styles.to}
+    Component={TouchableScale}
+    friction={90}
+    tension={100}
+    activeScale={0.95}
+    containerStyle={from ? styles.received : styles.sent}
+    subtitleStyle={{
+      fontFamily: 'SpaceMonoRegular',
+      color: colors.darkpurple,
+      fontSize: 15,
+    }}
     subtitle={`${from ? 'Te debe' : 'Debes'} ${formatCurrency(
       amount,
       currency_code

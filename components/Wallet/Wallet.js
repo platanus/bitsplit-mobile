@@ -1,33 +1,58 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { AppLoading } from 'expo';
+import { useFonts } from '@use-expo/font';
 import formatCurrency from '../../utils/formatCurrency';
 import styles from './styles';
+import colors from '../../styles/colors';
 
 function Wallet({ isDefault = false, name, balance }) {
-  const [showIn, setShowIn] = useState('BTC');
+  const [showIn, setShowIn] = useState(true);
 
   const showCoin = () =>
-    showIn === 'BTC'
-      ? balance[showIn].amount
-      : formatCurrency(parseInt(balance[showIn].amount), 'CLP').slice(1);
+    showIn
+      ? balance.BTC.amount
+      : formatCurrency(parseInt(balance.BTC_CLP.amount), 'CLP').slice(3);
+
+  const [fontsLoaded] = useFonts({
+    SpaceMonoItalic: require('../../assets/fonts/SpaceMono-BoldItalic.ttf'),
+    SpaceMonoRegular: require('../../assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <TouchableOpacity
       activeOpacity={100}
-      onPressIn={() => setShowIn(() => 'BTC_CLP')}
-      onPressOut={() => setShowIn(() => 'BTC')}
-      style={styles.componentContainer}
+      onPressIn={() => setShowIn(!showIn)}
+      onPressOut={() => setShowIn(!showIn)}
+      style={isDefault ? styles.defaultWallet : styles.secondWallet}
     >
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>{name}</Text>
-        {isDefault && (
-          <Text style={styles.defaultWalletText}>{'Tu Wallet\nx defecto'}</Text>
-        )}
-      </View>
-      <Text style={styles.coinText}>
-        {`Saldo ${showIn.replace('_', ' > ')}
-                ${showCoin()} `}
+      {/* <Text style={{ fontFamily: 'SpaceMonoItalic'}}>
+        {name}
+      </Text> */}
+      <Text
+        style={{ ...styles.titleWallet, ...{ fontFamily: 'SpaceMonoItalic' } }}
+      >
+        {name}
+      </Text>
+      <Text
+        style={{ ...styles.coinText, ...{ fontFamily: 'SpaceMonoRegular' } }}
+      >
+        {showCoin()} {showIn ? 'BTC' : 'CLP'}
+      </Text>
+
+      <Text
+        style={{
+          fontFamily: 'SpaceMonoRegular',
+          textAlign: 'center',
+          color: colors.lightpurple,
+        }}
+      >
+        {isDefault ? 'Wallet Principal' : 'Wallet Secundaria'}
       </Text>
     </TouchableOpacity>
   );

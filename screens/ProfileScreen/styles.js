@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
   },
 
   nameText: {
-    fontSize: 18,
+    fontSize: 15,
     marginLeft: 125,
-    marginTop: -110,
+    marginTop: -90,
     marginBottom: 2,
   },
 
@@ -27,46 +27,48 @@ const styles = StyleSheet.create({
   },
 
   walletText: {
-    fontSize: 15,
+    fontSize: 13,
     marginLeft: 125,
     color: colors.purple,
-    marginBottom: 5,
+    marginBottom: '15%',
   },
 
   button: {
-    backgroundColor: colors.white,
-    width: 70,
-    height: 35,
-    marginLeft: 125,
-    borderColor: colors.black,
-    borderRadius: 5,
-    borderWidth: 1,
-    marginBottom: 30,
-  },
-
-  buttonText: {
-    color: colors.black,
-    fontSize: 15,
-  },
-
-  wallet: {
-    backgroundColor: colors.purple,
-    height: 50,
-    borderRadius: 5,
+    backgroundColor: colors.darkpurple,
     padding: 10,
-    marginBottom: 50,
+    borderColor: colors.black,
+    borderRadius: 10,
+    borderWidth: 1.5,
   },
 
-  saldoText: {
-    color: colors.white,
+  textButton: {
+    padding: 10,
+    color: colors.lightpurple,
+  },
+
+  syncButton: {
+    backgroundColor: colors.darkpurple,
+    padding: 10,
+    borderColor: colors.black,
+    borderRadius: 10,
+    borderWidth: 1.5,
+    width: '80%',
+    height: '15%',
+    marginTop: '5%',
+    margin: '11%',
+  },
+
+  syncTextButton: {
+    color: colors.lightpurple,
+    fontSize: 10,
     textAlign: 'center',
-    fontSize: 20,
+    marginTop: '-18%',
   },
 
   appWallet: {
     backgroundColor: colors.middlepurple,
     width: 300,
-    height: 150,
+    height: 160,
     borderRadius: 20,
     padding: 10,
     marginBottom: 20,
@@ -78,26 +80,14 @@ const styles = StyleSheet.create({
   },
 
   walletAvatar: {
-    width: 90,
-    height: 90,
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: 30,
+    marginLeft: '40%',
   },
 
   titleText: {
-    color: colors.gray,
-    fontSize: 18,
-    marginLeft: 150,
-    marginTop: -120,
-    marginBottom: 2,
-  },
-
-  coinText: {
-    color: colors.black,
+    color: colors.purple,
     fontSize: 15,
-    marginLeft: 150,
-    marginBottom: 2,
+    marginTop: '5%',
+    textAlign: 'center',
   },
 
   syncBuda: {

@@ -10,7 +10,8 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
-import QuotationComponent from '../../components/QuotationComponent';
+import QuotationComponent from '../../components/Quotation/QuotationComponent';
+import color from '../../styles/colors';
 
 const minTrxAmount = 100;
 

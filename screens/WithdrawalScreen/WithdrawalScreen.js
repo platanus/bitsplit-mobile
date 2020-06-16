@@ -10,6 +10,7 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
+import colors from '../../styles/colors';
 
 const minLnLength = 2;
 
@@ -113,10 +114,14 @@ function WithdrawalScreen() {
           </Text>
           <Input
             {...bind('invoiceCode')}
-            label='Código invoice'
             autoCapitalize='characters'
             placeholder='Código lightning'
-            leftIcon={<Icon name='code' size={24} color='black' />}
+            leftIcon={<Icon name='bolt' size={24} color={colors.purple} />}
+            inputContainerStyle={styles.inputOff}
+            inputStyle={{
+              ...styles.inputText,
+              ...{ fontFamily: 'SpaceMonoRegular' },
+            }}
           />
           {hasPermission === null || hasPermission === false ? (
             <Text>Se debe autorizar a la app para utilizar la cámara</Text>
@@ -141,6 +146,23 @@ function WithdrawalScreen() {
             onPress={onWithdrawalPress}
             loading={loading}
             disabled={isWithdrawDisabled}
+            buttonStyle={styles.button}
+            titleStyle={{
+              ...styles.textButton,
+              ...{ fontFamily: 'SpaceMonoRegular' },
+            }}
+          />
+          <Button
+            title='Scanear QR'
+            type='solid'
+            onPress={onWithdrawalPress}
+            loading={loading}
+            disabled={isWithdrawDisabled}
+            buttonStyle={styles.button}
+            titleStyle={{
+              ...styles.textButton,
+              ...{ fontFamily: 'SpaceMonoRegular' },
+            }}
           />
           {lastWithdrawal && (
             <Overlay

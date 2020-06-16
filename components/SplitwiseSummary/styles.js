@@ -6,34 +6,47 @@ const styles = StyleSheet.create({
   componentContainer: {
     backgroundColor: colors.middlepurple,
     borderRadius: 20,
-    padding: '10%',
-    paddingTop: '5%',
+    padding: '8%',
+    margin: 10,
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
+    shadowOpacity: 1,
     shadowRadius: 2,
     elevation: 1,
   },
+
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  titleText: {
-    color: colors.gray,
-    fontSize: 18,
+
+  plus: {
+    backgroundColor: colors.lightgreen,
+    width: '50%',
+    padding: 5,
+    borderColor: colors.green,
+    borderWidth: 2,
   },
 
-  toCollectTitle: {
-    fontSize: 18,
-    color: colors.green,
+  less: {
+    backgroundColor: colors.lightred,
+    width: '50%',
+    padding: 5,
+    borderColor: colors.red,
+    borderWidth: 2,
   },
-  toPayTitle: {
+
+  titleText: {
+    color: colors.darkpurple,
     fontSize: 18,
-    color: colors.red,
+    textAlign: 'center',
+    marginBottom: 15,
   },
+
   coinText: {
-    color: colors.gray,
+    color: colors.black,
     fontSize: 15,
+    textAlign: 'center',
   },
 });
 export default { ...crossStyles, ...styles };
