@@ -28,4 +28,3 @@ export const START_SETUP = 'onstart/finishStart';
 // SPLITWISE MIDDLEWARE
 
 export const SPLITWISE_GET_DEBTS = 'SPLITWISE_GET_DEBTS';
-export const SPLITWISE_POST_AUTH = 'SPLITWISE_POST_AUTH';
