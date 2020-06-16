@@ -19,8 +19,12 @@ function budaPaymentApi(payload) {
   });
 }
 
+// function budaPaymentHistoryApi() {
+//   return authedAxios.getInstance().get(`${env.url}/api/v1/payments`);
+// }
+
 function budaPaymentHistoryApi() {
-  return authedAxios.getInstance().get(`${env.url}/api/v1/payments`);
+  return authedAxios.getInstance().get(`${env.url}/api/v2/transactions`);
 }
 
 function bitSplitWithdrawalApi(payload) {

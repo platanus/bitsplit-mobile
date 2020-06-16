@@ -17,27 +17,15 @@ function PaymentHistoryScreen() {
           {!loading &&
             payments &&
             payments.map(
-              ({
-                id,
-                amount,
-                received,
-                created_at,
-                sender_email,
-                receiver_email,
-              }) => (
+              ({ id, amount_btc, received, created_at, sender, email }) => (
                 <ListItem
                   key={id}
                   title={
                     <Text style={received ? styles.received : styles.sent}>
-                      {amount} BTC
+                      {amount_btc} BTC
                     </Text>
                   }
-                  subtitle={getSubtitle(
-                    received,
-                    created_at,
-                    sender_email,
-                    receiver_email
-                  )}
+                  subtitle={getSubtitle(received, created_at, sender, email)}
                   bottomDivider
                 />
               )
@@ -48,9 +36,9 @@ function PaymentHistoryScreen() {
   );
 }
 
-const getSubtitle = (received, created_at, sender_email, receiver_email) =>
+const getSubtitle = (received, created_at, sender, email) =>
   `${received ? 'Recibido' : 'Enviado'} el ${moment(created_at).format(
     'DD/MM/YY HH:mm'
-  )} ${received ? 'de' : 'a'} ${received ? sender_email : receiver_email}`;
+  )} ${received ? 'de' : 'a'} ${received ? sender : email}`;
 
 export default PaymentHistoryScreen;
