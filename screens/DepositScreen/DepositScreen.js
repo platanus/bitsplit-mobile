@@ -4,6 +4,7 @@ import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
+import QRCode from 'react-native-qrcode-svg';
 import { BUDA_QUOTATION, BITSPLIT_DEPOSIT } from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
@@ -81,7 +82,7 @@ function DepostitScreen() {
 
   return (
     <>
-      <Header title='Depositar' />
+      <Header title={'Depositar'} />
       <ScrollView>
         <View style={styles.screen}>
           <Text h4>{(error && error.message) || error}</Text>
@@ -125,6 +126,7 @@ function DepostitScreen() {
                   Tu código de retiro es válido hasta el{' '}
                   {lastDeposit.expires_at}
                 </Text>
+                <QRCode value={`${lastDeposit.payreq}`} size={250} />
                 <Text h5>{`Código LN:\n${lastDeposit.payreq}`}</Text>
                 <Button title='Listo' type='solid' onPress={toggleDisplay} />
               </View>
