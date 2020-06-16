@@ -31,8 +31,10 @@ function* syncBudaRequest(action) {
     if (error) {
       yield put(budaActions.syncBudaRejected(error.message));
     } else {
+      const { callback = () => {} } = action;
       yield put(budaActions.budaBalance(balance));
       yield put(budaActions.setBudaKey(api_key));
+      callback();
     }
   } catch (err) {
     yield put(budaActions.syncBudaRejected('tus credenciales son invalidas'));

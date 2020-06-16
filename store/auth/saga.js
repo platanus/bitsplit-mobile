@@ -12,6 +12,7 @@ import {
 } from '../types';
 import api from '../../utils/api';
 import authedAxios from '../../utils/api/authedAxios';
+import { registerForPushNotifications } from '../../utils/api/notifications';
 
 function* fetchUser() {
   yield put(authActions.start());
@@ -54,6 +55,7 @@ function* loginRequest(action) {
       yield put(authActions.loginRejected('Tus credenciales son invalidas'));
     }
   }
+  yield call(registerForPushNotifications);
   yield put(authActions.finish());
 }
 
@@ -85,6 +87,7 @@ function* register(action) {
       );
     }
   }
+  yield call(registerForPushNotifications);
   yield put(authActions.finish());
 }
 
@@ -95,14 +98,13 @@ function* logoutRequest(action) {
     const { status } = yield call(api.logoutApi);
     if (success_status.includes(status)) {
       yield put(authActions.logout());
-      action.callback();
       yield put(authActions.reset());
       yield put(budaActions.reset());
       yield put(onstartActions.resetStartFlag());
       authedAxios.clear();
     }
   } catch (err) {
-    console.log(err.response);
+    console.error(err);
   }
   yield put(authActions.finish());
 }

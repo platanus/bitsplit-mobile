@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
 import styles from './styles';
 import { useSplitwiseDebts } from './hooks';
