@@ -30,6 +30,12 @@ function PaymentHistoryScreen() {
                 friction={90}
                 tension={100}
                 activeScale={0.95}
+                leftAvatar={{
+                  source: {
+                    uri:
+                      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                  },
+                }}
                 subtitleStyle={{
                   fontFamily: 'SpaceMonoRegular',
                   color: colors.darkpurple,

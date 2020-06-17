@@ -103,7 +103,7 @@ function* postBudaPayment(action) {
 }
 
 function* getBudaPaymentHistory() {
-  console.log('aqui');
+  // console.log('aqui');
   yield put(budaActions.start());
   try {
     const {
@@ -112,7 +112,7 @@ function* getBudaPaymentHistory() {
     const {
       data: { data },
     } = yield call(api.budaPaymentHistoryApi);
-    console.log(data);
+    // console.log(data);
     const payments = data.transactions
       .map(({ id, attributes }) => ({
         id,
@@ -121,7 +121,7 @@ function* getBudaPaymentHistory() {
       }))
 
       .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
-    console.log('HOLA', payments);
+    // console.log('HOLA', payments);
     yield put(budaActions.setPayments(payments));
   } catch (err) {
     console.error(err);

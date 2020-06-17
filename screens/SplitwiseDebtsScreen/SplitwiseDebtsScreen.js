@@ -59,6 +59,12 @@ const Debt = ({ id, first_name, last_name, amount, from, currency_code }) => (
     tension={100}
     activeScale={0.95}
     containerStyle={from ? styles.received : styles.sent}
+    leftAvatar={{
+      source: {
+        uri:
+          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+      },
+    }}
     subtitleStyle={{
       fontFamily: 'SpaceMonoRegular',
       color: colors.darkpurple,
