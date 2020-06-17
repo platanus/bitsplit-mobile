@@ -52,13 +52,8 @@ const DebtList = ({ title, debts }) => {
 const Debt = ({ id, first_name, last_name, amount, from, currency_code }) => (
   <ListItem
     key={id}
-    title={
-      <Text style={from ? styles.from : styles.to}>{`${first_name} ${
-        last_name || ''
-      }`}</Text>
-    }
-    // title={{ first_name }}
-    // titleStyle={from ? styles.from : styles.to}
+    title={`${first_name} ${last_name || ''}`}
+    titleStyle={from ? styles.from : styles.to}
     Component={TouchableScale}
     friction={90}
     tension={100}
