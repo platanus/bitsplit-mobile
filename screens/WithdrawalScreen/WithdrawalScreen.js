@@ -3,7 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Modal } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text, Overlay } from 'react-native-elements';
+import {
+  Input,
+  Button,
+  Text,
+  Overlay,
+  ButtonGroup,
+} from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { BITSPLIT_WITHDRAWAL } from '../../store/types';
 import styles from './styles';
@@ -74,6 +80,9 @@ function WithdrawalScreen() {
     }
   );
 
+  const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
+  const buttons = ['Buda', 'Otro'];
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -110,7 +119,6 @@ function WithdrawalScreen() {
       <Header title='Retiro' />
       <ScrollView>
         <View style={styles.screen}>
-          <Text h4>{(error && error.message) || error}</Text>
           <Text h4>
             {(returnMessage && returnMessage.message) || returnMessage}
           </Text>
@@ -142,6 +150,15 @@ function WithdrawalScreen() {
               </Modal>
             </>
           )}
+
+          <Text h4>¿Desde donde se desea cargar?</Text>
+          <ButtonGroup
+            onPress={e => setSelectedIndex({ selectedIndex: e })}
+            selectedIndex={buttonState.selectedIndex}
+            buttons={buttons}
+            containerStyle={styles.groupButtonContainer}
+            selectedButtonStyle={styles.groupButton}
+          />
 
           <Button
             title='Escanear QR'

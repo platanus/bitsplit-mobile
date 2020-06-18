@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMonoRegular',
   },
 
+  groupButton: {
+    backgroundColor: color.darkpurple,
+  },
+
   cameraContainer: {
     backgroundColor: color.black,
     alignItems: 'center',
