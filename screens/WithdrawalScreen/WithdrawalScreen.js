@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Modal } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button, Text, Overlay } from 'react-native-elements';
@@ -10,6 +10,7 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
+import colors from '../../styles/colors';
 
 const minLnLength = 2;
 
@@ -75,6 +76,7 @@ function WithdrawalScreen() {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -85,8 +87,9 @@ function WithdrawalScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    setModalVisible(!modalVisible);
     state.invoiceCode = data.replace('lightning:', '');
-    alert(`¡Invoice escandeado!`);
+    alert('¡Invoice escandeado!');
   };
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
@@ -113,35 +116,55 @@ function WithdrawalScreen() {
           </Text>
           <Input
             {...bind('invoiceCode')}
-            label='Código invoice'
             autoCapitalize='characters'
             placeholder='Código lightning'
-            leftIcon={<Icon name='code' size={24} color='black' />}
+            leftIcon={<Icon name='bolt' size={24} color={colors.purple} />}
+            inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
           />
           {hasPermission === null || hasPermission === false ? (
             <Text>Se debe autorizar a la app para utilizar la cámara</Text>
           ) : (
             <>
-              {scanned && (
-                <Button
-                  title={'Escanear de nuevo'}
-                  type='solid'
-                  onPress={clearLN}
-                />
-              )}
-              <BarCodeScanner
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                style={{ height: 250, width: 250 }}
-              />
+              <Modal
+                visible={modalVisible}
+                animationType={'slide'}
+                onRequestClose={() => setModalVisible(!modalVisible)}
+              >
+                <View style={styles.cameraContainer}>
+                  <BarCodeScanner
+                    onBarCodeScanned={
+                      scanned ? undefined : handleBarCodeScanned
+                    }
+                    style={styles.camera}
+                  />
+                </View>
+              </Modal>
             </>
           )}
+
+          <Button
+            title='Escanear QR'
+            type='solid'
+            onPress={() => {
+              clearLN();
+              setModalVisible(!modalVisible);
+            }}
+            loading={loading}
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
+          />
+
           <Button
             title='Retirar'
             type='solid'
             onPress={onWithdrawalPress}
             loading={loading}
             disabled={isWithdrawDisabled}
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
           />
+
           {lastWithdrawal && (
             <Overlay
               isVisible={isDisplayVisible}

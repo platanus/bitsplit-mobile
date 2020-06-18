@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   },
 
   overlayError: {
+    backgroundColor: colors.lightpurple,
     width: 300,
     height: 100,
     maxWidth: '80%',
@@ -50,9 +51,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 8,
-    backgroundColor: colors.purple,
     padding: 5,
-    borderRadius: 15,
     marginVertical: 30,
   },
 });

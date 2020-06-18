@@ -16,7 +16,8 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
-import QuotationComponent from '../../components/QuotationComponent';
+import QuotationComponent from '../../components/Quotation/QuotationComponent';
+import color from '../../styles/colors';
 
 const minTrxAmount = 100;
 
@@ -104,10 +105,12 @@ function DepostitScreen() {
           </Text>
           <Input
             {...bind('transferAmount')}
-            label='Monto a depositar'
+            inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             autoCapitalize='none'
-            placeholder='Monto a depositar en CLP'
-            leftIcon={<Icon name='dollar' size={24} color='black' />}
+            keyboardType='numeric'
+            placeholder='Monto en CLP'
+            leftIcon={<Icon name='dollar' size={24} color={color.purple} />}
           />
           <QuotationComponent
             style={styles.quotationContainer}
@@ -125,11 +128,13 @@ function DepostitScreen() {
           />
 
           <Button
-            title='Crear depósito'
+            title='Crear Depósito'
             type='solid'
             onPress={onDepositPress}
             loading={loading}
             disabled={isPayDisabled}
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
           />
           {lastDeposit && (
             <Overlay

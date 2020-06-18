@@ -19,10 +19,6 @@ function budaPaymentApi(payload) {
   });
 }
 
-function budaPaymentHistoryApi() {
-  return authedAxios.getInstance().get(`${env.url}/api/v1/payments`);
-}
-
 function bitSplitWithdrawalApi(payload) {
   return authedAxios.getInstance().post(`${env.url}/api/v2/withdrawals`, {
     invoice: payload.invoice,
@@ -47,7 +43,6 @@ const budaApi = {
   budaBalance,
   budaGetQuotationApi,
   budaPaymentApi,
-  budaPaymentHistoryApi,
   bitSplitWithdrawalApi,
   bitSplitDepositApi,
   budaAutoDepositApi,

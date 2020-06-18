@@ -1,12 +1,11 @@
 /* eslint-disable max-statements */
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions as budaActions } from './slice';
 import {
   BUDA_AUTH_REQUEST,
   BUDA_GET_BALANCE,
   BUDA_QUOTATION,
   BUDA_PAYMENT,
-  BUDA_GET_PAYMENT_HISTORY,
   BITSPLIT_WITHDRAWAL,
   BITSPLIT_DEPOSIT,
 } from '../types';
@@ -98,29 +97,6 @@ function* postBudaPayment(action) {
     }
   } catch (err) {
     yield put(budaActions.syncBudaRejected('Hubo un error en el pago'));
-  }
-  yield put(budaActions.finish());
-}
-
-function* getBudaPaymentHistory() {
-  yield put(budaActions.start());
-  try {
-    const {
-      user: { email },
-    } = yield select(state => state.auth);
-    const {
-      data: { data },
-    } = yield call(api.budaPaymentHistoryApi);
-    const payments = data
-      .map(({ id, attributes }) => ({
-        id,
-        ...attributes,
-        received: attributes.receiver_email === email,
-      }))
-      .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
-    yield put(budaActions.setPayments(payments));
-  } catch (err) {
-    yield put(budaActions.syncBudaRejected(err));
   }
   yield put(budaActions.finish());
 }
@@ -250,7 +226,6 @@ export default function* budaSaga() {
   yield takeLatest(BUDA_GET_BALANCE, getBudaBalance);
   yield takeLatest(BUDA_QUOTATION, getBudaQuotation);
   yield takeLatest(BUDA_PAYMENT, postBudaPayment);
-  yield takeLatest(BUDA_GET_PAYMENT_HISTORY, getBudaPaymentHistory);
   yield takeLatest(BITSPLIT_WITHDRAWAL, postWithdrawal);
   yield takeLatest(BITSPLIT_DEPOSIT, postDeposit);
 }

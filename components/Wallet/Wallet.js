@@ -1,33 +1,31 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import formatCurrency from '../../utils/formatCurrency';
 import styles from './styles';
 
 function Wallet({ isDefault = false, name, balance }) {
-  const [showIn, setShowIn] = useState('BTC');
+  const [showIn, setShowIn] = useState(true);
 
   const showCoin = () =>
-    showIn === 'BTC'
-      ? balance[showIn].amount
-      : formatCurrency(parseInt(balance[showIn].amount), 'CLP').slice(1);
+    showIn
+      ? balance.BTC.amount
+      : formatCurrency(parseInt(balance.BTC_CLP.amount), 'CLP').slice(3);
 
   return (
     <TouchableOpacity
       activeOpacity={100}
-      onPressIn={() => setShowIn(() => 'BTC_CLP')}
-      onPressOut={() => setShowIn(() => 'BTC')}
-      style={styles.componentContainer}
+      onPressIn={() => setShowIn(!showIn)}
+      onPressOut={() => setShowIn(!showIn)}
+      style={isDefault ? styles.defaultWallet : styles.secondWallet}
     >
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>{name}</Text>
-        {isDefault && (
-          <Text style={styles.defaultWalletText}>{'Tu Wallet\nx defecto'}</Text>
-        )}
-      </View>
+      <Text style={styles.titleWallet}>{name}</Text>
       <Text style={styles.coinText}>
-        {`Saldo ${showIn.replace('_', ' > ')}
-                ${showCoin()} `}
+        {showCoin()} {showIn ? 'BTC' : 'CLP'}
+      </Text>
+
+      <Text style={styles.defaultWalletText}>
+        {isDefault ? 'Wallet Principal' : 'Wallet Secundaria'}
       </Text>
     </TouchableOpacity>
   );
