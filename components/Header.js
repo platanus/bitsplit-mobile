@@ -18,7 +18,14 @@ const AppHeader = ({ title }) => {
         color: colors.white,
         onPress: navigation.toggleDrawer,
       }}
-      centerComponent={{ text: title, style: { color: '#fff' } }}
+      centerComponent={{
+        text: title,
+        style: {
+          color: colors.white,
+          fontSize: 15,
+          fontFamily: 'SpaceMonoRegular',
+        },
+      }}
     />
   );
 };

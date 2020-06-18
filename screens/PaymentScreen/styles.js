@@ -3,19 +3,24 @@ import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
-  wallet: {
-    backgroundColor: colors.purple,
-    height: 50,
-    borderRadius: 5,
-    padding: 10,
+  screen: {
     marginTop: 30,
-    marginBottom: 50,
+    margin: 15,
   },
 
   saldoText: {
-    color: colors.white,
+    color: colors.darkpurple,
     textAlign: 'center',
     fontSize: 20,
+    marginBottom: '5%',
+    fontFamily: 'SpaceMonoBoldItalic',
+  },
+
+  inputText: {
+    color: colors.black,
+    fontSize: 15,
+    textAlign: 'center',
+    fontFamily: 'SpaceMonoRegular',
   },
 
   inputOff: {
@@ -28,56 +33,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
 
-  button: {
-    backgroundColor: colors.white,
-    padding: 10,
-    marginBottom: 30,
-    borderColor: colors.black,
-    borderRadius: 10,
-    borderWidth: 1.5,
-    width: 150,
-  },
-
-  textButton: {
-    padding: 10,
-    color: colors.black,
-  },
-
-  titleText: {
-    color: colors.gray,
-    fontSize: 18,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-
-  moneyText: {
-    color: colors.purple,
-    fontSize: 15,
-    marginBottom: 2,
-  },
-
   errorText: {
     color: colors.red,
     fontSize: 12,
     textAlign: 'center',
     margin: 3,
-  },
-
-  quotationContainer: {
-    margin: 15,
-    backgroundColor: colors.middlepurple,
-    width: 250,
-    height: 150,
-    borderRadius: 20,
-    padding: 10,
-    marginBottom: 20,
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   overlayContainer: {
@@ -113,11 +73,26 @@ const styles = StyleSheet.create({
   groupButtonContainer: {
     backgroundColor: colors.middlepurple,
     borderRadius: 5,
-    maxWidth: 300,
+    maxWidth: '100%',
   },
 
   groupButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.darkpurple,
+  },
+
+  button: {
+    backgroundColor: colors.darkpurple,
+    padding: 10,
+    borderColor: colors.black,
+    borderRadius: 10,
+    borderWidth: 1.5,
+    margin: 22,
+  },
+
+  textButton: {
+    padding: 10,
+    color: colors.lightpurple,
+    fontFamily: 'SpaceMonoRegular',
   },
 });
 export default { ...crossStyles, ...styles };

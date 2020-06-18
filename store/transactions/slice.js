@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   error: null,
   loading: false,
+  payments: [],
 };
 const slice = createSlice({
   name: 'transactions',
@@ -16,6 +17,9 @@ const slice = createSlice({
     },
     setError(state, action) {
       state.error = action.payload;
+    },
+    setPayments(state, action) {
+      state.payments = action.payload;
     },
     cleanError(state) {
       state.error = null;

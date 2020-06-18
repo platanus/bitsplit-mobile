@@ -4,10 +4,14 @@ import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
   received: {
-    color: colors.green,
+    color: colors.lightgreen,
+    fontSize: 18,
+    fontFamily: 'SpaceMonoRegular',
   },
   sent: {
-    color: colors.red,
+    color: colors.lightred,
+    fontSize: 18,
+    fontFamily: 'SpaceMonoRegular',
   },
 });
-export default { ...styles, ...crossStyles };
+export default { ...crossStyles, ...styles };

@@ -18,7 +18,7 @@ import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
-import QuotationComponent from '../../components/QuotationComponent';
+import QuotationComponent from '../../components/Quotation/QuotationComponent';
 
 const minTrxAmount = 100;
 
@@ -102,12 +102,12 @@ function PaymentScreen() {
     <>
       <Header title='Transferencia' />
       <View style={styles.screen}>
-        <View style={styles.wallet}>
-          <Text style={styles.saldoText}>Saldo: {balance.BTC.amount} BTC</Text>
-        </View>
+        <Text style={styles.saldoText}>Wallet: {balance.BTC.amount} BTC</Text>
+
         <Input
           {...bind('receptor')}
           inputContainerStyle={styles.inputOff}
+          inputStyle={styles.inputText}
           autoCapitalize='none'
           placeholder='Correo de quien recibe'
         />
@@ -115,6 +115,7 @@ function PaymentScreen() {
           {...bind('transferAmount')}
           keyboardType='numeric'
           inputContainerStyle={styles.inputOff}
+          inputStyle={styles.inputText}
           autoCapitalize='none'
           placeholder='Monto de llegada en CLP'
         />
@@ -125,22 +126,22 @@ function PaymentScreen() {
           containerStyle={styles.groupButtonContainer}
           selectedButtonStyle={styles.groupButton}
         />
-          <QuotationComponent
-            style={styles.quotationContainer}
-            isValidQuotation={isValidQuotation}
-            totalClp={totalClp}
-            totalBitcoins={totalBitcoins}
-            fee={fee}
-          />
+        <QuotationComponent
+          style={styles.quotationContainer}
+          isValidQuotation={isValidQuotation}
+          totalClp={totalClp}
+          totalBitcoins={totalBitcoins}
+          fee={fee}
+        />
 
         <Button
-          buttonStyle={styles.button}
-          titleStyle={styles.textButton}
           title='Pagar'
           type='solid'
           onPress={onPayPress}
           loading={loading}
           disabled={isPayDisabled}
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
         />
         {lastPayment && (
           <Overlay

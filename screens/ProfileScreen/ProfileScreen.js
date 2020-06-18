@@ -58,29 +58,23 @@ function ProfileScreen() {
           <Text style={styles.nameText}>Astronaut Monkey</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
           <Text style={styles.walletText}>Wallet BitSplit</Text>
-          <Button
-            title='Editar'
-            type='outline'
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonText}
-          />
 
           {apiKey ? (
             <View style={styles.appWallet}>
               <Avatar
                 containerStyle={styles.walletAvatar}
                 source={require('../../assets/Images/buda.png')}
+                size='medium'
+                rounded
               />
               <View>
                 <Text style={styles.titleText}>Conectado a Buda Wallet</Text>
                 <Button
-                  title={`Actualizar 
-                  keys
-                  `}
+                  title={'Actualizar Keys'}
                   type='outline'
-                  buttonStyle={styles.button}
-                  titleStyle={styles.buttonText}
                   onPress={goBudaSync}
+                  buttonStyle={styles.syncButton}
+                  titleStyle={styles.syncTextButton}
                 />
               </View>
             </View>
@@ -98,6 +92,8 @@ function ProfileScreen() {
                 <Avatar
                   containerStyle={styles.syncAvatar}
                   source={require('../../assets/Images/buda.png')}
+                  size='medium'
+                  rounded
                 />
               </TouchableOpacity>
             </View>
@@ -108,6 +104,8 @@ function ProfileScreen() {
               <Avatar
                 containerStyle={styles.walletAvatar}
                 source={require('../../assets/Images/split.jpg')}
+                size='medium'
+                rounded
               />
               <View>
                 <Text style={styles.titleText}>Conectado a Splitwise</Text>
@@ -130,6 +128,13 @@ function ProfileScreen() {
               </TouchableOpacity>
             </View>
           )}
+
+          <Button
+            title='Editar'
+            type='outline'
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
+          />
         </View>
       </ThemeProvider>
     </>

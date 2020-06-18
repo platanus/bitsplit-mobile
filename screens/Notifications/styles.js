@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
     marginTop: 200,
   },
 });
-export default { ...styles, ...crossStyles };
+export default { ...crossStyles, ...styles };
