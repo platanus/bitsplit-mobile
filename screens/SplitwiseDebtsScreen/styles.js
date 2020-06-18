@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMonoBoldItalic',
   },
 });
-export default { ...styles, ...crossStyles };
+export default { ...crossStyles, ...styles };

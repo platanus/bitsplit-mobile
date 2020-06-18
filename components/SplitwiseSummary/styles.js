@@ -41,12 +41,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 15,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   coinText: {
     color: colors.black,
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: 'SpaceMonoRegular',
   },
 });
 export default { ...crossStyles, ...styles };

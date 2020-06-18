@@ -14,4 +14,4 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMonoRegular',
   },
 });
-export default { ...styles, ...crossStyles };
+export default { ...crossStyles, ...styles };

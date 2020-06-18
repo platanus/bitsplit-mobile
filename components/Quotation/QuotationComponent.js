@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import styles from './styles';
-import colors from '../../styles/colors';
 
 const QuotationComponent = ({
   style,
@@ -14,50 +13,17 @@ const QuotationComponent = ({
   <View style={styles.quotationContainer}>
     {isValidQuotation ? (
       <View>
-        <Text
-          style={{
-            ...styles.titleQuotation,
-            ...{ fontFamily: 'SpaceMonoBoldItalic' },
-          }}
-        >
-          Cotizacion
-        </Text>
-        <Text
-          style={{
-            ...styles.textQuotation,
-            ...{ fontFamily: 'SpaceMonoRegular' },
-          }}
-        >
-          CLP: ${totalClp}
-        </Text>
-        <Text
-          style={{
-            ...styles.textQuotation,
-            ...{ fontFamily: 'SpaceMonoRegular' },
-          }}
-        >
-          BTC: ${totalBitcoins}
-        </Text>
+        <Text style={styles.titleQuotation}>Cotizacion</Text>
+        <Text style={styles.textQuotation}>CLP: ${totalClp}</Text>
+        <Text style={styles.textQuotation}>BTC: ${totalBitcoins}</Text>
         {fee === null ? (
           <Text />
         ) : (
-          <Text
-            style={{
-              ...styles.textQuotation,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
-          >
-            Costo por servicio: ${fee}
-          </Text>
+          <Text style={styles.textQuotation}>Costo por servicio: ${fee}</Text>
         )}
       </View>
     ) : (
-      <Text
-        style={{
-          ...styles.textQuotation,
-          ...{ fontFamily: 'SpaceMonoRegular' },
-        }}
-      >
+      <Text style={styles.textQuotation}>
         Para poder hacer una conversión, lo mínimo es $100 CLP
       </Text>
     )}

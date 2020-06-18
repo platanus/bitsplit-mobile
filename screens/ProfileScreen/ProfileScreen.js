@@ -55,28 +55,9 @@ function ProfileScreen() {
             containerStyle={styles.avatar}
             source={require('../../assets/Images/spacemonkey.png')}
           />
-          <Text
-            style={{
-              ...styles.nameText,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
-          >
-            Astronaut Monkey
-          </Text>
-          <Text
-            style={{
-              ...styles.emailText,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
-          >{`${email}`}</Text>
-          <Text
-            style={{
-              ...styles.walletText,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
-          >
-            Wallet BitSplit
-          </Text>
+          <Text style={styles.nameText}>Astronaut Monkey</Text>
+          <Text style={styles.emailText}>{`${email}`}</Text>
+          <Text style={styles.walletText}>Wallet BitSplit</Text>
 
           {apiKey ? (
             <View style={styles.appWallet}>
@@ -87,23 +68,13 @@ function ProfileScreen() {
                 rounded
               />
               <View>
-                <Text
-                  style={{
-                    ...styles.titleText,
-                    ...{ fontFamily: 'SpaceMonoRegular' },
-                  }}
-                >
-                  Conectado a Buda Wallet
-                </Text>
+                <Text style={styles.titleText}>Conectado a Buda Wallet</Text>
                 <Button
                   title={'Actualizar Keys'}
                   type='outline'
                   onPress={goBudaSync}
                   buttonStyle={styles.syncButton}
-                  titleStyle={{
-                    ...styles.syncTextButton,
-                    ...{ fontFamily: 'SpaceMonoRegular' },
-                  }}
+                  titleStyle={styles.syncTextButton}
                 />
               </View>
             </View>
@@ -137,14 +108,7 @@ function ProfileScreen() {
                 rounded
               />
               <View>
-                <Text
-                  style={{
-                    ...styles.titleText,
-                    ...{ fontFamily: 'SpaceMonoRegular' },
-                  }}
-                >
-                  Conectado a Splitwise
-                </Text>
+                <Text style={styles.titleText}>Conectado a Splitwise</Text>
               </View>
             </View>
           ) : (
@@ -169,10 +133,7 @@ function ProfileScreen() {
             title='Editar'
             type='outline'
             buttonStyle={styles.button}
-            titleStyle={{
-              ...styles.textButton,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
+            titleStyle={styles.textButton}
           />
         </View>
       </ThemeProvider>

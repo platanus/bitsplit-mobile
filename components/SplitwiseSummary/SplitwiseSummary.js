@@ -12,36 +12,26 @@ function SplitwiseSummary() {
 
   return (
     <View style={styles.componentContainer}>
-      <Text
-        style={{ ...styles.titleText, ...{ fontFamily: 'SpaceMonoRegular' } }}
-      >
-        Resumen Splitwise
-      </Text>
+      <Text style={styles.titleText}>Resumen Splitwise</Text>
       <View style={styles.rowContainer}>
         <View style={styles.less}>
           {Object.keys(toPay)
             .sort()
             .map(currency => (
-              <Text
-                key={currency}
-                style={{
-                  ...styles.coinText,
-                  ...{ fontFamily: 'SpaceMonoRegular' },
-                }}
-              >{`${formatCurrency(toPay[currency], currency)}`}</Text>
+              <Text key={currency} style={styles.coinText}>{`${formatCurrency(
+                toPay[currency],
+                currency
+              )}`}</Text>
             ))}
         </View>
         <View style={styles.plus}>
           {Object.keys(toCollect)
             .sort()
             .map(currency => (
-              <Text
-                key={currency}
-                style={{
-                  ...styles.coinText,
-                  ...{ fontFamily: 'SpaceMonoRegular' },
-                }}
-              >{` ${formatCurrency(toCollect[currency], currency)}`}</Text>
+              <Text key={currency} style={styles.coinText}>{` ${formatCurrency(
+                toCollect[currency],
+                currency
+              )}`}</Text>
             ))}
         </View>
       </View>

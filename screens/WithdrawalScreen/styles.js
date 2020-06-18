@@ -31,11 +31,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   textButton: {
     padding: 10,
     color: color.lightpurple,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   cameraContainer: {

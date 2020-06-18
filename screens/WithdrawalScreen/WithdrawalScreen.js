@@ -120,10 +120,7 @@ function WithdrawalScreen() {
             placeholder='Código lightning'
             leftIcon={<Icon name='bolt' size={24} color={colors.purple} />}
             inputContainerStyle={styles.inputOff}
-            inputStyle={{
-              ...styles.inputText,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
+            inputStyle={styles.inputText}
           />
           {hasPermission === null || hasPermission === false ? (
             <Text>Se debe autorizar a la app para utilizar la cámara</Text>
@@ -155,10 +152,7 @@ function WithdrawalScreen() {
             }}
             loading={loading}
             buttonStyle={styles.button}
-            titleStyle={{
-              ...styles.textButton,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
+            titleStyle={styles.textButton}
           />
 
           <Button
@@ -168,10 +162,7 @@ function WithdrawalScreen() {
             loading={loading}
             disabled={isWithdrawDisabled}
             buttonStyle={styles.button}
-            titleStyle={{
-              ...styles.textButton,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
+            titleStyle={styles.textButton}
           />
 
           {lastWithdrawal && (

@@ -102,22 +102,12 @@ function PaymentScreen() {
     <>
       <Header title='Transferencia' />
       <View style={styles.screen}>
-        <Text
-          style={{
-            ...styles.saldoText,
-            ...{ fontFamily: 'SpaceMonoBoldItalic' },
-          }}
-        >
-          Wallet: {balance.BTC.amount} BTC
-        </Text>
+        <Text style={styles.saldoText}>Wallet: {balance.BTC.amount} BTC</Text>
 
         <Input
           {...bind('receptor')}
           inputContainerStyle={styles.inputOff}
-          inputStyle={{
-            ...styles.inputText,
-            ...{ fontFamily: 'SpaceMonoRegular' },
-          }}
+          inputStyle={styles.inputText}
           autoCapitalize='none'
           placeholder='Correo de quien recibe'
         />
@@ -125,10 +115,7 @@ function PaymentScreen() {
           {...bind('transferAmount')}
           keyboardType='numeric'
           inputContainerStyle={styles.inputOff}
-          inputStyle={{
-            ...styles.inputText,
-            ...{ fontFamily: 'SpaceMonoRegular' },
-          }}
+          inputStyle={styles.inputText}
           autoCapitalize='none'
           placeholder='Monto de llegada en CLP'
         />
@@ -154,10 +141,7 @@ function PaymentScreen() {
           loading={loading}
           disabled={isPayDisabled}
           buttonStyle={styles.button}
-          titleStyle={{
-            ...styles.textButton,
-            ...{ fontFamily: 'SpaceMonoRegular' },
-          }}
+          titleStyle={styles.textButton}
         />
         {lastPayment && (
           <Overlay

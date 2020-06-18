@@ -13,12 +13,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     marginBottom: '5%',
+    fontFamily: 'SpaceMonoBoldItalic',
   },
 
   inputText: {
     color: colors.black,
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: 'SpaceMonoRegular',
   },
 
   inputOff: {
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
   textButton: {
     padding: 10,
     color: colors.lightpurple,
+    fontFamily: 'SpaceMonoRegular',
   },
 });
 export default { ...crossStyles, ...styles };

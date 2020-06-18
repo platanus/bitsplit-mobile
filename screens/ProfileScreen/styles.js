@@ -18,12 +18,14 @@ const styles = StyleSheet.create({
     marginLeft: 125,
     marginTop: -90,
     marginBottom: 2,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   emailText: {
     fontSize: 13,
     marginLeft: 125,
     marginBottom: 5,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   walletText: {
@@ -31,6 +33,7 @@ const styles = StyleSheet.create({
     marginLeft: 125,
     color: colors.purple,
     marginBottom: '15%',
+    fontFamily: 'SpaceMonoRegular',
   },
 
   button: {
@@ -44,6 +47,7 @@ const styles = StyleSheet.create({
   textButton: {
     padding: 10,
     color: colors.lightpurple,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   syncButton: {
@@ -63,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: 'center',
     marginTop: '-18%',
+    fontFamily: 'SpaceMonoRegular',
   },
 
   appWallet: {
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: '5%',
     textAlign: 'center',
+    fontFamily: 'SpaceMonoRegular',
   },
 
   syncBuda: {

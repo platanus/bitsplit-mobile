@@ -28,6 +28,7 @@ const walletStyles = StyleSheet.create({
     color: colors.lightpurple,
     fontSize: 18,
     marginTop: '-5%',
+    fontFamily: 'SpaceMonoBoldItalic',
   },
 
   coinText: {
@@ -36,12 +37,13 @@ const walletStyles = StyleSheet.create({
     color: colors.lightpurple,
     textAlign: 'center',
     padding: '10%',
+    fontFamily: 'SpaceMonoRegular',
   },
 
   defaultWalletText: {
+    fontFamily: 'SpaceMonoRegular',
     textAlign: 'center',
-    fontSize: 15,
-    color: colors.red,
+    color: colors.lightpurple,
   },
 });
 export default { ...crossStyles, ...walletStyles };

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import formatCurrency from '../../utils/formatCurrency';
 import styles from './styles';
-import colors from '../../styles/colors';
 
 function Wallet({ isDefault = false, name, balance }) {
   const [showIn, setShowIn] = useState(true);
@@ -20,30 +19,12 @@ function Wallet({ isDefault = false, name, balance }) {
       onPressOut={() => setShowIn(!showIn)}
       style={isDefault ? styles.defaultWallet : styles.secondWallet}
     >
-      {/* <Text style={{ fontFamily: 'SpaceMonoBoldItalic'}}>
-        {name}
-      </Text> */}
-      <Text
-        style={{
-          ...styles.titleWallet,
-          ...{ fontFamily: 'SpaceMonoBoldItalic' },
-        }}
-      >
-        {name}
-      </Text>
-      <Text
-        style={{ ...styles.coinText, ...{ fontFamily: 'SpaceMonoRegular' } }}
-      >
+      <Text style={styles.titleWallet}>{name}</Text>
+      <Text style={styles.coinText}>
         {showCoin()} {showIn ? 'BTC' : 'CLP'}
       </Text>
 
-      <Text
-        style={{
-          fontFamily: 'SpaceMonoRegular',
-          textAlign: 'center',
-          color: colors.lightpurple,
-        }}
-      >
+      <Text style={styles.defaultWalletText}>
         {isDefault ? 'Wallet Principal' : 'Wallet Secundaria'}
       </Text>
     </TouchableOpacity>

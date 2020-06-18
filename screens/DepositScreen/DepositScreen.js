@@ -93,10 +93,7 @@ function DepostitScreen() {
           <Input
             {...bind('transferAmount')}
             inputContainerStyle={styles.inputOff}
-            inputStyle={{
-              ...styles.inputText,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
+            inputStyle={styles.inputText}
             autoCapitalize='none'
             keyboardType='numeric'
             placeholder='Monto en CLP'
@@ -116,10 +113,7 @@ function DepostitScreen() {
             loading={loading}
             disabled={isPayDisabled}
             buttonStyle={styles.button}
-            titleStyle={{
-              ...styles.textButton,
-              ...{ fontFamily: 'SpaceMonoRegular' },
-            }}
+            titleStyle={styles.textButton}
           />
           {lastDeposit && (
             <Overlay

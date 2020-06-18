@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 15,
+    fontFamily: 'SpaceMonoBoldItalic',
   },
 
   textQuotation: {
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     margin: 3,
+    fontFamily: 'SpaceMonoRegular',
   },
 });
 
