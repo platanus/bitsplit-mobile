@@ -1,8 +1,6 @@
 import { Text } from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { AppLoading } from 'expo';
-import { useFonts } from '@use-expo/font';
 import formatCurrency from '../../utils/formatCurrency';
 import styles from './styles';
 import colors from '../../styles/colors';
@@ -15,15 +13,6 @@ function Wallet({ isDefault = false, name, balance }) {
       ? balance.BTC.amount
       : formatCurrency(parseInt(balance.BTC_CLP.amount), 'CLP').slice(3);
 
-  const [fontsLoaded] = useFonts({
-    SpaceMonoItalic: require('../../assets/fonts/SpaceMono-BoldItalic.ttf'),
-    SpaceMonoRegular: require('../../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
   return (
     <TouchableOpacity
       activeOpacity={100}
@@ -31,11 +20,14 @@ function Wallet({ isDefault = false, name, balance }) {
       onPressOut={() => setShowIn(!showIn)}
       style={isDefault ? styles.defaultWallet : styles.secondWallet}
     >
-      {/* <Text style={{ fontFamily: 'SpaceMonoItalic'}}>
+      {/* <Text style={{ fontFamily: 'SpaceMonoBoldItalic'}}>
         {name}
       </Text> */}
       <Text
-        style={{ ...styles.titleWallet, ...{ fontFamily: 'SpaceMonoItalic' } }}
+        style={{
+          ...styles.titleWallet,
+          ...{ fontFamily: 'SpaceMonoBoldItalic' },
+        }}
       >
         {name}
       </Text>

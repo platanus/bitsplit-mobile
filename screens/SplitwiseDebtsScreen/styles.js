@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     color: colors.darkpurple,
     fontSize: 18,
     textAlign: 'center',
-    fontFamily: 'SpaceMonoItalic',
+    fontFamily: 'SpaceMonoBoldItalic',
   },
 });
 export default { ...styles, ...crossStyles };

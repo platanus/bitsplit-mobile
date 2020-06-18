@@ -103,7 +103,10 @@ function PaymentScreen() {
       <Header title='Transferencia' />
       <View style={styles.screen}>
         <Text
-          style={{ ...styles.saldoText, ...{ fontFamily: 'SpaceMonoItalic' } }}
+          style={{
+            ...styles.saldoText,
+            ...{ fontFamily: 'SpaceMonoBoldItalic' },
+          }}
         >
           Wallet: {balance.BTC.amount} BTC
         </Text>

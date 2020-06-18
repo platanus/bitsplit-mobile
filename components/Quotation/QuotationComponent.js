@@ -17,7 +17,7 @@ const QuotationComponent = ({
         <Text
           style={{
             ...styles.titleQuotation,
-            ...{ fontFamily: 'SpaceMonoItalic' },
+            ...{ fontFamily: 'SpaceMonoBoldItalic' },
           }}
         >
           Cotizacion

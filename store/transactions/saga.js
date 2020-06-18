@@ -32,7 +32,6 @@ export function* getBalance() {
 }
 
 function* getTransactionHistory() {
-  // console.log('aqui');
   yield put(transactionsActions.start());
   try {
     const {
@@ -41,7 +40,6 @@ function* getTransactionHistory() {
     const {
       data: { data },
     } = yield call(api.transactionsHistory);
-    // console.log(data);
     const payments = data.transactions
       .map(({ id, attributes }) => ({
         id,
@@ -50,7 +48,6 @@ function* getTransactionHistory() {
       }))
 
       .sort(({ created_at: d1 }, { created_at: d2 }) => (d1 < d2 ? 1 : -1));
-    // console.log('HOLA', payments);
     yield put(transactionsActions.setPayments(payments));
   } catch (err) {
     console.error(err);
