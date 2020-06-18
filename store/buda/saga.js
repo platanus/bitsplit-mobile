@@ -185,6 +185,16 @@ function* postDeposit(action) {
       },
     } = yield call(api.bitSplitDepositApi, { ...action.payload });
     if (response.data) {
+      if (action.payload.depositMethod === 'buda') {
+        const {
+          data: {
+            data: { response },
+          },
+        } = yield call(api.budaAutoDepositApi, {
+          payreq: response.data.lightning_invoice.payreq,
+          orderId: response.data.order_id,
+        });
+      }
       const {
         amount,
         processed_at,
