@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     color: colors.white,
     fontSize: 30,
+    fontFamily: 'SpaceMonoItalic',
   },
 
   inputText: {
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     borderRadius: 30,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   errorText: {
