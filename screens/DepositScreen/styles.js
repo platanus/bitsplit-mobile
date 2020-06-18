@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
     color: color.lightpurple,
     fontFamily: 'SpaceMonoRegular',
   },
+  groupButton: {
+    backgroundColor: color.darkpurple,
+  },
 });
 
 export default { ...crossStyles, ...styles };
