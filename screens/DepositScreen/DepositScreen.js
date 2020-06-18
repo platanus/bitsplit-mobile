@@ -145,17 +145,23 @@ function DepostitScreen() {
             >
               <View style={styles.screen}>
                 <Text h4>Depósito en proceso</Text>
-                <Text h5>{`Monto en BTC \n ${lastDeposit.amount}`}</Text>
+                <Text h5>{`Monto en BTC: ${lastDeposit.amount}`}</Text>
+
+                {/* give padding to QR as the prop does not accept a padding */}
+                <Text h5></Text>
+                <QRCode value={`${lastDeposit.payreq}`} size={250} />
+                <Text h5></Text>
+
+                <Text h5>{`Código LN:\n\n${lastDeposit.payreq}`}</Text>
+
                 {lastDeposit.expires_at === null ? (
                   <Text>Fecha de transacción: {lastDeposit.processed_at}</Text>
                 ) : (
                   <Text h5>
-                    Tu código de retiro es válido hasta el{' '}
+                    Tu código de depósito válido hasta el{' '}
                     {lastDeposit.expires_at}
                   </Text>
                 )}
-                <QRCode value={`${lastDeposit.payreq}`} size={250} />
-                <Text h5>{`Código LN:\n${lastDeposit.payreq}`}</Text>
                 <Button title='Listo' type='solid' onPress={toggleDisplay} />
               </View>
             </Overlay>
