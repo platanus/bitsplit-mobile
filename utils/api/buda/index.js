@@ -36,10 +36,10 @@ function bitSplitDepositApi(payload) {
   });
 }
 
-function budaAutoDepositApi(payreq, orderId) {
+function budaAutoDepositApi(payload) {
   return authedAxios.getInstance().post(`${env.url}/api/v2/buda_pays`, {
-    invoice: payreq,
-    order_id: orderId,
+    invoice: payload.payreq,
+    order_id: payload.orderId,
   });
 }
 

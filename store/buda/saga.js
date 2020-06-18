@@ -185,42 +185,57 @@ function* postDeposit(action) {
       },
     } = yield call(api.bitSplitDepositApi, { ...action.payload });
     if (response.data) {
-      if (action.payload.depositMethod === 'buda') {
-        const {
-          data: {
-            data: { response },
-          },
-        } = yield call(api.budaAutoDepositApi, {
-          payreq: response.data.lightning_invoice.payreq,
-          orderId: response.data.order_id,
-        });
-      }
       const {
         amount,
         processed_at,
         lightning_invoice: { expires_at, payreq },
       } = response.data;
-      yield put(
-        budaActions.setLastDeposit({
-          amount: amount / BTC_TO_SAT,
-          processed_at: new Date(processed_at * JS_MILISEC).toLocaleDateString(
-            'es-ES',
-            DATE_OPTIONS
-          ),
-          expires_at: new Date(expires_at * JS_MILISEC).toLocaleDateString(
-            'es-ES',
-            DATE_OPTIONS
-          ),
-          payreq,
-        })
-      );
-      yield put(budaActions.syncReturnMessage('Transacción en proceso'));
+      if (action.payload.depositMethod === 'buda') {
+        const {
+          data: {
+            data: {
+              attributes: { withdrawal },
+            },
+          },
+        } = yield call(api.budaAutoDepositApi, {
+          payreq: response.data.lightning_invoice.payreq,
+          orderId: response.data.order_id,
+        });
+        yield put(
+          budaActions.setLastDeposit({
+            amount: amount / BTC_TO_SAT,
+            processed_at: new Date(withdrawal.created_at).toLocaleDateString(
+              'es-ES',
+              DATE_OPTIONS
+            ),
+            expires_at: null,
+            payreq: withdrawal.withdrawal_data.payment_request,
+          })
+        );
+        yield put(budaActions.syncReturnMessage('Tu dinero será depositado'));
+      } else {
+        yield put(
+          budaActions.setLastDeposit({
+            amount: amount / BTC_TO_SAT,
+            processed_at: new Date(
+              processed_at * JS_MILISEC
+            ).toLocaleDateString('es-ES', DATE_OPTIONS),
+            expires_at: new Date(expires_at * JS_MILISEC).toLocaleDateString(
+              'es-ES',
+              DATE_OPTIONS
+            ),
+            payreq,
+          })
+        );
+        yield put(budaActions.syncReturnMessage('Transacción en proceso'));
+      }
       yield put(budaActions.syncBudaRejected(null));
       action.callback();
     } else {
       yield put(budaActions.syncBudaRejected(response.message));
     }
   } catch (err) {
+    console.log(err);
     yield put(
       budaActions.syncBudaRejected(
         'Hubo un error al crear la solicitud de depósito'
