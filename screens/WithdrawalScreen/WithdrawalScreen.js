@@ -112,6 +112,7 @@ function WithdrawalScreen() {
   };
 
   const onWithdrawalPress = () =>
+    // TODO: widthrawal directly to BUDA
     handleBitSplitWithdrawal(state.invoiceCode.toUpperCase(), toggleDisplay);
 
   return (
@@ -152,13 +153,13 @@ function WithdrawalScreen() {
           )}
 
           <Text h4>¿Desde donde se desea cargar?</Text>
-          <ButtonGroup
+          {/* <ButtonGroup
             onPress={e => setSelectedIndex({ selectedIndex: e })}
             selectedIndex={buttonState.selectedIndex}
             buttons={buttons}
             containerStyle={styles.groupButtonContainer}
             selectedButtonStyle={styles.groupButton}
-          />
+          /> */}
 
           <Button
             title='Escanear QR'
