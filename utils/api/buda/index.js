@@ -26,7 +26,7 @@ function bitSplitWithdrawalApi(payload) {
 }
 
 function bitSplitDepositApi(payload) {
-  return authedAxios.getInstance().post(`${env.url}/api/v2/charges`, {
+  return authedAxios.getInstance().post(`${env.url}/api/v2/deposits`, {
     amount: payload.amountBtc,
     currency: 'BTC',
   });
