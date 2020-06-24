@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Text } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale';
 import moment from 'moment';
 import styles from './styles';
@@ -21,7 +21,6 @@ function PaymentHistoryScreen() {
             ({ id, amount_btc, received, created_at, sender, receiver }) => (
               <ListItem
                 key={id}
-                title={amount_btc}
                 title={`${amount_btc} BTC`}
                 titleStyle={received ? styles.received : styles.sent}
                 subtitle={getSubtitle(received, created_at, sender, receiver)}
@@ -44,6 +43,9 @@ function PaymentHistoryScreen() {
               />
             )
           )}
+        {!loading && (
+          <Text style={styles.text}>Por ahora, no tienes transacciones</Text>
+        )}
       </ScrollView>
     </>
   );
