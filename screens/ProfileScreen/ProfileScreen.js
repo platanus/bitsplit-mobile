@@ -9,6 +9,8 @@ import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 
 function useProfile() {
+  const userData = useSelector(state => state.auth);
+  console.log(userData);
   const {
     auth: {
       user: { email },
@@ -32,6 +34,7 @@ function useProfile() {
     budaLoading,
     isSplitSync,
     splitwiseLoading,
+    userData,
     goBudaSync,
   };
 }
@@ -43,6 +46,7 @@ function ProfileScreen() {
     budaLoading,
     splitwiseLoading,
     isSplitSync,
+    userData,
     goBudaSync,
   } = useProfile();
 
@@ -53,11 +57,21 @@ function ProfileScreen() {
         <View style={styles.screen}>
           <Avatar
             containerStyle={styles.avatar}
-            source={require('../../assets/Images/spacemonkey.png')}
+            // source={require('../../assets/Images/spacemonkey.png')}
+            source={{
+              uri: `${
+                userData.user.picture ||
+                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
+              }`,
+            }}
           />
-          <Text style={styles.nameText}>Astronaut Monkey</Text>
+          <Text style={styles.nameText}>{`${
+            userData.user.name || 'Armando Casas'
+          }`}</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
-          <Text style={styles.walletText}>Wallet BitSplit</Text>
+          <Text style={styles.walletText}>{`Wallet ${
+            userData.user.wallet || 'Define una Wallet'
+          }`}</Text>
 
           {apiKey ? (
             <View style={styles.appWallet}>
