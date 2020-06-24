@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, ListItem, ThemeProvider } from 'react-native-elements';
+import TouchableScale from 'react-native-touchable-scale';
 import { useListVals } from 'react-firebase-hooks/database';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import styles from './styles';
 import { FIREBASE_NOTIFICATIONS } from '../../store/types';
 import { database } from '../../utils/firebase/database/config';
@@ -31,33 +33,39 @@ function NotificationScreen() {
       <Header title='Notificaciones' />
       <ThemeProvider theme={Theme}>
         <ScrollView>
-          <View>
-            {!loading &&
-              notifications &&
-              notifications.map(({ seen, data, token }) => (
-                <ListItem
-                  key={data.id}
-                  title={
-                    <Text style={seen ? styles.old : styles.new}>
-                      Haz recibido un nuevo pago de {data.amount}
-                    </Text>
-                  }
-                  onPress={() => handleSeen(token)}
-                  bottomDivider
-                />
-              ))}
+          {!loading &&
+            notifications &&
+            notifications.map(({ seen, data, token }) => (
+              <ListItem
+                key={token}
+                title={`${data.amount} BTC`}
+                titleStyle={seen ? styles.old : styles.new}
+                subtitle={getSubtitle(seen, data)}
+                onPress={() => handleSeen(token)}
+                bottomDivider
+                Component={TouchableScale}
+                friction={90}
+                tension={100}
+                activeScale={0.95}
+                leftAvatar={{
+                  source: {
+                    uri:
+                      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                  },
+                }}
+              />
+            ))}
 
-            {!loading && (
-              <Text style={styles.text}>
-                {' '}
-                Por ahora, no tienes notificaciones
-              </Text>
-            )}
-          </View>
+          {!loading && (
+            <Text style={styles.text}>Por ahora, no tienes notificaciones</Text>
+          )}
         </ScrollView>
       </ThemeProvider>
     </>
   );
 }
+
+const getSubtitle = (seen, data) =>
+  `Fecha: ${moment(data.created_at).format('DD/MM/YY HH:mm')}`;
 
 export default NotificationScreen;

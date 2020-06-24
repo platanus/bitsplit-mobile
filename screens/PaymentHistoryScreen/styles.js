@@ -13,5 +13,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'SpaceMonoRegular',
   },
+  text: {
+    fontSize: 20,
+    margin: 50,
+    marginTop: 200,
+    fontFamily: 'SpaceMonoRegular',
+    textAlign: 'center',
+  },
 });
 export default { ...crossStyles, ...styles };
