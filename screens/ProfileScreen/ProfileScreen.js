@@ -3,14 +3,13 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Button, ThemeProvider } from 'react-native-elements';
-import { SPLITWISE_GET_DEBTS } from '../../store/types';
+import { SPLITWISE_GET_DEBTS, BUDA_AUTH_REQUEST } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 
 function useProfile() {
   const userData = useSelector(state => state.auth);
-  console.log(userData);
   const {
     auth: {
       user: { email },
@@ -27,6 +26,7 @@ function useProfile() {
 
   const navegation = useNavigation();
   const goBudaSync = () => navegation.navigate('Buda');
+  const goUpdate = () => navegation.navigate('Editar');
 
   return {
     email,
@@ -36,6 +36,7 @@ function useProfile() {
     splitwiseLoading,
     userData,
     goBudaSync,
+    goUpdate,
   };
 }
 
@@ -48,6 +49,7 @@ function ProfileScreen() {
     isSplitSync,
     userData,
     goBudaSync,
+    goUpdate,
   } = useProfile();
 
   return (
@@ -57,7 +59,6 @@ function ProfileScreen() {
         <View style={styles.screen}>
           <Avatar
             containerStyle={styles.avatar}
-            // source={require('../../assets/Images/spacemonkey.png')}
             source={{
               uri: `${
                 userData.user.picture ||
@@ -148,6 +149,7 @@ function ProfileScreen() {
             type='outline'
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
+            onPress={goUpdate}
           />
         </View>
       </ThemeProvider>
