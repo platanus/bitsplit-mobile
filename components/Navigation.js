@@ -38,6 +38,7 @@ function profileStack() {
         component={ProfileScreen}
       />
       <Stack.Screen name='Buda' component={BudaAuthScreen} />
+      <Stack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
     </Stack.Navigator>
   );
 }

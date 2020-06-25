@@ -9,12 +9,14 @@ import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 
 function useProfile() {
+  const { user } = useSelector(state => state.auth);
+  const isSplitSync = user.picture_url !== null;
   const {
     auth: {
       user: { email },
     },
     buda: { apiKey, loading: budaLoading },
-    splitwise: { isSync: isSplitSync, loading: splitwiseLoading },
+    splitwise: { loading: splitwiseLoading },
   } = useSelector(state => state);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,6 +27,7 @@ function useProfile() {
 
   const navegation = useNavigation();
   const goBudaSync = () => navegation.navigate('Buda');
+  const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
   return {
     email,
@@ -33,6 +36,7 @@ function useProfile() {
     isSplitSync,
     splitwiseLoading,
     goBudaSync,
+    goSplitwiseSync,
   };
 }
 
@@ -44,6 +48,7 @@ function ProfileScreen() {
     splitwiseLoading,
     isSplitSync,
     goBudaSync,
+    goSplitwiseSync,
   } = useProfile();
 
   return (
@@ -120,7 +125,10 @@ function ProfileScreen() {
                 Paga tus deudas de forma fácil y rápida!
               </Text>
 
-              <TouchableOpacity style={styles.syncBuda}>
+              <TouchableOpacity
+                style={styles.syncBuda}
+                onPress={goSplitwiseSync}
+              >
                 <Avatar
                   containerStyle={styles.syncAvatar}
                   source={require('../../assets/Images/split.jpg')}
