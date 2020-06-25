@@ -32,11 +32,19 @@ function bitSplitDepositApi(payload) {
   });
 }
 
+function budaAutoDepositApi(payload) {
+  return authedAxios.getInstance().post(`${env.url}/api/v2/buda_pays`, {
+    invoice: payload.payreq,
+    order_id: payload.orderId,
+  });
+}
+
 const budaApi = {
   budaBalance,
   budaGetQuotationApi,
   budaPaymentApi,
   bitSplitWithdrawalApi,
   bitSplitDepositApi,
+  budaAutoDepositApi,
 };
 export default budaApi;
