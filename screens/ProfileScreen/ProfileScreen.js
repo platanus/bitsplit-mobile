@@ -9,13 +9,14 @@ import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 
 function useProfile() {
-  const userData = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.auth);
+  const isSplitSync = user.picture_url !== null;
   const {
     auth: {
       user: { email },
     },
     buda: { apiKey, loading: budaLoading },
-    splitwise: { isSync: isSplitSync, loading: splitwiseLoading },
+    splitwise: { loading: splitwiseLoading },
   } = useSelector(state => state);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,6 +28,7 @@ function useProfile() {
   const navegation = useNavigation();
   const goBudaSync = () => navegation.navigate('Buda');
   const goEdit = () => navegation.navigate('Editar');
+  const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
   return {
     email,
@@ -34,9 +36,10 @@ function useProfile() {
     budaLoading,
     isSplitSync,
     splitwiseLoading,
-    userData,
+    user,
     goBudaSync,
     goEdit,
+    goSplitwiseSync,
   };
 }
 
@@ -47,9 +50,10 @@ function ProfileScreen() {
     budaLoading,
     splitwiseLoading,
     isSplitSync,
-    userData,
+    user,
     goBudaSync,
     goEdit,
+    goSplitwiseSync,
   } = useProfile();
 
   return (
@@ -61,17 +65,17 @@ function ProfileScreen() {
             containerStyle={styles.avatar}
             source={{
               uri: `${
-                userData.user.picture ||
+                user.user.picture ||
                 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
               }`,
             }}
           />
           <Text style={styles.nameText}>{`${
-            userData.user.name || 'Armando Casas'
+            user.user.name || 'Armando Casas'
           }`}</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
           <Text style={styles.walletText}>{`Wallet ${
-            userData.user.wallet || 'Define una Wallet'
+            user.user.wallet || 'Define una Wallet'
           }`}</Text>
 
           {apiKey ? (
@@ -135,7 +139,10 @@ function ProfileScreen() {
                 Paga tus deudas de forma fácil y rápida!
               </Text>
 
-              <TouchableOpacity style={styles.syncBuda}>
+              <TouchableOpacity
+                style={styles.syncBuda}
+                onPress={goSplitwiseSync}
+              >
                 <Avatar
                   containerStyle={styles.syncAvatar}
                   source={require('../../assets/Images/split.jpg')}

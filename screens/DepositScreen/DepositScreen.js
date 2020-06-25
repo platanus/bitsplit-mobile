@@ -1,8 +1,14 @@
 /* eslint-disable max-statements */
-import React from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Text, Overlay } from 'react-native-elements';
+import {
+  Input,
+  Button,
+  Text,
+  Overlay,
+  ButtonGroup,
+} from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-native-qrcode-svg';
 import { BUDA_QUOTATION, BITSPLIT_DEPOSIT } from '../../store/types';
@@ -20,10 +26,10 @@ function useBitSplitDeposit() {
   function handleBudaQuotation(amount) {
     dispatch({ type: BUDA_QUOTATION, payload: amount });
   }
-  function handleBitSplitDeposit(amountBtc, callback) {
+  function handleBitSplitDeposit(amountBtc, depositMethod, callback) {
     dispatch({
       type: BITSPLIT_DEPOSIT,
-      payload: { amountBtc },
+      payload: { amountBtc, depositMethod },
       callback,
     });
   }
@@ -72,6 +78,9 @@ function DepostitScreen() {
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
 
+  const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
+  const buttons = ['Buda', 'Otro'];
+
   const transferAmount = parseInt(state.transferAmount);
   // const evalFee = totalClp - transferAmount;
   // const fee = evalFee && evalFee > 0 ? evalFee : '0';
@@ -79,7 +88,11 @@ function DepostitScreen() {
   const isPayDisabled = !transferAmount || transferAmount <= minTrxAmount;
 
   const onDepositPress = () =>
-    handleBitSplitDeposit(totalBitcoins, toggleDisplay);
+    handleBitSplitDeposit(
+      totalBitcoins,
+      buttons[buttonState.selectedIndex].toLowerCase(),
+      toggleDisplay
+    );
 
   return (
     <>
@@ -105,6 +118,14 @@ function DepostitScreen() {
             totalClp={totalClp}
             totalBitcoins={totalBitcoins}
           />
+          <Text h4>¿Desde donde se desea cargar?</Text>
+          <ButtonGroup
+            onPress={e => setSelectedIndex({ selectedIndex: e })}
+            selectedIndex={buttonState.selectedIndex}
+            buttons={buttons}
+            containerStyle={styles.groupButtonContainer}
+            selectedButtonStyle={styles.groupButton}
+          />
 
           <Button
             title='Crear Depósito'
@@ -124,15 +145,23 @@ function DepostitScreen() {
             >
               <View style={styles.screen}>
                 <Text h4>Depósito en proceso</Text>
-                <Text
-                  h5
-                >{`Monto a depositar en BTC \n ${lastDeposit.amount}`}</Text>
-                <Text h5>
-                  Tu código de retiro es válido hasta el{' '}
-                  {lastDeposit.expires_at}
-                </Text>
+                <Text h5>{`Monto en BTC: ${lastDeposit.amount}`}</Text>
+
+                {/* give padding to QR as the prop does not accept a padding */}
+                <Text h5></Text>
                 <QRCode value={`${lastDeposit.payreq}`} size={250} />
-                <Text h5>{`Código LN:\n${lastDeposit.payreq}`}</Text>
+                <Text h5></Text>
+
+                <Text h5>{`Código LN:\n\n${lastDeposit.payreq}`}</Text>
+
+                {lastDeposit.expires_at === null ? (
+                  <Text>Fecha de transacción: {lastDeposit.processed_at}</Text>
+                ) : (
+                  <Text h5>
+                    Tu código de depósito válido hasta el{' '}
+                    {lastDeposit.expires_at}
+                  </Text>
+                )}
                 <Button title='Listo' type='solid' onPress={toggleDisplay} />
               </View>
             </Overlay>

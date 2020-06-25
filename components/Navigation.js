@@ -42,6 +42,7 @@ function profileStack() {
         name='Editar'
         component={EditScreen}
       />
+      <Stack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
     </Stack.Navigator>
   );
 }
