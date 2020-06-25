@@ -44,7 +44,7 @@ function PaymentHistoryScreen() {
             )
           )}
         {!loading && (
-          <Text style={styles.text}>Por ahora, no tienes transacciones</Text>
+          <Text style={styles.text}>Por ahora no tienes transacciones</Text>
         )}
       </ScrollView>
     </>

@@ -20,7 +20,7 @@ function EditScreen() {
     navegation.goBack();
   }
 
-  const onPayPress = () => handleBudaRequest(text);
+  const onPressEdit = () => handleBudaRequest(text);
 
   return (
     <>
@@ -39,7 +39,7 @@ function EditScreen() {
           type='solid'
           buttonStyle={styles.button}
           titleStyle={styles.textButton}
-          onPress={() => onPayPress()}
+          onPress={() => onPressEdit()}
         />
         <Button
           title='Cancelar'

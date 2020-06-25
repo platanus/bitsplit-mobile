@@ -26,7 +26,7 @@ function useProfile() {
 
   const navegation = useNavigation();
   const goBudaSync = () => navegation.navigate('Buda');
-  const goUpdate = () => navegation.navigate('Editar');
+  const goEdit = () => navegation.navigate('Editar');
 
   return {
     email,
@@ -36,7 +36,7 @@ function useProfile() {
     splitwiseLoading,
     userData,
     goBudaSync,
-    goUpdate,
+    goEdit,
   };
 }
 
@@ -49,7 +49,7 @@ function ProfileScreen() {
     isSplitSync,
     userData,
     goBudaSync,
-    goUpdate,
+    goEdit,
   } = useProfile();
 
   return (
@@ -149,7 +149,7 @@ function ProfileScreen() {
             type='outline'
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
-            onPress={goUpdate}
+            onPress={goEdit}
           />
         </View>
       </ThemeProvider>

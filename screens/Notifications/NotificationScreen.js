@@ -57,7 +57,7 @@ function NotificationScreen() {
             ))}
 
           {!loading && (
-            <Text style={styles.text}>Por ahora, no tienes notificaciones</Text>
+            <Text style={styles.text}>Por ahora no tienes notificaciones</Text>
           )}
         </ScrollView>
       </ThemeProvider>
