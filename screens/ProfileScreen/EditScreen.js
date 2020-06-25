@@ -1,14 +1,15 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Input, Button, Text } from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { BUDA_AUTH_REQUEST } from '../../store/types';
 import styles from './styles';
-import useForm from '../../utils/hooks/useForm';
-import Header from '../../components/Header';
 
-function handleBudaPayment() {
+function EditScreen() {
+  const [text, setText] = useState('');
+  const navegation = useNavigation();
   const dispatch = useDispatch();
 
   function handleBudaRequest(newName) {
@@ -16,41 +17,36 @@ function handleBudaPayment() {
       type: BUDA_AUTH_REQUEST,
       payload: { newName },
     });
+    navegation.goBack();
   }
 
-  return {
-    handleBudaRequest,
-  };
-}
-
-function EditScreen() {
-  const [state, bind] = useForm(
-    { newName: '' },
-    {
-      validations: { newName: value => !isNaN(value) },
-      errorMessages: { newName: 'Debes ingresar un valor' },
-    }
-  );
-
-  const onPayPress = () => handleBudaPayment(state.newName);
+  const onPayPress = () => handleBudaRequest(text);
 
   return (
     <>
       <View style={styles.screen}>
         <Input
-          {...bind('newName')}
-          inputContainerStyle={styles.inputOff}
+          inputContainerStyle={styles.input}
           inputStyle={styles.inputText}
           autoCapitalize='none'
-          placeholder='Actualizar nombre de usuario'
+          placeholder='Actualizar nombre'
+          onChangeText={text => setText(text)}
+          defaultValue={text}
         />
 
         <Button
           title='Guardar'
           type='solid'
-          onPress={onPayPress}
           buttonStyle={styles.button}
           titleStyle={styles.textButton}
+          onPress={() => onPayPress()}
+        />
+        <Button
+          title='Cancelar'
+          type='solid'
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
+          onPress={() => navegation.goBack()}
         />
       </View>
     </>

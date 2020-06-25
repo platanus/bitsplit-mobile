@@ -13,7 +13,6 @@ import colors from '../styles/colors';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
 import EditScreen from '../screens/ProfileScreen/EditScreen';
-import SplitwiseAuthScreen from '../screens/SplitwiseAuthScreen/SplitwiseAuthScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';
@@ -22,7 +21,6 @@ import DepositScreen from '../screens/DepositScreen/DepositScreen';
 import SplitwiseDebtsScreen from '../screens/SplitwiseDebtsScreen';
 import NotificationScreen from '../screens/Notifications/NotificationScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
-
 import { LOGOUT_REQUEST } from '../store/types';
 
 const Drawer = createDrawerNavigator();
@@ -39,7 +37,11 @@ function profileStack() {
         component={ProfileScreen}
       />
       <Stack.Screen name='Buda' component={BudaAuthScreen} />
-      <Stack.Screen name='Editar' component={EditScreen} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name='Editar'
+        component={EditScreen}
+      />
     </Stack.Navigator>
   );
 }
