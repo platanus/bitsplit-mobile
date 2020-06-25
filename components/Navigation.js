@@ -19,6 +19,7 @@ import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistory
 import WithdrawalScreen from '../screens/WithdrawalScreen/WithdrawalScreen';
 import DepositScreen from '../screens/DepositScreen/DepositScreen';
 import SplitwiseDebtsScreen from '../screens/SplitwiseDebtsScreen';
+import SplitwiseAuthScreen from '../screens/SplitwiseAuthScreen/SplitwiseAuthScreen';
 import NotificationScreen from '../screens/Notifications/NotificationScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import { LOGOUT_REQUEST } from '../store/types';

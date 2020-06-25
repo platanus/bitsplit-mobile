@@ -65,17 +65,17 @@ function ProfileScreen() {
             containerStyle={styles.avatar}
             source={{
               uri: `${
-                user.user.picture ||
+                user.picture ||
                 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
               }`,
             }}
           />
           <Text style={styles.nameText}>{`${
-            user.user.name || 'Armando Casas'
+            user.name || 'Armando Casas'
           }`}</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
           <Text style={styles.walletText}>{`Wallet ${
-            user.user.wallet || 'Define una Wallet'
+            user.wallet || 'Define una Wallet'
           }`}</Text>
 
           {apiKey ? (
