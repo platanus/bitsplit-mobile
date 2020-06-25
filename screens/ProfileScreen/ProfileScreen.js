@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Button, ThemeProvider } from 'react-native-elements';
-import { SPLITWISE_GET_DEBTS } from '../../store/types';
+import { SPLITWISE_GET_DEBTS, BUDA_AUTH_REQUEST } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
@@ -27,6 +27,7 @@ function useProfile() {
 
   const navegation = useNavigation();
   const goBudaSync = () => navegation.navigate('Buda');
+  const goEdit = () => navegation.navigate('Editar');
   const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
   return {
@@ -35,7 +36,9 @@ function useProfile() {
     budaLoading,
     isSplitSync,
     splitwiseLoading,
+    user,
     goBudaSync,
+    goEdit,
     goSplitwiseSync,
   };
 }
@@ -47,7 +50,9 @@ function ProfileScreen() {
     budaLoading,
     splitwiseLoading,
     isSplitSync,
+    user,
     goBudaSync,
+    goEdit,
     goSplitwiseSync,
   } = useProfile();
 
@@ -58,11 +63,20 @@ function ProfileScreen() {
         <View style={styles.screen}>
           <Avatar
             containerStyle={styles.avatar}
-            source={require('../../assets/Images/spacemonkey.png')}
+            source={{
+              uri: `${
+                user.picture ||
+                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
+              }`,
+            }}
           />
-          <Text style={styles.nameText}>Astronaut Monkey</Text>
+          <Text style={styles.nameText}>{`${
+            user.name || 'Armando Casas'
+          }`}</Text>
           <Text style={styles.emailText}>{`${email}`}</Text>
-          <Text style={styles.walletText}>Wallet BitSplit</Text>
+          <Text style={styles.walletText}>{`Wallet ${
+            user.wallet || 'Define una Wallet'
+          }`}</Text>
 
           {apiKey ? (
             <View style={styles.appWallet}>
@@ -142,6 +156,7 @@ function ProfileScreen() {
             type='outline'
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
+            onPress={goEdit}
           />
         </View>
       </ThemeProvider>

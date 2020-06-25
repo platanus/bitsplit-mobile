@@ -43,19 +43,22 @@ function AuthScreen(props) {
   return (
     <ThemeProvider theme={Theme}>
       <View style={styles.screen}>
-        <Image
-          style={styles.image}
-          resizeMode='cover'
-          source={require('../../assets/logo.png')}
-        />
+        {!isSignup && (
+          <Image
+            style={styles.image}
+            resizeMode='cover'
+            source={require('../../assets/logo.png')}
+          />
+        )}
         {isSignup && (
           <>
-            <Text h2>Crea tu cuenta</Text>
-            <Text h4>Es gratis y rápido!</Text>
+            <Text style={styles.titleText}>Crea tu cuenta</Text>
+            <Text style={styles.subtitleText}>Es gratis y rápido!</Text>
           </>
         )}
         <Input
           inputContainerStyle={styles.inputOff}
+          inputStyle={styles.inputText}
           id='email'
           keyboardType='email-address'
           required
@@ -68,6 +71,7 @@ function AuthScreen(props) {
 
         <Input
           inputContainerStyle={styles.inputOff}
+          inputStyle={styles.inputText}
           id='password'
           keyboardType='default'
           secureTextEntry
@@ -82,6 +86,7 @@ function AuthScreen(props) {
         {isSignup && (
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='passwordConfirmation'
             keyboardType='default'
             secureTextEntry

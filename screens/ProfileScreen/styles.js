@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
     borderColor: colors.black,
     borderRadius: 10,
     borderWidth: 1.5,
+    marginBottom: '5%',
   },
 
   textButton: {
-    padding: 10,
     color: colors.lightpurple,
     fontFamily: 'SpaceMonoRegular',
+    textAlign: 'center',
   },
 
   syncButton: {
@@ -135,6 +136,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 120,
     marginLeft: 10,
+  },
+
+  input: {
+    marginTop: '40%',
+    backgroundColor: colors.middlepurple,
+    padding: 10,
+    paddingLeft: 15,
+    marginBottom: 30,
+    borderStyle: 'solid',
+    borderRadius: 15,
+    borderBottomWidth: 0,
+  },
+
+  inputText: {
+    color: colors.black,
+    fontSize: 15,
+    textAlign: 'center',
+    fontFamily: 'SpaceMonoRegular',
   },
 });
 
