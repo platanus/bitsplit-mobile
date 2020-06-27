@@ -65,17 +65,14 @@ function HomeScreen() {
       <ThemeProvider theme={Theme}>
         {isSplitwiseSync && <SplitwiseSummary />}
         <Text style={styles.walletText}>Buda Wallet: 0.00000234 BTC</Text>
+        <Text style={styles.titleText}>Deudas</Text>
         <ScrollView>
           {!loading && (
             <>
-              <DebtList title='Deudas individuales' debts={singleDebts} />
+              <DebtList debts={singleDebts} />
               {groupDebts &&
                 groupDebts.map(group => (
-                  <DebtList
-                    key={group.group_id}
-                    title={group.group_name}
-                    debts={group}
-                  />
+                  <DebtList key={group.group_id} debts={group} />
                 ))}
             </>
           )}
@@ -86,30 +83,25 @@ function HomeScreen() {
 }
 
 const DebtList = ({ title, debts }) => {
-  const { friendsToUser, userToFriends } = debts || {};
+  const { userToFriends } = debts || {};
 
   return (
     <>
-      <Text style={styles.titleText}>{title}</Text>
-
-      {friendsToUser &&
-        friendsToUser.map(debt => <Debt key={debt.id} {...debt} from />)}
       {userToFriends &&
         userToFriends.map(debt => <Debt key={debt.id} {...debt} />)}
     </>
   );
 };
 
-const Debt = ({ id, first_name, last_name, amount, from, currency_code }) => (
+const Debt = ({ id, first_name, last_name, amount, currency_code }) => (
   <ListItem
     key={id}
     title={`${first_name} ${last_name || ''}`}
-    titleStyle={from ? styles.from : styles.to}
+    titleStyle={styles.to}
     Component={TouchableScale}
     friction={90}
     tension={100}
     activeScale={0.95}
-    containerStyle={from ? styles.received : styles.sent}
     leftAvatar={{
       source: {
         uri:
@@ -121,11 +113,9 @@ const Debt = ({ id, first_name, last_name, amount, from, currency_code }) => (
       color: colors.darkpurple,
       fontSize: 15,
     }}
-    subtitle={`${from ? 'Te debe' : 'Debes'} ${formatCurrency(
-      amount,
-      currency_code
-    )}`}
+    subtitle={`Debes ${formatCurrency(amount, currency_code)}`}
     bottomDivider
+    chevron={{ color: colors.darkpurpl, size: 25 }}
   />
 );
 

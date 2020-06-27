@@ -6,11 +6,6 @@ const styles = StyleSheet.create({
   screen: {
     marginTop: '0.1%',
   },
-  from: {
-    color: colors.lightgreen,
-    fontSize: 18,
-    fontFamily: 'SpaceMonoRegular',
-  },
   to: {
     color: colors.lightred,
     fontSize: 18,
@@ -18,15 +13,11 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    padding: 10,
     backgroundColor: colors.middlepurple,
-    borderColor: colors.purple,
-    borderWidth: 1,
-    color: colors.darkpurple,
+    padding: 10,
     fontSize: 18,
     textAlign: 'center',
     fontFamily: 'SpaceMonoBoldItalic',
-    width: '100%',
   },
 
   walletText: {
