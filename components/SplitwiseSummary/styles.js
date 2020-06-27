@@ -5,14 +5,7 @@ import colors from '../../styles/colors';
 const styles = StyleSheet.create({
   componentContainer: {
     backgroundColor: colors.middlepurple,
-    borderRadius: 20,
-    padding: '8%',
-    margin: 10,
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 2,
-    elevation: 1,
+    padding: '5%',
   },
 
   rowContainer: {

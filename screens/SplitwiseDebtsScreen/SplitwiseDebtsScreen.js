@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
 import styles from './styles';
-import { useSplitwiseDebts } from './hooks';
+import { useSplitwiseDebts } from '../HomeScreen/hooks';
 import Header from '../../components/Header';
 import formatCurrency from '../../utils/formatCurrency';
 import colors from '../../styles/colors';
