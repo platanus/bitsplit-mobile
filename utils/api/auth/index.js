@@ -43,5 +43,18 @@ function budaSyncApi(payload) {
   });
 }
 
-const authApi = { loginApi, logoutApi, signUpApi, budaSyncApi, fetchUserApi };
+function userUpdateApi(payload) {
+  return authedAxios.getInstance().patch(`${env.url}/api/v1/users/`, {
+    ...payload,
+  });
+}
+
+const authApi = {
+  loginApi,
+  logoutApi,
+  signUpApi,
+  budaSyncApi,
+  fetchUserApi,
+  userUpdateApi,
+};
 export default authApi;

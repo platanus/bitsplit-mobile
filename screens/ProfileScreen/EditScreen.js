@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { BUDA_AUTH_REQUEST } from '../../store/types';
+import { UPDATE_USER } from '../../store/types';
 import styles from './styles';
 
 function EditScreen() {
@@ -14,8 +14,8 @@ function EditScreen() {
 
   function handleBudaRequest(newName) {
     dispatch({
-      type: BUDA_AUTH_REQUEST,
-      payload: { newName },
+      type: UPDATE_USER,
+      payload: { name: newName },
     });
     navegation.goBack();
   }
