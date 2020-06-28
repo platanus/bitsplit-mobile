@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, ButtonGroup } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { UPDATE_USER } from '../../store/types';
@@ -12,15 +12,20 @@ function EditScreen() {
   const navegation = useNavigation();
   const dispatch = useDispatch();
 
-  function handleBudaRequest(newName) {
+  function handleBudaRequest(newName, newWallet) {
     dispatch({
       type: UPDATE_USER,
-      payload: { name: newName },
+      payload: { name: newName, wallet: newWallet },
     });
     navegation.goBack();
   }
 
-  const onPressEdit = () => handleBudaRequest(text);
+  const onPressEdit = () => handleBudaRequest(text, newWallet);
+
+  const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
+  const buttons = ['BitSplit', 'Buda'];
+
+  const newWallet = buttons[buttonState.selectedIndex].toLowerCase();
 
   return (
     <>
@@ -32,6 +37,15 @@ function EditScreen() {
           placeholder='Actualizar nombre'
           onChangeText={text => setText(text)}
           defaultValue={text}
+        />
+
+        <ButtonGroup
+          onPress={e => setSelectedIndex({ selectedIndex: e })}
+          selectedIndex={buttonState.selectedIndex}
+          buttons={buttons}
+          containerStyle={styles.groupButtonContainer}
+          selectedButtonStyle={styles.groupButton}
+          titleStyle={styles.textButton}
         />
 
         <Button

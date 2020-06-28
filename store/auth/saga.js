@@ -31,8 +31,6 @@ function* fetchUser() {
   } catch (err) {
     yield put(authActions.loginRejected('Error pidiendo datos del usuario'));
   }
-  console.log('FETCHUSER');
-
   yield put(authActions.finish());
 }
 
@@ -115,19 +113,8 @@ function* logoutRequest(action) {
 function* updateRequest(action) {
   yield put(authActions.start());
   try {
-    // const {
-    //   data: {
-    //     data: {
-    //       attributes,
-    //     } = {},
-    //   }, data,
-    // } = yield call(api.userUpdateApi, action.payload);
-    console.log('DATA: ', yield call(api.userUpdateApi, action.payload));
+    yield call(api.userUpdateApi, action.payload);
     yield* fetchUser();
-
-    // if (attributes) {
-    //   yield put(authActions.fetchUser(attributes));
-    // }
   } catch (err) {
     console.error(err);
   }
