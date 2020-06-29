@@ -46,6 +46,14 @@ function HomeScreen() {
   const [debts, loading] = useSplitwiseDebts();
   const { singleDebts, groupDebts } = debts;
 
+  const {
+    auth: {
+      user: { wallet: defaultWallet },
+    },
+    buda: { balance: budaBalance, apiKey },
+    bitsplitWallet: { balance: bitsplitBalance },
+  } = useSelector(state => state);
+
   return (
     <>
       <Header title='Inicio' />
@@ -54,7 +62,19 @@ function HomeScreen() {
       )}
       <ThemeProvider theme={Theme}>
         {isSplitwiseSync && <SplitwiseSummary />}
-        <Text style={styles.walletText}>Buda Wallet: 0.00000234 BTC</Text>
+
+        {defaultWallet === 'bitsplit' && bitsplitBalance && (
+          <Text style={styles.walletText}>
+            Bitsplit Wallet: ${bitsplitBalance.BTC.amount} BTC
+          </Text>
+        )}
+
+        {defaultWallet === 'buda' && apiKey && (
+          <Text style={styles.walletText}>
+            Buda Wallet: ${budaBalance.BTC.amount} BTC
+          </Text>
+        )}
+
         <Text style={styles.titleText}>Deudas</Text>
         <ScrollView>
           {!loading && (
@@ -72,7 +92,7 @@ function HomeScreen() {
   );
 }
 
-const DebtList = ({ title, debts }) => {
+const DebtList = ({ debts }) => {
   const { userToFriends } = debts || {};
 
   return (

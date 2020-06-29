@@ -1,12 +1,9 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Text, ListItem } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
+import { Text } from 'react-native-elements';
 import styles from './styles';
 import { useSplitwiseDebts } from './hooks';
 import Header from '../../components/Header';
-import formatCurrency from '../../utils/formatCurrency';
-import colors from '../../styles/colors';
 import Debt from './Debt';
 
 function SplitwiseDebtsScreen() {
