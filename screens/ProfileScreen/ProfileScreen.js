@@ -20,7 +20,7 @@ function useProfile() {
   } = useSelector(state => state);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!isSplitSync) {
+    if (isSplitSync) {
       dispatch({ type: SPLITWISE_GET_DEBTS });
     }
   }, [isSplitSync]);
