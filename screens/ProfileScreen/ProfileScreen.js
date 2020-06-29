@@ -45,9 +45,10 @@ function useProfile() {
     buda: { apiKey, loading: budaLoading },
     splitwise: { loading: splitwiseLoading },
   } = useSelector(state => state);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!isSplitSync) {
+    if (isSplitSync) {
       dispatch({ type: SPLITWISE_GET_DEBTS });
     }
   }, [isSplitSync]);
@@ -95,8 +96,6 @@ function ProfileScreen() {
     splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
 
-  const startSetup = useStartup();
-
   return (
     <>
       <Header title='Perfil' />
@@ -119,15 +118,13 @@ function ProfileScreen() {
             user.wallet || 'Define una Wallet'
           }`}</Text>
 
-          {/* ARREGLAR EL SALDO DE BITSPLIT
-          {defaultWallet === 'bitsplit' &&
-          bitsplitBalance &&
+          {defaultWallet === 'bitsplit' && bitsplitBalance && (
             <Wallet
               name={'Bitsplit'}
               isDefault={defaultWallet === 'bitsplit'}
-              balance={true}
+              balance={bitsplitBalance}
             />
-          } */}
+          )}
 
           {defaultWallet === 'buda' && apiKey && (
             <Wallet name={'Buda'} balance={budaBalance} isDefault={true} />
