@@ -74,8 +74,6 @@ function useProfile() {
 function ProfileScreen() {
   const {
     email,
-    budaLoading,
-    splitwiseLoading,
     isSplitSync,
     user,
     goBudaSync,
@@ -88,12 +86,7 @@ function ProfileScreen() {
       user: { wallet: defaultWallet },
     },
     buda: { balance: budaBalance, apiKey },
-    bitsplitWallet: {
-      balance: bitsplitBalance,
-      loading: bitsplitWalletLoading,
-    },
-    onstart: { startFlag },
-    splitwise: { isSync: isSplitwiseSync },
+    bitsplitWallet: { balance: bitsplitBalance },
   } = useSelector(state => state);
 
   return (

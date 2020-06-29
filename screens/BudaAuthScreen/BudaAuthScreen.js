@@ -49,6 +49,7 @@ function BudaAuthScreen() {
           />
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='API_KEY'
             required
             secureTextEntry
@@ -59,6 +60,7 @@ function BudaAuthScreen() {
           />
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='API_SECRET'
             required
             secureTextEntry
@@ -73,6 +75,7 @@ function BudaAuthScreen() {
 
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='password'
             keyboardType='default'
             secureTextEntry

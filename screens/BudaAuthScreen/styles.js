@@ -3,6 +3,11 @@ import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
+  screen: {
+    marginTop: 60,
+    margin: 25,
+  },
+
   inputOff: {
     backgroundColor: colors.middlepurple,
     padding: 10,
@@ -13,6 +18,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
 
+  inputText: {
+    color: colors.black,
+    fontSize: 12,
+    textAlign: 'center',
+    fontFamily: 'SpaceMonoRegular',
+  },
+
   button: {
     backgroundColor: colors.white,
     padding: 10,
@@ -20,17 +32,19 @@ const styles = StyleSheet.create({
     borderColor: colors.black,
     borderRadius: 10,
     borderWidth: 1.5,
-    width: 150,
+    margin: '3%',
   },
 
   textButton: {
     padding: 10,
     color: colors.black,
+    fontFamily: 'SpaceMonoRegular',
   },
 
   avatar: {
     marginBottom: 50,
     marginTop: -10,
+    marginLeft: '38%',
   },
 
   errorText: {
