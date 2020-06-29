@@ -28,7 +28,6 @@ function PinOverlay({ onSuccess = () => {}, onFailure, pinLength, maxTries }) {
       isVisible={isDisplayVisible}
       containerStyle={styles.pinOverlayContainer}
       overlayStyle={styles.pinView}
-      // windowBackgroundColor='rgba(255, 255, 255, .5)'
     >
       <View style={styles.container}>
         <Image

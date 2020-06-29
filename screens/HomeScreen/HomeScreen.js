@@ -45,7 +45,6 @@ function HomeScreen() {
       balance: bitsplitBalance,
       loading: bitsplitWalletLoading,
     },
-    onstart: { startFlag },
     splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
 
@@ -54,9 +53,9 @@ function HomeScreen() {
   return (
     <>
       <Header title='Inicio' />
-      {startFlag && (
-        <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
-      )}
+
+      <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
+
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           {bitsplitBalance ? (
