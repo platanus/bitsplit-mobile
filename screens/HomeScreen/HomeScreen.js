@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThemeProvider, Text, ListItem } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
+import { ThemeProvider, Text } from 'react-native-elements';
 import {
   GET_WALLETS_BALANCES,
   START_SETUP,
@@ -14,9 +13,8 @@ import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import SplitwiseSummary from '../../components/SplitwiseSummary/SplitwiseSummary';
 import authedAxios from '../../utils/api/authedAxios';
-import { useSplitwiseDebts } from './hooks';
-import colors from '../../styles/colors';
-import formatCurrency from '../../utils/formatCurrency';
+import { useSplitwiseDebts } from '../SplitwiseDebtsScreen/hooks';
+import Debt from '../SplitwiseDebtsScreen/Debt';
 
 function useStartup() {
   const dispatch = useDispatch();
@@ -40,14 +38,6 @@ function useStartup() {
 
 function HomeScreen() {
   const {
-    auth: {
-      user: { wallet: defaultWallet },
-    },
-    buda: { balance: budaBalance, apiKey },
-    bitsplitWallet: {
-      balance: bitsplitBalance,
-      loading: bitsplitWalletLoading,
-    },
     onstart: { startFlag },
     splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
@@ -92,31 +82,5 @@ const DebtList = ({ title, debts }) => {
     </>
   );
 };
-
-const Debt = ({ id, first_name, last_name, amount, currency_code }) => (
-  <ListItem
-    key={id}
-    title={`${first_name} ${last_name || ''}`}
-    titleStyle={styles.to}
-    Component={TouchableScale}
-    friction={90}
-    tension={100}
-    activeScale={0.95}
-    leftAvatar={{
-      source: {
-        uri:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-      },
-    }}
-    subtitleStyle={{
-      fontFamily: 'SpaceMonoRegular',
-      color: colors.darkpurple,
-      fontSize: 15,
-    }}
-    subtitle={`Debes ${formatCurrency(amount, currency_code)}`}
-    bottomDivider
-    chevron={{ color: colors.darkpurpl, size: 25 }}
-  />
-);
 
 export default HomeScreen;
