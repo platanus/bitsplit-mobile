@@ -20,6 +20,7 @@ import WithdrawalScreen from '../screens/WithdrawalScreen/WithdrawalScreen';
 import DepositScreen from '../screens/DepositScreen/DepositScreen';
 import SplitwiseDebtsScreen from '../screens/SplitwiseDebtsScreen';
 import SplitwiseAuthScreen from '../screens/SplitwiseAuthScreen/SplitwiseAuthScreen';
+import PaySplitwiseDebtScreen from '../screens/SplitwiseDebtsScreen/PaySplitwiseDebtScreen';
 import NotificationScreen from '../screens/Notifications/NotificationScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import { LOGOUT_REQUEST } from '../store/types';
@@ -27,26 +28,6 @@ import { LOGOUT_REQUEST } from '../store/types';
 const Drawer = createDrawerNavigator();
 
 enableScreens();
-const Stack = createNativeStackNavigator();
-
-function profileStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name='Settings'
-        component={ProfileScreen}
-      />
-      <Stack.Screen name='Buda' component={BudaAuthScreen} />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name='Editar'
-        component={UpdateScreen}
-      />
-      <Stack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
-    </Stack.Navigator>
-  );
-}
 
 const Navigation = () => {
   const token = useSelector(state => state.auth.token);
@@ -69,12 +50,12 @@ const Navigation = () => {
             />
             <Drawer.Screen name='Retirar' component={WithdrawalScreen} />
             <Drawer.Screen name='Depositar' component={DepositScreen} />
-            <Drawer.Screen name='Splitwise' component={SplitwiseDebtsScreen} />
+            <Drawer.Screen name='Splitwise' component={SplitwiseNavigation} />
             <Drawer.Screen
               name='Notificaciones'
               component={NotificationScreen}
             />
-            <Drawer.Screen name='Perfil' component={profileStack} />
+            <Drawer.Screen name='Perfil' component={ProfileNavigation} />
           </>
         ) : (
           <Drawer.Screen name='Authentication' component={AuthScreen} />
@@ -84,6 +65,42 @@ const Navigation = () => {
   );
 };
 
+const ProfileStack = createNativeStackNavigator();
+
+const ProfileNavigation = () => (
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen
+      options={{ headerShown: false }}
+      name='Settings'
+      component={ProfileScreen}
+    />
+    <ProfileStack.Screen name='Buda' component={BudaAuthScreen} />
+    <ProfileStack.Screen
+      options={{ headerShown: false }}
+      name='Editar'
+      component={EditScreen}
+    />
+    <ProfileStack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
+  </ProfileStack.Navigator>
+);
+
+const SplitwiseStack = createNativeStackNavigator();
+
+const SplitwiseNavigation = () => (
+  <SplitwiseStack.Navigator>
+    <SplitwiseStack.Screen
+      options={{ headerShown: false }}
+      name='SplitwiseDebts'
+      component={SplitwiseDebtsScreen}
+    />
+    <SplitwiseStack.Screen
+      options={{ headerShown: false }}
+      name='PaySplitwiseDebt'
+      component={PaySplitwiseDebtScreen}
+    />
+  </SplitwiseStack.Navigator>
+);
+
 const CustomDrawerContent = props => (
   <DrawerContentScrollView {...props}>
     <DrawerItemList {...props} />
@@ -91,7 +108,7 @@ const CustomDrawerContent = props => (
   </DrawerContentScrollView>
 );
 
-const Logout = props => {
+const Logout = () => {
   const dispatch = useDispatch();
   const onPress = () => {
     dispatch({
