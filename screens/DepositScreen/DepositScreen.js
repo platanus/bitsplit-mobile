@@ -96,6 +96,7 @@ function DepostitScreen() {
 
   const copyToClipboard = () => {
     Clipboard.setString(lastDeposit.payreq);
+    alert('¡Invoice copiado!');
   };
 
   const closeCreated = () => {
