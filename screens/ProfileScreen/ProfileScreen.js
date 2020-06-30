@@ -3,36 +3,11 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Button, ThemeProvider } from 'react-native-elements';
-import {
-  GET_WALLETS_BALANCES,
-  START_SETUP,
-  SPLITWISE_GET_DEBTS,
-} from '../../store/types';
+import { SPLITWISE_GET_DEBTS } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import Wallet from '../../components/Wallet/Wallet';
-import authedAxios from '../../utils/api/authedAxios';
-
-function useStartup() {
-  const dispatch = useDispatch();
-  const {
-    auth: {
-      user: { email },
-      token,
-    },
-  } = useSelector(state => state);
-
-  useEffect(() => {
-    if (email && token) {
-      authedAxios.createInstance({ email, token });
-      dispatch({ type: GET_WALLETS_BALANCES });
-      dispatch({ type: SPLITWISE_GET_DEBTS });
-    }
-  }, [email, token]);
-
-  return () => dispatch({ type: START_SETUP });
-}
 
 function useProfile() {
   const { user } = useSelector(state => state.auth);
