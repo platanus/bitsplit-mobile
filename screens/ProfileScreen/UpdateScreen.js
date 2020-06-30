@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { UPDATE_USER } from '../../store/types';
 import styles from './styles';
 
-function EditScreen() {
+function UpdateScreen() {
   const { user } = useSelector(state => state.auth);
   const [newName, setName] = useState('');
   const navegation = useNavigation();
@@ -29,7 +29,7 @@ function EditScreen() {
     }
   }
 
-  const onPressEdit = () => handleBudaRequest(user, newName, newWallet);
+  const onPressUpdate = () => handleBudaRequest(user, newName, newWallet);
 
   const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
   const buttons = ['BitSplit', 'Buda'];
@@ -62,7 +62,7 @@ function EditScreen() {
           type='solid'
           buttonStyle={styles.button}
           titleStyle={styles.textButton}
-          onPress={() => onPressEdit()}
+          onPress={() => onPressUpdate()}
         />
         <Button
           title='Cancelar'
@@ -76,4 +76,4 @@ function EditScreen() {
   );
 }
 
-export default EditScreen;
+export default UpdateScreen;
