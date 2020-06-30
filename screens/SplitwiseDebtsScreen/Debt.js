@@ -4,12 +4,32 @@ import TouchableScale from 'react-native-touchable-scale';
 import formatCurrency from '../../utils/formatCurrency';
 import styles from './styles';
 import colors from '../../styles/colors';
+import { useNavigation } from '@react-navigation/native';
 
-function Debt({ id, first_name, last_name, amount, from, currency_code }) {
+const Debt = ({
+  id,
+  first_name,
+  last_name,
+  amount,
+  from,
+  currency_code,
+  picture,
+  email,
+}) => {
+  const navigation = useNavigation();
+  const name = `${first_name} ${last_name || ''}`;
+  const onPress = () =>
+    navigation.navigate({
+      name: 'PaySplitwiseDebt',
+      params: { title: `Pagar a ${name}`, amount, currency_code, name, email },
+    });
+  const chevron = { color: colors.purple };
+  const payProps = !from ? { onPress, chevron } : {};
+
   return (
     <ListItem
       key={id}
-      title={`${first_name} ${last_name || ''}`}
+      title={name}
       titleStyle={from ? styles.from : styles.to}
       Component={TouchableScale}
       friction={90}
@@ -18,8 +38,7 @@ function Debt({ id, first_name, last_name, amount, from, currency_code }) {
       containerStyle={from ? styles.received : styles.sent}
       leftAvatar={{
         source: {
-          uri:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+          uri: picture,
         },
       }}
       subtitleStyle={{
@@ -32,8 +51,9 @@ function Debt({ id, first_name, last_name, amount, from, currency_code }) {
         currency_code
       )}`}
       bottomDivider
+      {...payProps}
     />
   );
-}
+};
 
 export default Debt;
