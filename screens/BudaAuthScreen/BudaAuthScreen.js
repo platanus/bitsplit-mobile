@@ -12,7 +12,11 @@ import {
 } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { BUDA_AUTH_REQUEST, BUDA_CLEAN_ERROR } from '../../store/types';
+import {
+  BUDA_AUTH_REQUEST,
+  BUDA_CLEAN_ERROR,
+  GET_WALLETS_BALANCES,
+} from '../../store/types';
 import styles from './styles';
 import Theme from '../../styles/Theme';
 import colors from '../../styles/colors';
@@ -31,6 +35,7 @@ function BudaAuthScreen() {
       payload: { apiKey, apiSecret, password },
       callback: () => {
         navegation.goBack();
+        dispatch({ type: GET_WALLETS_BALANCES });
       },
     });
   }
@@ -49,6 +54,7 @@ function BudaAuthScreen() {
           />
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='API_KEY'
             required
             secureTextEntry
@@ -59,6 +65,7 @@ function BudaAuthScreen() {
           />
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='API_SECRET'
             required
             secureTextEntry
@@ -73,6 +80,7 @@ function BudaAuthScreen() {
 
           <Input
             inputContainerStyle={styles.inputOff}
+            inputStyle={styles.inputText}
             id='password'
             keyboardType='default'
             secureTextEntry

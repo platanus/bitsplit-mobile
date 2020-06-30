@@ -4,6 +4,7 @@ export const FETCH_USER = 'FETCH_USER';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const SET_PIN = 'SET_PIN';
+export const UPDATE_USER = 'UPDATE_USER';
 
 // BUDA MIDDLEWARE
 export const BUDA_AUTH_REQUEST = 'BUDA_AUTH_REQUEST';

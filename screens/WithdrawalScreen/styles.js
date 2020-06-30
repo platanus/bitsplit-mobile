@@ -55,6 +55,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+
+  text: {
+    padding: 10,
+    color: color.darkpurple,
+    fontFamily: 'SpaceMonoRegular',
+    textAlign: 'center',
+  },
 });
 
 export default { ...crossStyles, ...styles };

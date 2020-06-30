@@ -3,14 +3,16 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Button, ThemeProvider } from 'react-native-elements';
-import { SPLITWISE_GET_DEBTS, BUDA_AUTH_REQUEST } from '../../store/types';
+import { SPLITWISE_GET_DEBTS } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
+import Wallet from '../../components/Wallet/Wallet';
 
 function useProfile() {
   const { user } = useSelector(state => state.auth);
   const isSplitSync = user.picture_url !== null;
+
   const {
     auth: {
       user: { email },
@@ -18,16 +20,17 @@ function useProfile() {
     buda: { apiKey, loading: budaLoading },
     splitwise: { loading: splitwiseLoading },
   } = useSelector(state => state);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!isSplitSync) {
+    if (isSplitSync) {
       dispatch({ type: SPLITWISE_GET_DEBTS });
     }
   }, [isSplitSync]);
 
   const navegation = useNavigation();
   const goBudaSync = () => navegation.navigate('Buda');
-  const goEdit = () => navegation.navigate('Editar');
+  const goUpdate = () => navegation.navigate('Editar');
   const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
   return {
@@ -38,7 +41,7 @@ function useProfile() {
     splitwiseLoading,
     user,
     goBudaSync,
-    goEdit,
+    goUpdate,
     goSplitwiseSync,
   };
 }
@@ -46,15 +49,20 @@ function useProfile() {
 function ProfileScreen() {
   const {
     email,
-    apiKey,
-    budaLoading,
-    splitwiseLoading,
     isSplitSync,
     user,
     goBudaSync,
-    goEdit,
+    goUpdate,
     goSplitwiseSync,
   } = useProfile();
+
+  const {
+    auth: {
+      user: { wallet: defaultWallet },
+    },
+    buda: { balance: budaBalance, apiKey },
+    bitsplitWallet: { balance: bitsplitBalance },
+  } = useSelector(state => state);
 
   return (
     <>
@@ -65,7 +73,7 @@ function ProfileScreen() {
             containerStyle={styles.avatar}
             source={{
               uri: `${
-                user.picture ||
+                user.picture_url.large ||
                 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
               }`,
             }}
@@ -78,77 +86,59 @@ function ProfileScreen() {
             user.wallet || 'Define una Wallet'
           }`}</Text>
 
+          {defaultWallet === 'bitsplit' && bitsplitBalance && (
+            <Wallet
+              name={'Bitsplit'}
+              isDefault={defaultWallet === 'bitsplit'}
+              balance={bitsplitBalance}
+            />
+          )}
+
+          {defaultWallet === 'buda' && apiKey && (
+            <Wallet name={'Buda'} balance={budaBalance} isDefault={true} />
+          )}
+
           {apiKey ? (
-            <View style={styles.appWallet}>
+            <TouchableOpacity onPress={goBudaSync} style={styles.budaIcon}>
               <Avatar
                 containerStyle={styles.walletAvatar}
                 source={require('../../assets/Images/buda.png')}
-                size='medium'
+                size='large'
                 rounded
               />
-              <View>
-                <Text style={styles.titleText}>Conectado a Buda Wallet</Text>
-                <Button
-                  title={'Actualizar Keys'}
-                  type='outline'
-                  onPress={goBudaSync}
-                  buttonStyle={styles.syncButton}
-                  titleStyle={styles.syncTextButton}
-                />
-              </View>
-            </View>
+            </TouchableOpacity>
           ) : (
-            <View>
-              <View style={styles.syncBudaLeft}>
-                <Text style={styles.syncText}>
-                  {budaLoading || 'Sync Buda'}
-                </Text>
-                <Text style={styles.syncTextBody}>
-                  Envia y recibe Bitcoins!
-                </Text>
-              </View>
-              <TouchableOpacity style={styles.syncBuda} onPress={goBudaSync}>
-                <Avatar
-                  containerStyle={styles.syncAvatar}
-                  source={require('../../assets/Images/buda.png')}
-                  size='medium'
-                  rounded
-                />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={goBudaSync} style={styles.budaIcon}>
+              <Avatar
+                containerStyle={styles.walletAvatar}
+                source={require('../../assets/Images/budaOff.png')}
+                size='large'
+                rounded
+              />
+            </TouchableOpacity>
           )}
 
           {isSplitSync ? (
-            <View style={styles.appWallet}>
+            <TouchableOpacity style={styles.splitwiseIcon}>
               <Avatar
-                containerStyle={styles.walletAvatar}
+                containerStyle={styles.plitwiseIcon}
                 source={require('../../assets/Images/split.jpg')}
-                size='medium'
+                size='large'
                 rounded
               />
-              <View>
-                <Text style={styles.titleText}>Conectado a Splitwise</Text>
-              </View>
-            </View>
+            </TouchableOpacity>
           ) : (
-            <View>
-              <Text style={styles.syncText}>
-                {splitwiseLoading || 'Sync SplitWise'}
-              </Text>
-              <Text style={styles.syncTextBody}>
-                Paga tus deudas de forma fácil y rápida!
-              </Text>
-
-              <TouchableOpacity
-                style={styles.syncBuda}
-                onPress={goSplitwiseSync}
-              >
-                <Avatar
-                  containerStyle={styles.syncAvatar}
-                  source={require('../../assets/Images/split.jpg')}
-                />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={goSplitwiseSync}
+              style={styles.splitwiseIcon}
+            >
+              <Avatar
+                containerStyle={styles.walletAvatar}
+                source={require('../../assets/Images/splitOff.png')}
+                size='large'
+                rounded
+              />
+            </TouchableOpacity>
           )}
 
           <Button
@@ -156,7 +146,7 @@ function ProfileScreen() {
             type='outline'
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
-            onPress={goEdit}
+            onPress={goUpdate}
           />
         </View>
       </ThemeProvider>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThemeProvider } from 'react-native-elements';
+import { ThemeProvider, Text } from 'react-native-elements';
 import {
   GET_WALLETS_BALANCES,
   START_SETUP,
@@ -12,8 +12,9 @@ import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import SplitwiseSummary from '../../components/SplitwiseSummary/SplitwiseSummary';
-import Wallet from '../../components/Wallet/Wallet';
 import authedAxios from '../../utils/api/authedAxios';
+import { useSplitwiseDebts } from '../SplitwiseDebtsScreen/hooks';
+import Debt from '../SplitwiseDebtsScreen/Debt';
 
 function useStartup() {
   const dispatch = useDispatch();
@@ -36,19 +37,18 @@ function useStartup() {
 }
 
 function HomeScreen() {
+  const startSetup = useStartup();
+  const [debts, loading] = useSplitwiseDebts();
+  const { singleDebts, groupDebts } = debts;
+
   const {
     auth: {
       user: { wallet: defaultWallet },
     },
     buda: { balance: budaBalance, apiKey },
-    bitsplitWallet: {
-      balance: bitsplitBalance,
-      loading: bitsplitWalletLoading,
-    },
+    bitsplitWallet: { balance: bitsplitBalance },
     splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
-
-  const startSetup = useStartup();
 
   return (
     <>
@@ -57,32 +57,46 @@ function HomeScreen() {
       <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
 
       <ThemeProvider theme={Theme}>
-        <View style={styles.screen}>
-          {bitsplitBalance ? (
-            <Wallet
-              name={'Bitsplit'}
-              isDefault={defaultWallet === 'bitsplit'}
-              balance={bitsplitBalance}
-            />
-          ) : (
-            <Text style={styles.saldoText}>
-              {bitsplitWalletLoading
-                ? 'Cargando...'
-                : 'Tenemos problemas con tu saldo'}
-            </Text>
+        {isSplitwiseSync && <SplitwiseSummary />}
+
+        {defaultWallet === 'bitsplit' && bitsplitBalance && (
+          <Text style={styles.walletText}>
+            Bitsplit Wallet: ${bitsplitBalance.BTC.amount} BTC
+          </Text>
+        )}
+
+        {defaultWallet === 'buda' && apiKey && (
+          <Text style={styles.walletText}>
+            Buda Wallet: ${budaBalance.BTC.amount} BTC
+          </Text>
+        )}
+
+        <Text style={styles.titleText}>Deudas</Text>
+        <ScrollView>
+          {!loading && (
+            <>
+              <DebtList debts={singleDebts} />
+              {groupDebts &&
+                groupDebts.map(group => (
+                  <DebtList key={group.group_id} debts={group} />
+                ))}
+            </>
           )}
-          {apiKey && (
-            <Wallet
-              name={'Buda'}
-              balance={budaBalance}
-              isDefault={defaultWallet === 'buda'}
-            />
-          )}
-          {isSplitwiseSync && <SplitwiseSummary />}
-        </View>
+        </ScrollView>
       </ThemeProvider>
     </>
   );
 }
+
+const DebtList = ({ debts }) => {
+  const { userToFriends } = debts || {};
+
+  return (
+    <>
+      {userToFriends &&
+        userToFriends.map(debt => <Debt key={debt.id} {...debt} />)}
+    </>
+  );
+};
 
 export default HomeScreen;
