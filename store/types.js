@@ -3,7 +3,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const FETCH_USER = 'FETCH_USER';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const SET_PIN = 'auth/setPin';
+export const SET_PIN = 'SET_PIN';
 export const UPDATE_USER = 'UPDATE_USER';
 
 // BUDA MIDDLEWARE

@@ -37,11 +37,6 @@ function useStartup() {
 }
 
 function HomeScreen() {
-  const {
-    onstart: { startFlag },
-    splitwise: { isSync: isSplitwiseSync },
-  } = useSelector(state => state);
-
   const startSetup = useStartup();
   const [debts, loading] = useSplitwiseDebts();
   const { singleDebts, groupDebts } = debts;
@@ -52,14 +47,15 @@ function HomeScreen() {
     },
     buda: { balance: budaBalance, apiKey },
     bitsplitWallet: { balance: bitsplitBalance },
+    splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
 
   return (
     <>
       <Header title='Inicio' />
-      {startFlag && (
-        <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
-      )}
+
+      <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
+
       <ThemeProvider theme={Theme}>
         {isSplitwiseSync && <SplitwiseSummary />}
 

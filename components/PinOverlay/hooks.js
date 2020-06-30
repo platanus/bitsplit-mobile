@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useToggle from '../../utils/hooks/useToggle';
 import { SET_PIN, LOGOUT_REQUEST } from '../../store/types';
+import encrypt from '../../utils/helpers/encrypt';
 
 export default function usePin(
   compRef,
@@ -49,17 +50,20 @@ export default function usePin(
     }
   };
 
-  const checkPin = currentPin => {
-    if (currentPin === storedPin) {
+  const checkPin = async currentPin => {
+    const encryptedPin = await encrypt(currentPin);
+    if (encryptedPin === storedPin) {
       toggleDisplay();
       onSuccess();
-    } else {
-      setState(prevState => ({ ...prevState, message: 'PIN no coincide' }));
-      if (state.currentTries === maxTries - 1) {
-        onFailure();
-        dispatch({ type: LOGOUT_REQUEST });
-      }
+
+      return;
     }
+    setState(prevState => ({ ...prevState, message: 'PIN no coincide' }));
+    if (state.currentTries === maxTries - 1) {
+      onFailure();
+      dispatch({ type: LOGOUT_REQUEST });
+    }
+
     setState(prevState => ({
       ...prevState,
       currentTries: state.currentTries + 1,

@@ -9,11 +9,13 @@ import {
   REGISTER_REQUEST,
   LOGOUT_REQUEST,
   FETCH_USER,
+  SET_PIN,
   UPDATE_USER,
 } from '../types';
 import api from '../../utils/api';
 import authedAxios from '../../utils/api/authedAxios';
 import { registerForPushNotifications } from '../../utils/api/notifications';
+import encrypt from '../../utils/helpers/encrypt';
 
 function* fetchUser() {
   yield put(authActions.start());
@@ -110,6 +112,10 @@ function* logoutRequest(action) {
   yield put(authActions.finish());
 }
 
+function* setPin(action) {
+  const digest = yield call(encrypt, action.payload);
+  yield put(authActions.setPin(digest));
+}
 function* updateRequest(action) {
   yield put(authActions.start());
   try {
@@ -126,5 +132,6 @@ export default function* loginSaga() {
   yield takeLatest(REGISTER_REQUEST, register);
   yield takeLatest(LOGOUT_REQUEST, logoutRequest);
   yield takeLatest(FETCH_USER, fetchUser);
+  yield takeLatest(SET_PIN, setPin);
   yield takeLatest(UPDATE_USER, updateRequest);
 }
