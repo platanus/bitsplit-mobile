@@ -1,8 +1,8 @@
 import React from 'react';
-import formatCurrency from '../../utils/formatCurrency';
-import styles from './styles';
 import { ListItem } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale';
+import formatCurrency from '../../utils/formatCurrency';
+import styles from './styles';
 import colors from '../../styles/colors';
 
 function Debt({ id, first_name, last_name, amount, from, currency_code }) {

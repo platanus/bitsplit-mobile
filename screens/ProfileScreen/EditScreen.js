@@ -2,25 +2,34 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Input, Button, ButtonGroup } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { UPDATE_USER } from '../../store/types';
 import styles from './styles';
 
 function EditScreen() {
-  const [text, setText] = useState('');
+  const { user } = useSelector(state => state.auth);
+  const [newName, setName] = useState('');
   const navegation = useNavigation();
   const dispatch = useDispatch();
 
-  function handleBudaRequest(newName, newWallet) {
-    dispatch({
-      type: UPDATE_USER,
-      payload: { name: newName, wallet: newWallet },
-    });
-    navegation.goBack();
+  function handleBudaRequest(user, newName, newWallet) {
+    if (newName === '') {
+      dispatch({
+        type: UPDATE_USER,
+        payload: { name: user.name, wallet: newWallet },
+      });
+      navegation.goBack();
+    } else {
+      dispatch({
+        type: UPDATE_USER,
+        payload: { name: newName, wallet: newWallet },
+      });
+      navegation.goBack();
+    }
   }
 
-  const onPressEdit = () => handleBudaRequest(text, newWallet);
+  const onPressEdit = () => handleBudaRequest(user, newName, newWallet);
 
   const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
   const buttons = ['BitSplit', 'Buda'];
@@ -35,8 +44,8 @@ function EditScreen() {
           inputStyle={styles.inputText}
           autoCapitalize='none'
           placeholder='Actualizar nombre'
-          onChangeText={text => setText(text)}
-          defaultValue={text}
+          onChangeText={newName => setName(newName)}
+          defaultValue={newName}
         />
 
         <ButtonGroup
