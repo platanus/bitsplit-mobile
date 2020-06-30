@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import colors from '../styles/colors';
 import styles from '../styles/CrossStyles';
 
-const AppHeader = ({ title }) => {
+const AppHeader = ({ title, back }) => {
   const navigation = useNavigation();
 
   return (
@@ -14,9 +14,9 @@ const AppHeader = ({ title }) => {
         Platform.OS === 'android' ? styles.androidHeader : styles.iosHeader
       }
       leftComponent={{
-        icon: 'menu',
+        icon: back ? 'arrow-back' : 'menu',
         color: colors.white,
-        onPress: navigation.toggleDrawer,
+        onPress: back ? navigation.goBack : navigation.toggleDrawer,
       }}
       centerComponent={{
         text: title,
