@@ -8,7 +8,7 @@ import {
   Overlay,
   ButtonGroup,
 } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
   BUDA_QUOTATION,
   BUDA_PAYMENT,
@@ -36,21 +36,42 @@ function useBudaPayments() {
   }
   const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
 
-  const { error, quotation, lastPayment, balance, loading } = useSelector(
-    state => state.buda
-  );
+  const storageSelection = useSelector(state => {
+    const {
+      auth: {
+        user: { wallet: defaultWallet },
+      },
+      bitsplitWallet: { balance: bitsplitBalance },
+      buda: {
+        error,
+        quotation,
+        lastPayment,
+        balance: budaBalance,
+        loading,
+        apiKey,
+      },
+    } = state;
 
+    return {
+      apiKey,
+      defaultWallet,
+      bitsplitBalance,
+      error,
+      quotation,
+      lastPayment,
+      budaBalance,
+      loading,
+    };
+  }, shallowEqual);
+  const { quotation } = storageSelection;
   const totalClp = parseInt(quotation ? quotation.amount_clp[0] : '0');
   const totalBitcoins = parseFloat(quotation ? quotation.amount_btc[0] : '0');
 
   return {
-    balance,
+    ...storageSelection,
     cleanError,
-    error,
     totalClp,
     totalBitcoins,
-    lastPayment,
-    loading,
     handleBudaQuotation,
     handleBudaPayment,
   };
@@ -58,7 +79,10 @@ function useBudaPayments() {
 
 function PaymentScreen() {
   const {
-    balance,
+    apiKey,
+    defaultWallet,
+    bitsplitBalance,
+    budaBalance,
     cleanError,
     error,
     totalClp,
@@ -68,6 +92,8 @@ function PaymentScreen() {
     handleBudaQuotation,
     handleBudaPayment,
   } = useBudaPayments();
+
+  const balances = [bitsplitBalance, budaBalance];
   const [state, bind] = useForm(
     { receptor: '', transferAmount: '' },
     {
@@ -80,15 +106,22 @@ function PaymentScreen() {
     }
   );
 
-  const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
-  const buttons = ['BitSplit', 'Buda'];
-
+  const buttons = ['BitSplit'];
+  if (apiKey) buttons.push('Buda');
+  const [buttonState, setSelectedIndex] = useState({
+    selectedIndex: buttons.findIndex(
+      walletName => walletName.toLowerCase() === defaultWallet
+    ),
+  });
   const [isDisplayVisible, toggleDisplay] = useToggle();
   const transferAmount = parseInt(state.transferAmount);
   const evalFee = totalClp - transferAmount;
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
   const isValidQuotation = transferAmount >= minTrxAmount;
-  const isPayDisabled = !transferAmount || transferAmount <= minTrxAmount;
+  const isOverBudget =
+    totalBitcoins > balances[buttonState.selectedIndex].BTC.amount;
+  const isPayDisabled =
+    !transferAmount || transferAmount <= minTrxAmount || isOverBudget;
 
   const onPayPress = () =>
     handleBudaPayment(
@@ -102,7 +135,9 @@ function PaymentScreen() {
     <>
       <Header title='Transferencia' />
       <View style={styles.screen}>
-        <Text style={styles.saldoText}>Wallet: {balance.BTC.amount} BTC</Text>
+        <Text style={styles.saldoText}>
+          Wallet: {balances[buttonState.selectedIndex].BTC.amount} BTC
+        </Text>
 
         <Input
           {...bind('receptor')}
@@ -135,7 +170,7 @@ function PaymentScreen() {
         />
 
         <Button
-          title='Pagar'
+          title={isOverBudget ? 'Insuficiente' : 'Pagar'}
           type='solid'
           onPress={onPayPress}
           loading={loading}
