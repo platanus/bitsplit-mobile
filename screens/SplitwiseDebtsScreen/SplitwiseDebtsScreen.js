@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
-import { Text, ListItem } from 'react-native-elements';
+import { ScrollView } from 'react-native';
+import { Text } from 'react-native-elements';
 import styles from './styles';
 import { useSplitwiseDebts } from './hooks';
 import Header from '../../components/Header';
-import formatCurrency from '../../utils/formatCurrency';
-import colors from '../../styles/colors';
-import TouchableScale from 'react-native-touchable-scale';
+import Debt from './Debt';
 
 function SplitwiseDebtsScreen() {
   const [debts, loading] = useSplitwiseDebts();
@@ -48,34 +46,5 @@ const DebtList = ({ title, debts }) => {
     </>
   );
 };
-
-const Debt = ({ id, first_name, last_name, amount, from, currency_code }) => (
-  <ListItem
-    key={id}
-    title={`${first_name} ${last_name || ''}`}
-    titleStyle={from ? styles.from : styles.to}
-    Component={TouchableScale}
-    friction={90}
-    tension={100}
-    activeScale={0.95}
-    containerStyle={from ? styles.received : styles.sent}
-    leftAvatar={{
-      source: {
-        uri:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-      },
-    }}
-    subtitleStyle={{
-      fontFamily: 'SpaceMonoRegular',
-      color: colors.darkpurple,
-      fontSize: 15,
-    }}
-    subtitle={`${from ? 'Te debe' : 'Debes'} ${formatCurrency(
-      amount,
-      currency_code
-    )}`}
-    bottomDivider
-  />
-);
 
 export default SplitwiseDebtsScreen;

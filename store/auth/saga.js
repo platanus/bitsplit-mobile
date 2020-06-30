@@ -9,6 +9,7 @@ import {
   REGISTER_REQUEST,
   LOGOUT_REQUEST,
   FETCH_USER,
+  UPDATE_USER,
 } from '../types';
 import api from '../../utils/api';
 import authedAxios from '../../utils/api/authedAxios';
@@ -109,9 +110,21 @@ function* logoutRequest(action) {
   yield put(authActions.finish());
 }
 
+function* updateRequest(action) {
+  yield put(authActions.start());
+  try {
+    yield call(api.userUpdateApi, action.payload);
+    yield* fetchUser();
+  } catch (err) {
+    console.error(err);
+  }
+  yield put(authActions.finish());
+}
+
 export default function* loginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(REGISTER_REQUEST, register);
   yield takeLatest(LOGOUT_REQUEST, logoutRequest);
   yield takeLatest(FETCH_USER, fetchUser);
+  yield takeLatest(UPDATE_USER, updateRequest);
 }

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BudaAuthScreen from '../screens/BudaAuthScreen/BudaAuthScreen';
-import EditScreen from '../screens/ProfileScreen/EditScreen';
+import UpdateScreen from '../screens/ProfileScreen/UpdateScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
 import PaymentHistoryScreen from '../screens/PaymentHistoryScreen/PaymentHistoryScreen';
@@ -41,7 +41,7 @@ function profileStack() {
       <Stack.Screen
         options={{ headerShown: false }}
         name='Editar'
-        component={EditScreen}
+        component={UpdateScreen}
       />
       <Stack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
     </Stack.Navigator>
