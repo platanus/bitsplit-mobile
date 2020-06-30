@@ -37,42 +37,40 @@ function UpdateScreen() {
   const newWallet = buttons[buttonState.selectedIndex].toLowerCase();
 
   return (
-    <>
-      <View style={styles.screen}>
-        <Input
-          inputContainerStyle={styles.input}
-          inputStyle={styles.inputText}
-          autoCapitalize='none'
-          placeholder='Actualizar nombre'
-          onChangeText={newName => setName(newName)}
-          defaultValue={newName}
-        />
+    <View style={styles.screen}>
+      <Input
+        inputContainerStyle={styles.input}
+        inputStyle={styles.inputText}
+        autoCapitalize='none'
+        placeholder='Actualizar nombre'
+        onChangeText={newName => setName(newName)}
+        defaultValue={newName}
+      />
 
-        <ButtonGroup
-          onPress={e => setSelectedIndex({ selectedIndex: e })}
-          selectedIndex={buttonState.selectedIndex}
-          buttons={buttons}
-          containerStyle={styles.groupButtonContainer}
-          selectedButtonStyle={styles.groupButton}
-          titleStyle={styles.textButton}
-        />
+      <ButtonGroup
+        onPress={e => setSelectedIndex({ selectedIndex: e })}
+        selectedIndex={buttonState.selectedIndex}
+        buttons={buttons}
+        containerStyle={styles.groupButtonContainer}
+        selectedButtonStyle={styles.groupButton}
+        titleStyle={styles.textButton}
+      />
 
-        <Button
-          title='Guardar'
-          type='solid'
-          buttonStyle={styles.button}
-          titleStyle={styles.textButton}
-          onPress={() => onPressUpdate()}
-        />
-        <Button
-          title='Cancelar'
-          type='solid'
-          buttonStyle={styles.button}
-          titleStyle={styles.textButton}
-          onPress={() => navegation.goBack()}
-        />
-      </View>
-    </>
+      <Button
+        title='Guardar'
+        type='solid'
+        buttonStyle={styles.button}
+        titleStyle={styles.textButton}
+        onPress={() => onPressUpdate()}
+      />
+      <Button
+        title='Cancelar'
+        type='solid'
+        buttonStyle={styles.button}
+        titleStyle={styles.textButton}
+        onPress={() => navegation.goBack()}
+      />
+    </View>
   );
 }
 
