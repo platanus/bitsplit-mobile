@@ -78,7 +78,7 @@ const ProfileNavigation = () => (
     <ProfileStack.Screen
       options={{ headerShown: false }}
       name='Editar'
-      component={EditScreen}
+      component={UpdateScreen}
     />
     <ProfileStack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
   </ProfileStack.Navigator>
