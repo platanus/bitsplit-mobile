@@ -39,6 +39,12 @@ function budaAutoDepositApi(payload) {
   });
 }
 
+function budaAutoWithdrawalApi(payload) {
+  return authedAxios.getInstance().post(`${env.url}/api/v2/buda_withdrawals`, {
+    amount: payload.amountBtc,
+  });
+}
+
 const budaApi = {
   budaBalance,
   budaGetQuotationApi,
@@ -46,5 +52,6 @@ const budaApi = {
   bitSplitWithdrawalApi,
   bitSplitDepositApi,
   budaAutoDepositApi,
+  budaAutoWithdrawalApi,
 };
 export default budaApi;
