@@ -128,7 +128,7 @@ function DepostitScreen() {
             totalClp={totalClp}
             totalBitcoins={totalBitcoins}
           />
-          <Text style={styles.text}>¿Desde donde se desea cargar?</Text>
+          <Text style={styles.text}>¿Desde dónde se desea cargar?</Text>
           <ButtonGroup
             onPress={e => setSelectedIndex({ selectedIndex: e })}
             selectedIndex={buttonState.selectedIndex}
