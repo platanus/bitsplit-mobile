@@ -173,7 +173,6 @@ function DepostitScreen() {
                 <Text h5></Text>
 
                 <Text h5>{`Código LN:\n\n${lastDeposit.payreq}`}</Text>
-                <Text h5></Text>
 
                 {lastDeposit.expires_at === null ? (
                   <Text>Fecha de transacción: {lastDeposit.processed_at}</Text>
