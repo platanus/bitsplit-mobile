@@ -38,7 +38,7 @@ function NotificationScreen() {
             notifications.map(({ seen, data, token }) => (
               <ListItem
                 key={token}
-                title={`${data.amount} BTC`}
+                title={`Te pagaron ${data.amount} BTC`}
                 titleStyle={seen ? styles.old : styles.new}
                 subtitle={getSubtitle(seen, data)}
                 onPress={() => handleSeen(token)}
@@ -47,12 +47,6 @@ function NotificationScreen() {
                 friction={90}
                 tension={100}
                 activeScale={0.95}
-                leftAvatar={{
-                  source: {
-                    uri:
-                      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                  },
-                }}
               />
             ))}
 
@@ -66,6 +60,8 @@ function NotificationScreen() {
 }
 
 const getSubtitle = (seen, data) =>
-  `Fecha: ${moment(data.created_at).format('DD/MM/YY HH:mm')}`;
+  `Fecha: ${moment(data.created_at).format('DD/MM/YY HH:mm')} de ${
+    data.sender
+  }`;
 
 export default NotificationScreen;

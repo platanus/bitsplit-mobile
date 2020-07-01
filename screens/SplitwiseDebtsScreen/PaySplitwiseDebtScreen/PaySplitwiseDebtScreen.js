@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Button } from 'react-native';
-import { Text } from 'react-native-elements';
+import { View } from 'react-native';
+import { Text, Button } from 'react-native-elements';
+import { useRoute } from '@react-navigation/native';
 import Header from '../../../components/Header';
 import formatCurrency from '../../../utils/formatCurrency';
-import { useRoute } from '@react-navigation/native';
+import styles from './styles';
 
 function PaySplitwiseDebt() {
   const {
@@ -13,10 +14,19 @@ function PaySplitwiseDebt() {
   return (
     <>
       <Header back title={title} />
-      <View>
-        <Text>Monto a pagar: {formatCurrency(amount, currency_code)}</Text>
-        <Text>Destinatario: {email}</Text>
-        <Button title='Pagar' />
+      <View style={styles.container}>
+        <Text style={styles.title}>Monto</Text>
+        <Text style={styles.money}>
+          {formatCurrency(amount, currency_code)}
+        </Text>
+        <Text style={styles.user1}>{name}</Text>
+        <Text style={styles.user2}>{email}</Text>
+
+        <Button
+          title='Pagar'
+          buttonStyle={styles.button}
+          titleStyle={styles.textButton}
+        />
       </View>
     </>
   );
