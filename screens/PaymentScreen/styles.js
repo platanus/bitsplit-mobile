@@ -94,5 +94,11 @@ const styles = StyleSheet.create({
     color: colors.lightpurple,
     fontFamily: 'SpaceMonoRegular',
   },
+  text: {
+    padding: 10,
+    color: colors.darkpurple,
+    fontFamily: 'SpaceMonoRegular',
+    textAlign: 'center',
+  },
 });
 export default { ...crossStyles, ...styles };

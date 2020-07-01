@@ -154,6 +154,8 @@ function PaymentScreen() {
           autoCapitalize='none'
           placeholder='Monto de llegada en CLP'
         />
+
+        <Text style={styles.text}>Enviar desde</Text>
         <ButtonGroup
           onPress={e => setSelectedIndex({ selectedIndex: e })}
           selectedIndex={buttonState.selectedIndex}
