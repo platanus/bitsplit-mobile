@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Clipboard } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Input,
@@ -94,6 +94,16 @@ function DepostitScreen() {
       toggleDisplay
     );
 
+  const copyToClipboard = () => {
+    Clipboard.setString(lastDeposit.payreq);
+    alert('¡Invoice copiado!');
+  };
+
+  const closeCreated = () => {
+    toggleDisplay();
+    copyToClipboard();
+  };
+
   return (
     <>
       <Header title={'Depositar'} />
@@ -136,6 +146,16 @@ function DepostitScreen() {
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
           />
+
+          <Button
+            title='Copiar último código'
+            type='solid'
+            onPress={copyToClipboard}
+            disabled={lastDeposit === null}
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
+          />
+
           {lastDeposit && (
             <Overlay
               isVisible={isDisplayVisible}
@@ -162,7 +182,12 @@ function DepostitScreen() {
                     {lastDeposit.expires_at}
                   </Text>
                 )}
-                <Button title='Listo' type='solid' onPress={toggleDisplay} />
+                <Text h5></Text>
+                <Button
+                  title='Copiar código y cerrar'
+                  type='solid'
+                  onPress={closeCreated}
+                />
               </View>
             </Overlay>
           )}

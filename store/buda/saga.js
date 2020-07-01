@@ -115,6 +115,14 @@ function* postWithdrawal(action) {
 
   yield put(budaActions.start());
   try {
+    if (action.payload.withdrawalMethod === 'buda') {
+      const {
+        data: { invoice },
+      } = yield call(api.budaAutoWithdrawalApi, { ...action.payload });
+      if (invoice !== null) {
+        action.payload.invoice = invoice;
+      }
+    }
     const {
       data: {
         data: { response },
