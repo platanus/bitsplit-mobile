@@ -126,7 +126,6 @@ function WithdrawalScreen() {
   };
 
   const onWithdrawalPress = () =>
-    // TODO: widthrawal directly to BUDA
     handleBitSplitWithdrawal(
       state.invoiceCode.toUpperCase(),
       state.transferAmount,
@@ -193,17 +192,21 @@ function WithdrawalScreen() {
             selectedButtonStyle={styles.groupButton}
           />
 
-          <Button
-            title='Escanear QR'
-            type='solid'
-            onPress={() => {
-              clearLN();
-              setModalVisible(!modalVisible);
-            }}
-            loading={loading}
-            buttonStyle={styles.button}
-            titleStyle={styles.textButton}
-          />
+          {buttons[buttonState.selectedIndex] === 'Otro' ? (
+            <Button
+              title='Escanear QR'
+              type='solid'
+              onPress={() => {
+                clearLN();
+                setModalVisible(!modalVisible);
+              }}
+              loading={loading}
+              buttonStyle={styles.button}
+              titleStyle={styles.textButton}
+            />
+          ) : (
+            <></>
+          )}
 
           <Button
             title='Retirar'
