@@ -98,7 +98,6 @@ function WithdrawalScreen() {
     setScanned(true);
     setModalVisible(!modalVisible);
     state.invoiceCode = data.replace('lightning:', '');
-    alert('¡Invoice escandeado!');
   };
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
