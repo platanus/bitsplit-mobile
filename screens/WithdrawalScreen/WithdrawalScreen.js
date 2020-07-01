@@ -192,21 +192,18 @@ function WithdrawalScreen() {
             selectedButtonStyle={styles.groupButton}
           />
 
-          {buttons[buttonState.selectedIndex] === 'Otro' ? (
-            <Button
-              title='Escanear QR'
-              type='solid'
-              onPress={() => {
-                clearLN();
-                setModalVisible(!modalVisible);
-              }}
-              loading={loading}
-              buttonStyle={styles.button}
-              titleStyle={styles.textButton}
-            />
-          ) : (
-            <></>
-          )}
+          <Button
+            title='Escanear QR'
+            type='solid'
+            onPress={() => {
+              clearLN();
+              setModalVisible(!modalVisible);
+            }}
+            disabled={buttons[buttonState.selectedIndex] === 'Buda'}
+            loading={loading}
+            buttonStyle={styles.button}
+            titleStyle={styles.textButton}
+          />
 
           <Button
             title='Retirar'
