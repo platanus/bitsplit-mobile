@@ -22,10 +22,15 @@ const minLnLength = 2;
 
 function useBitSplitWithdrawal() {
   const dispatch = useDispatch();
-  function handleBitSplitWithdrawal(invoice, callback) {
+  function handleBitSplitWithdrawal(
+    invoice,
+    amountBtc,
+    withdrawalMethod,
+    callback
+  ) {
     dispatch({
       type: BITSPLIT_WITHDRAWAL,
-      payload: { invoice },
+      payload: { invoice, amountBtc, withdrawalMethod },
       callback,
     });
   }
@@ -70,12 +75,21 @@ function WithdrawalScreen() {
     handleBitSplitWithdrawal,
   } = useBitSplitWithdrawal();
   const [state, bind] = useForm(
-    { invoiceCode: 'LN' },
     {
-      validations: { invoiceCode: value => validateLnCode(value) },
-      sideEffects: {},
+      invoiceCode: 'LN',
+      transferAmount: '',
+    },
+    {
+      validations: {
+        invoiceCode: value => validateLnCode(value),
+        transferAmount: value => !isNaN(value),
+      },
+      sideEffects: {
+        transferAmount: value => parseFloat(value),
+      },
       errorMessages: {
         invoiceCode: 'El código lighgtning debe comenzar con LN',
+        transferAmount: 'Debes ingresar un número',
       },
     }
   );
@@ -113,7 +127,12 @@ function WithdrawalScreen() {
 
   const onWithdrawalPress = () =>
     // TODO: widthrawal directly to BUDA
-    handleBitSplitWithdrawal(state.invoiceCode.toUpperCase(), toggleDisplay);
+    handleBitSplitWithdrawal(
+      state.invoiceCode.toUpperCase(),
+      state.transferAmount,
+      buttons[buttonState.selectedIndex].toLowerCase(),
+      toggleDisplay
+    );
 
   return (
     <>
@@ -123,14 +142,27 @@ function WithdrawalScreen() {
           <Text h4>
             {(returnMessage && returnMessage.message) || returnMessage}
           </Text>
-          <Input
-            {...bind('invoiceCode')}
-            autoCapitalize='characters'
-            placeholder='Código lightning'
-            leftIcon={<Icon name='bolt' size={24} color={colors.purple} />}
-            inputContainerStyle={styles.inputOff}
-            inputStyle={styles.inputText}
-          />
+          {buttons[buttonState.selectedIndex] === 'Otro' ? (
+            <Input
+              {...bind('invoiceCode')}
+              autoCapitalize='characters'
+              placeholder='Código lightning'
+              leftIcon={<Icon name='bolt' size={24} color={colors.purple} />}
+              inputContainerStyle={styles.inputOff}
+              inputStyle={styles.inputText}
+            />
+          ) : (
+            <Input
+              {...bind('transferAmount')}
+              inputContainerStyle={styles.inputOff}
+              inputStyle={styles.inputText}
+              autoCapitalize='none'
+              keyboardType='numeric'
+              placeholder='Monto en BTC'
+              leftIcon={<Icon name='dollar' size={24} color={colors.purple} />}
+            />
+          )}
+
           {hasPermission === null || hasPermission === false ? (
             <Text>Se debe autorizar a la app para utilizar la cámara</Text>
           ) : (
@@ -152,14 +184,14 @@ function WithdrawalScreen() {
             </>
           )}
 
-          <Text style={styles.text}>¿Desde donde se desea cargar?</Text>
-          {/* <ButtonGroup
+          <Text style={styles.text}>¿Hacia dónde se desea retirar?</Text>
+          <ButtonGroup
             onPress={e => setSelectedIndex({ selectedIndex: e })}
             selectedIndex={buttonState.selectedIndex}
             buttons={buttons}
             containerStyle={styles.groupButtonContainer}
             selectedButtonStyle={styles.groupButton}
-          /> */}
+          />
 
           <Button
             title='Escanear QR'
@@ -195,9 +227,11 @@ function WithdrawalScreen() {
                 <Text h5>
                   Tu retiro se procesó el {lastWithdrawal.processed_at}
                 </Text>
+                <Text h5></Text>
                 <Text
                   h5
-                >{`Monto retirado en BTC \n ${lastWithdrawal.amount}`}</Text>
+                >{`Monto retirado en BTC: ${lastWithdrawal.amount}`}</Text>
+                <Text h5></Text>
                 <Button title='Listo' type='solid' onPress={toggleDisplay} />
               </View>
             </Overlay>
