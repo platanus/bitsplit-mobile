@@ -49,6 +49,25 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMonoRegular',
     textAlign: 'center',
   },
+
+  errorText: {
+    color: color.red,
+    fontSize: 13,
+    textAlign: 'center',
+  },
+
+  overlayError: {
+    backgroundColor: color.lightpurple,
+    width: 300,
+    height: 100,
+    maxWidth: '80%',
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
+    elevation: 8,
+  },
 });
 
 export default { ...crossStyles, ...styles };

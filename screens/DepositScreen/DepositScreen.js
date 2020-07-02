@@ -11,7 +11,11 @@ import {
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-native-qrcode-svg';
-import { BUDA_QUOTATION, BITSPLIT_DEPOSIT } from '../../store/types';
+import {
+  BUDA_QUOTATION,
+  BITSPLIT_DEPOSIT,
+  BUDA_CLEAN_ERROR,
+} from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
@@ -104,15 +108,26 @@ function DepostitScreen() {
     copyToClipboard();
   };
 
+  const dispatch = useDispatch();
+  const cleanError = () => dispatch({ type: BUDA_CLEAN_ERROR });
+
   return (
     <>
       <Header title={'Depositar'} />
       <ScrollView>
         <View style={styles.screen}>
-          <Text h4>{(error && error.message) || error}</Text>
-          <Text h4>
-            {(returnMessage && returnMessage.message) || returnMessage}
-          </Text>
+          <Overlay
+            isVisible={!!error}
+            overlayStyle={styles.overlayError}
+            onBackdropPress={cleanError}
+          >
+            <View style={styles.screen}>
+              <Text style={styles.errorText}>
+                Houston tenemos un problema, mensaje de error:{' '}
+                {(error && error.message) || JSON.stringify(error)}
+              </Text>
+            </View>
+          </Overlay>
           <Input
             {...bind('transferAmount')}
             inputContainerStyle={styles.inputOff}
