@@ -69,10 +69,18 @@ function SplitwiseAuthScreen() {
             onBackdropPress={cleanError}
           >
             <View style={styles.screen}>
-              <Text style={styles.errorText}>
-                Houston tenemos un problema, mensaje de error:{' '}
-                {(error && error.message) || JSON.stringify(error)}
-              </Text>
+              <Overlay
+                isVisible={!!error}
+                overlayStyle={styles.overlayError}
+                onBackdropPress={cleanError}
+              >
+                <View style={styles.screen}>
+                  <Text style={styles.errorText}>
+                    Houston tenemos un problema, mensaje de error:{' '}
+                    {(error && error.message) || JSON.stringify(error)}
+                  </Text>
+                </View>
+              </Overlay>
             </View>
           </Overlay>
         </View>
