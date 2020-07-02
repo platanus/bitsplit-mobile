@@ -3,10 +3,6 @@ import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
-  // screen: {
-  //   marginTop: '20%',
-  // },
-
   to: {
     color: colors.lightred,
     fontSize: 18,
