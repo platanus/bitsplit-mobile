@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
 
   errorText: {
     color: colors.red,
-    fontSize: 12,
+    fontSize: 13,
     textAlign: 'center',
-    margin: 3,
+    marginTop: '-20%',
   },
 
   overlayError: {
@@ -65,8 +65,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 8,
-    padding: 5,
-    marginVertical: 30,
   },
 });
 export default { ...crossStyles, ...styles };

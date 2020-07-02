@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThemeProvider, Text } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import { ThemeProvider, Text, Avatar } from 'react-native-elements';
 import {
   GET_WALLETS_BALANCES,
   START_SETUP,
@@ -40,6 +41,8 @@ function HomeScreen() {
   const startSetup = useStartup();
   const [debts, loading] = useSplitwiseDebts();
   const { singleDebts, groupDebts } = debts;
+  const { user } = useSelector(state => state.auth);
+  const isSplitSync = user.picture_url !== null;
 
   const {
     auth: {
@@ -47,8 +50,10 @@ function HomeScreen() {
     },
     buda: { balance: budaBalance, apiKey },
     bitsplitWallet: { balance: bitsplitBalance },
-    splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
+
+  const navegation = useNavigation();
+  const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
   return (
     <>
@@ -56,9 +61,23 @@ function HomeScreen() {
 
       <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
 
-      <ThemeProvider theme={Theme}>
-        {isSplitwiseSync && <SplitwiseSummary />}
+      {isSplitSync ? (
+        <SplitwiseSummary />
+      ) : (
+        <TouchableOpacity
+          onPress={goSplitwiseSync}
+          style={styles.splitwiseIcon}
+        >
+          <Avatar
+            containerStyle={styles.walletAvatar}
+            source={require('../../assets/Images/splitOff.png')}
+            size='large'
+            rounded
+          />
+        </TouchableOpacity>
+      )}
 
+      <ThemeProvider theme={Theme}>
         {defaultWallet === 'bitsplit' && bitsplitBalance && (
           <Text style={styles.walletText}>
             Bitsplit Wallet: ${bitsplitBalance.BTC.amount} BTC
@@ -71,7 +90,11 @@ function HomeScreen() {
           </Text>
         )}
 
-        <Text style={styles.titleText}>Deudas</Text>
+        <Text style={styles.titleText}>
+          {isSplitSync
+            ? 'Deudas'
+            : 'Conéctate a Splitwise para manejar tus deudas!'}
+        </Text>
         <ScrollView>
           {!loading && (
             <>

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
   money: {
     fontFamily: 'SpaceMonoBold',
-    fontSize: 50,
+    fontSize: 40,
     textAlign: 'center',
     marginBottom: '10%',
     color: color.darkpurple,

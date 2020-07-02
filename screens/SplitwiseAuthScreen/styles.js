@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
 
   avatar: {
     marginBottom: 50,
-    marginTop: -10,
   },
 
   errorText: {

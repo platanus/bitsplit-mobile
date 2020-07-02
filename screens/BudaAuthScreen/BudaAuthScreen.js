@@ -20,6 +20,7 @@ import {
 import styles from './styles';
 import Theme from '../../styles/Theme';
 import colors from '../../styles/colors';
+import Header from '../../components/Header';
 
 function BudaAuthScreen() {
   const { error, loading } = useSelector(state => state.buda);
@@ -44,6 +45,7 @@ function BudaAuthScreen() {
 
   return (
     <>
+      <Header back title='Buda' />
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           <Avatar

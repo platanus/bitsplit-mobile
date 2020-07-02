@@ -45,12 +45,12 @@ function SplitwiseAuthScreen() {
 
   return (
     <>
-      <Header title='Autentificación Splitwise' />
+      <Header back title='Conecta Splitwise' />
       <ThemeProvider theme={Theme}>
         <View style={styles.screen}>
           <Avatar
             rounded
-            size='large'
+            size='xlarge'
             containerStyle={styles.avatar}
             source={require('../../assets/Images/split.jpg')}
           />
@@ -69,10 +69,18 @@ function SplitwiseAuthScreen() {
             onBackdropPress={cleanError}
           >
             <View style={styles.screen}>
-              <Text style={styles.errorText}>
-                Houston tenemos un problema, mensaje de error:{' '}
-                {(error && error.message) || JSON.stringify(error)}
-              </Text>
+              <Overlay
+                isVisible={!!error}
+                overlayStyle={styles.overlayError}
+                onBackdropPress={cleanError}
+              >
+                <View style={styles.screen}>
+                  <Text style={styles.errorText}>
+                    Houston tenemos un problema, mensaje de error:{' '}
+                    {(error && error.message) || JSON.stringify(error)}
+                  </Text>
+                </View>
+              </Overlay>
             </View>
           </Overlay>
         </View>

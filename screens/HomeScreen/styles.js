@@ -3,9 +3,6 @@ import crossStyles from '../../styles/CrossStyles';
 import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
-  screen: {
-    marginTop: '0.1%',
-  },
   to: {
     color: colors.lightred,
     fontSize: 18,
@@ -28,6 +25,12 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMonoRegular',
     width: '100%',
     paddingBottom: 10,
+  },
+
+  walletAvatar: {
+    marginTop: 50,
+    marginLeft: '40%',
+    marginBottom: 30,
   },
 });
 

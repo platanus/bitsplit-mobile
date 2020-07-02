@@ -33,13 +33,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
 
-  errorText: {
-    color: colors.red,
-    fontSize: 12,
-    textAlign: 'center',
-    margin: 3,
-  },
-
   overlayContainer: {
     width: 300,
     maxWidth: '80%',
@@ -54,7 +47,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 30,
   },
+  errorText: {
+    color: colors.red,
+    fontSize: 13,
+    textAlign: 'center',
+  },
+
   overlayError: {
+    backgroundColor: colors.lightpurple,
     width: 300,
     height: 100,
     maxWidth: '80%',
@@ -64,10 +64,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 8,
-    backgroundColor: colors.purple,
-    padding: 5,
-    borderRadius: 15,
-    marginVertical: 30,
   },
 
   groupButtonContainer: {
