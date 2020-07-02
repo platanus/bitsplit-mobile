@@ -93,7 +93,7 @@ function HomeScreen() {
         <Text style={styles.titleText}>
           {isSplitSync
             ? 'Deudas'
-            : 'Conectate a Splitwise para manejas tus deudas!'}
+            : 'Conéctate a Splitwise para manejar tus deudas!'}
         </Text>
         <ScrollView>
           {!loading && (
