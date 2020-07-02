@@ -42,7 +42,7 @@ const Navigation = () => {
       >
         {token ? (
           <>
-            <Drawer.Screen name='Inicio' component={HomeScreen} />
+            <Drawer.Screen name='Inicio' component={HomeNavigation} />
             <Drawer.Screen name='Pagar' component={PaymentScreen} />
             <Drawer.Screen
               name='Historial de Pagos'
@@ -74,14 +74,39 @@ const ProfileNavigation = () => (
       name='Settings'
       component={ProfileScreen}
     />
-    <ProfileStack.Screen name='Buda' component={BudaAuthScreen} />
+    <ProfileStack.Screen
+      options={{ headerShown: false }}
+      name='Buda'
+      component={BudaAuthScreen}
+    />
     <ProfileStack.Screen
       options={{ headerShown: false }}
       name='Editar'
       component={UpdateScreen}
     />
-    <ProfileStack.Screen name='SplitwiseAuth' component={SplitwiseAuthScreen} />
+    <ProfileStack.Screen
+      options={{ headerShown: false }}
+      name='SplitwiseAuth'
+      component={SplitwiseAuthScreen}
+    />
   </ProfileStack.Navigator>
+);
+
+const HomeStack = createNativeStackNavigator();
+
+const HomeNavigation = () => (
+  <HomeStack.Navigator>
+    <HomeStack.Screen
+      options={{ headerShown: false }}
+      name='Inicio'
+      component={HomeScreen}
+    />
+    <HomeStack.Screen
+      options={{ headerShown: false }}
+      name='SplitwiseAuth'
+      component={SplitwiseAuthScreen}
+    />
+  </HomeStack.Navigator>
 );
 
 const SplitwiseStack = createNativeStackNavigator();

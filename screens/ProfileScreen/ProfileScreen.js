@@ -73,7 +73,7 @@ function ProfileScreen() {
             containerStyle={styles.avatar}
             source={{
               uri: `${
-                user.picture_url.large ||
+                user.picture ||
                 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
               }`,
             }}
