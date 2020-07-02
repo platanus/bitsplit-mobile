@@ -50,7 +50,6 @@ function HomeScreen() {
     },
     buda: { balance: budaBalance, apiKey },
     bitsplitWallet: { balance: bitsplitBalance },
-    splitwise: { isSync: isSplitwiseSync },
   } = useSelector(state => state);
 
   const navegation = useNavigation();
@@ -91,7 +90,11 @@ function HomeScreen() {
           </Text>
         )}
 
-        <Text style={styles.titleText}>Deudas</Text>
+        <Text style={styles.titleText}>
+          {isSplitSync
+            ? 'Deudas'
+            : 'Conectate a Splitwise para manejas tus deudas!'}
+        </Text>
         <ScrollView>
           {!loading && (
             <>
