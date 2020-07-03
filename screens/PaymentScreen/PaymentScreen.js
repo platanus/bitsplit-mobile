@@ -180,7 +180,7 @@ function PaymentScreen() {
         />
         {lastPayment && (
           <Overlay
-            isVisible={true}
+            isVisible={isDisplayVisible}
             overlayStyle={styles.overlayContainer}
             onBackdropPress={toggleDisplay}
           >
