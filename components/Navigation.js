@@ -21,7 +21,9 @@ import DepositScreen from '../screens/DepositScreen/DepositScreen';
 import SplitwiseDebtsScreen from '../screens/SplitwiseDebtsScreen';
 import SplitwiseAuthScreen from '../screens/SplitwiseAuthScreen/SplitwiseAuthScreen';
 import PaySplitwiseDebtScreen from '../screens/SplitwiseDebtsScreen/PaySplitwiseDebtScreen';
-import NotificationScreen from '../screens/Notifications/NotificationScreen';
+import NotificationScreen, {
+  useNotifications,
+} from '../screens/Notifications/NotificationScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import { LOGOUT_REQUEST } from '../store/types';
 
@@ -30,6 +32,7 @@ const Drawer = createDrawerNavigator();
 enableScreens();
 
 const Navigation = () => {
+  useNotifications();
   const token = useSelector(state => state.auth.token);
 
   return (

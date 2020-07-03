@@ -14,7 +14,7 @@ import { database } from '../../utils/firebase/database/config';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 
-function NotificationScreen() {
+export const useNotifications = () => {
   const {
     auth: {
       user: { email },
@@ -30,6 +30,13 @@ function NotificationScreen() {
   useEffect(() => {
     dispatch({ type: GET_WALLETS_BALANCES });
   }, [total, dispatch]);
+
+  return [notifications, loading];
+};
+
+function NotificationScreen() {
+  const [notifications, loading] = useNotifications();
+  const dispatch = useDispatch();
 
   function handleSeen(notificationToken) {
     dispatch({ type: FIREBASE_NOTIFICATIONS, payload: notificationToken });
