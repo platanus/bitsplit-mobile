@@ -180,17 +180,19 @@ function PaymentScreen() {
         />
         {lastPayment && (
           <Overlay
-            isVisible={isDisplayVisible}
+            isVisible={true}
             overlayStyle={styles.overlayContainer}
             onBackdropPress={toggleDisplay}
           >
             <View style={styles.screen}>
-              <Text h4>Pago Exitoso</Text>
-              <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
-              <Text
-                h5
-              >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-              <Button title='Listo' type='solid' onPress={toggleDisplay} />
+              <View style={{ display: 'flex' }}>
+                <Text h4>Pago Exitoso</Text>
+                <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
+                <Text
+                  h5
+                >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
+                <Button title='Listo' type='solid' onPress={toggleDisplay} />
+              </View>
             </View>
           </Overlay>
         )}

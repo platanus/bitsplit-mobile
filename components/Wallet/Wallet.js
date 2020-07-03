@@ -10,7 +10,7 @@ function Wallet({ isDefault = false, name, balance }) {
   const showCoin = () =>
     showIn
       ? balance.BTC.amount
-      : formatCurrency(parseInt(balance.BTC_CLP.amount), 'CLP').slice(3);
+      : formatCurrency(parseInt(balance.BTC_CLP.amount), 'CLP');
 
   return (
     <TouchableOpacity
