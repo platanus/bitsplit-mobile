@@ -11,17 +11,22 @@ import {
   ButtonGroup,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { BITSPLIT_WITHDRAWAL } from '../../store/types';
+import { BUDA_QUOTATION, BITSPLIT_WITHDRAWAL } from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
+import QuotationComponent from '../../components/Quotation/QuotationComponent';
 import colors from '../../styles/colors';
 
 const minLnLength = 2;
+const referenceQuotation = 1000;
 
 function useBitSplitWithdrawal() {
   const dispatch = useDispatch();
+  function handleBudaQuotation(amount) {
+    dispatch({ type: BUDA_QUOTATION, payload: amount });
+  }
   function handleBitSplitWithdrawal(
     invoice,
     amountBtc,
@@ -34,16 +39,24 @@ function useBitSplitWithdrawal() {
       callback,
     });
   }
-  const { error, returnMessage, lastWithdrawal, loading } = useSelector(
-    state => state.buda
-  );
+  const {
+    error,
+    returnMessage,
+    quotation,
+    lastWithdrawal,
+    loading,
+  } = useSelector(state => state.buda);
+
+  const btcEquivalent = parseFloat(quotation ? quotation.amount_btc[0] : '0');
 
   return {
     error,
     returnMessage,
     lastWithdrawal,
     loading,
+    btcEquivalent,
     handleBitSplitWithdrawal,
+    handleBudaQuotation,
   };
 }
 
@@ -72,7 +85,9 @@ function WithdrawalScreen() {
     returnMessage,
     lastWithdrawal,
     loading,
+    btcEquivalent,
     handleBitSplitWithdrawal,
+    handleBudaQuotation,
   } = useBitSplitWithdrawal();
   const [state, bind] = useForm(
     {
@@ -82,7 +97,8 @@ function WithdrawalScreen() {
     {
       validations: {
         invoiceCode: value => validateLnCode(value),
-        transferAmount: value => !isNaN(value),
+        transferAmount: value =>
+          !handleBudaQuotation(referenceQuotation) && !isNaN(value),
       },
       sideEffects: {
         transferAmount: value => parseFloat(value),
@@ -92,6 +108,11 @@ function WithdrawalScreen() {
         transferAmount: 'Debes ingresar un número',
       },
     }
+  );
+
+  // create initial quotation
+  const transformationBtcClp = parseInt(
+    (referenceQuotation / btcEquivalent) * state.transferAmount
   );
 
   const [buttonState, setSelectedIndex] = useState({ selectedIndex: 0 });
@@ -112,7 +133,6 @@ function WithdrawalScreen() {
     setScanned(true);
     setModalVisible(!modalVisible);
     state.invoiceCode = data.replace('lightning:', '');
-    alert('¡Invoice escandeado!');
   };
 
   const [isDisplayVisible, toggleDisplay] = useToggle();
@@ -192,18 +212,27 @@ function WithdrawalScreen() {
             selectedButtonStyle={styles.groupButton}
           />
 
-          <Button
-            title='Escanear QR'
-            type='solid'
-            onPress={() => {
-              clearLN();
-              setModalVisible(!modalVisible);
-            }}
-            disabled={buttons[buttonState.selectedIndex] === 'Buda'}
-            loading={loading}
-            buttonStyle={styles.button}
-            titleStyle={styles.textButton}
-          />
+          {buttons[buttonState.selectedIndex] === 'Buda' ? (
+            <QuotationComponent
+              style={styles.quotationContainer}
+              isValidQuotation={true}
+              totalClp={transformationBtcClp}
+              totalBitcoins={state.transferAmount}
+            />
+          ) : (
+            <Button
+              title='Escanear QR'
+              type='solid'
+              onPress={() => {
+                clearLN();
+                setModalVisible(!modalVisible);
+              }}
+              disabled={buttons[buttonState.selectedIndex] === 'Buda'}
+              loading={loading}
+              buttonStyle={styles.button}
+              titleStyle={styles.textButton}
+            />
+          )}
 
           <Button
             title='Retirar'
