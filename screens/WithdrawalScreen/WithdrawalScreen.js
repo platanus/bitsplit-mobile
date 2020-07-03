@@ -212,16 +212,14 @@ function WithdrawalScreen() {
             selectedButtonStyle={styles.groupButton}
           />
 
-          {buttons[buttonState.selectedIndex] === 'Buda' && (
+          {buttons[buttonState.selectedIndex] === 'Buda' ? (
             <QuotationComponent
               style={styles.quotationContainer}
               isValidQuotation={true}
               totalClp={transformationBtcClp}
               totalBitcoins={state.transferAmount}
             />
-          )}
-
-          {buttons[buttonState.selectedIndex] !== 'Buda' && (
+          ) : (
             <Button
               title='Escanear QR'
               type='solid'
