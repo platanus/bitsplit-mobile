@@ -3,36 +3,15 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeProvider, Text, Avatar } from 'react-native-elements';
-import { GET_WALLETS_BALANCES, SPLITWISE_GET_DEBTS } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 import PinOverlay from '../../components/PinOverlay/PinOverlay';
 import SplitwiseSummary from '../../components/SplitwiseSummary/SplitwiseSummary';
-import authedAxios from '../../utils/api/authedAxios';
 import { useSplitwiseDebts } from '../SplitwiseDebtsScreen/hooks';
 import Debt from '../SplitwiseDebtsScreen/Debt';
 
-function useStartup() {
-  const dispatch = useDispatch();
-  const {
-    auth: {
-      user: { email },
-      token,
-    },
-  } = useSelector(state => state);
-
-  useEffect(() => {
-    if (email && token) {
-      authedAxios.createInstance({ email, token });
-      dispatch({ type: GET_WALLETS_BALANCES });
-      dispatch({ type: SPLITWISE_GET_DEBTS });
-    }
-  }, [email, token]);
-}
-
 function HomeScreen() {
-  useStartup();
   const [debts, loading] = useSplitwiseDebts();
   const { singleDebts, groupDebts } = debts;
   const { user } = useSelector(state => state.auth);

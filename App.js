@@ -7,11 +7,17 @@ import { AppLoading } from 'expo';
 import { useFonts } from '@use-expo/font';
 import Navigation from './components/Navigation';
 import { store, runSagas, persistor } from './store';
+import useStart from './utils/hooks/useStart';
 
 moment.locale('es');
 
 runSagas();
 
+const RunFirst = () => {
+  useStart();
+
+  return null;
+};
 export default function App() {
   const [fontsLoaded] = useFonts({
     SpaceMonoBoldItalic: require('./assets/fonts/SpaceMono-BoldItalic.ttf'),
@@ -26,6 +32,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <RunFirst />
         <Navigation />
       </PersistGate>
     </Provider>
