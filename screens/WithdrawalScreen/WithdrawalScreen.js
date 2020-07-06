@@ -158,9 +158,6 @@ function WithdrawalScreen() {
       <Header title='Retiro' />
       <ScrollView>
         <View style={styles.screen}>
-          <Text h4>
-            {(returnMessage && returnMessage.message) || returnMessage}
-          </Text>
           {buttons[buttonState.selectedIndex] === 'Otro' ? (
             <Input
               {...bind('invoiceCode')}

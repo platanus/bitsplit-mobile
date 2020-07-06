@@ -33,12 +33,12 @@ function PaymentHistoryScreen() {
                   received
                     ? {
                         source: {
-                          uri: sender.picture,
+                          uri: sender.picture || '',
                         },
                       }
                     : {
                         source: {
-                          uri: receiver.picture,
+                          uri: receiver.picture || '',
                         },
                       }
                 }

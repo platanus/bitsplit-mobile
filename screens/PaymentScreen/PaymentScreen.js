@@ -13,6 +13,7 @@ import {
   BUDA_QUOTATION,
   BUDA_PAYMENT,
   BUDA_CLEAN_ERROR,
+  GET_WALLETS_BALANCES,
 } from '../../store/types';
 import styles from './styles';
 import useForm from '../../utils/hooks/useForm';
@@ -123,12 +124,16 @@ function PaymentScreen() {
   const isPayDisabled =
     !transferAmount || transferAmount <= minTrxAmount || isOverBudget;
 
+  const dispatch = useDispatch();
   const onPayPress = () =>
     handleBudaPayment(
       state.receptor,
       totalBitcoins,
       buttons[buttonState.selectedIndex].toLowerCase(),
-      toggleDisplay
+      () => {
+        toggleDisplay();
+        dispatch({ type: GET_WALLETS_BALANCES });
+      }
     );
 
   return (
@@ -187,12 +192,24 @@ function PaymentScreen() {
             onBackdropPress={toggleDisplay}
           >
             <View style={styles.screen}>
-              <Text h4>Pago Exitoso</Text>
-              <Text h5>{lastPayment.receiver_email} recibio tu pago! </Text>
-              <Text
-                h5
-              >{`Monto Transferido en BTC \n ${lastPayment.amount}`}</Text>
-              <Button title='Listo' type='solid' onPress={toggleDisplay} />
+              <View style={styles.debug}>
+                <Text h3 h3Style={styles.hTitleStyle}>
+                  Pago Exitoso
+                </Text>
+                <Text h4 h4Style={styles.hSubtitle}>
+                  {lastPayment.receiver_email} recibio tu pago!{' '}
+                </Text>
+                <Text h4 h4Style={styles.hSubtitle}>
+                  {lastPayment.amount} BTC
+                </Text>
+                <Button
+                  buttonStyle={[styles.button, styles.alertButton]}
+                  titleStyle={styles.textButton}
+                  title='Listo'
+                  type='solid'
+                  onPress={toggleDisplay}
+                />
+              </View>
             </View>
           </Overlay>
         )}

@@ -1,17 +1,20 @@
-import React from 'react';
-import { View, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { ScrollView } from 'react-native';
 import { Text, ListItem, ThemeProvider } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale';
 import { useListVals } from 'react-firebase-hooks/database';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import styles from './styles';
-import { FIREBASE_NOTIFICATIONS } from '../../store/types';
+import {
+  FIREBASE_NOTIFICATIONS,
+  GET_WALLETS_BALANCES,
+} from '../../store/types';
 import { database } from '../../utils/firebase/database/config';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
 
-function NotificationScreen() {
+export const useNotifications = () => {
   const {
     auth: {
       user: { email },
@@ -22,6 +25,17 @@ function NotificationScreen() {
     database.ref('notifications').child(firebaseEmail),
     { keyField: 'token' }
   );
+  const dispatch = useDispatch();
+  const total = notifications && notifications.length;
+  useEffect(() => {
+    dispatch({ type: GET_WALLETS_BALANCES });
+  }, [total, dispatch]);
+
+  return [notifications, loading];
+};
+
+function NotificationScreen() {
+  const [notifications, loading] = useNotifications();
   const dispatch = useDispatch();
 
   function handleSeen(notificationToken) {

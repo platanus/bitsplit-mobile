@@ -18,11 +18,12 @@ const Debt = ({
 }) => {
   const navigation = useNavigation();
   const name = `${first_name} ${last_name || ''}`;
-  const onPress = () =>
-    navigation.navigate({
-      name: 'PaySplitwiseDebt',
+  const onPress = () => {
+    navigation.navigate('Splitwise', {
+      screen: 'PaySplitwiseDebt',
       params: { title: `Pagar a ${name}`, amount, currency_code, name, email },
     });
+  };
   const chevron = { color: colors.purple };
   const payProps = !from ? { onPress, chevron } : {};
 
