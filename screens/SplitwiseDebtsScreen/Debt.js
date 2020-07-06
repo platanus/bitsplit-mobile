@@ -15,17 +15,28 @@ const Debt = ({
   currency_code,
   picture,
   email,
+  group_id,
+  to_user_id,
 }) => {
   const navigation = useNavigation();
   const name = `${first_name} ${last_name || ''}`;
   const onPress = () => {
     navigation.navigate('Splitwise', {
       screen: 'PaySplitwiseDebt',
-      params: { title: `Pagar a ${name}`, amount, currency_code, name, email },
+      params: {
+        title: `Pagar a ${name}`,
+        amount,
+        currency_code,
+        name,
+        email,
+        group_id,
+        to_user_id: id,
+      },
     });
   };
   const chevron = { color: colors.purple };
-  const payProps = !from ? { onPress, chevron } : {};
+  const canPay = !from && currency_code === 'CLP';
+  const payProps = canPay ? { onPress, chevron } : {};
 
   return (
     <ListItem

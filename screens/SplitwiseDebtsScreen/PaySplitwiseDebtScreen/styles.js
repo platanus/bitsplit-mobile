@@ -27,6 +27,14 @@ const styles = StyleSheet.create({
     color: color.darkpurple,
   },
 
+  moneyBTC: {
+    fontFamily: 'SpaceMonoBold',
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: '10%',
+    color: color.darkpurple,
+  },
+
   user1: {
     fontFamily: 'SpaceMonoRegular',
     fontSize: 15,
@@ -40,6 +48,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: '10%',
     color: color.purple,
+  },
+
+  error: {
+    fontFamily: 'SpaceMonoRegular',
+    fontSize: 10,
+    textAlign: 'center',
+    marginBottom: '5%',
+    color: color.red,
   },
 
   button: {

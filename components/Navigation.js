@@ -32,7 +32,6 @@ const Drawer = createDrawerNavigator();
 enableScreens();
 
 const Navigation = () => {
-  useNotifications();
   const token = useSelector(state => state.auth.token);
 
   return (
@@ -70,30 +69,34 @@ const Navigation = () => {
 
 const ProfileStack = createNativeStackNavigator();
 
-const ProfileNavigation = () => (
-  <ProfileStack.Navigator>
-    <ProfileStack.Screen
-      options={{ headerShown: false }}
-      name='Settings'
-      component={ProfileScreen}
-    />
-    <ProfileStack.Screen
-      options={{ headerShown: false }}
-      name='Buda'
-      component={BudaAuthScreen}
-    />
-    <ProfileStack.Screen
-      options={{ headerShown: false }}
-      name='Editar'
-      component={UpdateScreen}
-    />
-    <ProfileStack.Screen
-      options={{ headerShown: false }}
-      name='SplitwiseAuth'
-      component={SplitwiseAuthScreen}
-    />
-  </ProfileStack.Navigator>
-);
+const ProfileNavigation = () => {
+  useNotifications();
+
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        options={{ headerShown: false }}
+        name='Settings'
+        component={ProfileScreen}
+      />
+      <ProfileStack.Screen
+        options={{ headerShown: false }}
+        name='Buda'
+        component={BudaAuthScreen}
+      />
+      <ProfileStack.Screen
+        options={{ headerShown: false }}
+        name='Editar'
+        component={UpdateScreen}
+      />
+      <ProfileStack.Screen
+        options={{ headerShown: false }}
+        name='SplitwiseAuth'
+        component={SplitwiseAuthScreen}
+      />
+    </ProfileStack.Navigator>
+  );
+};
 
 const HomeStack = createNativeStackNavigator();
 
