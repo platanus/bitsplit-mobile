@@ -29,7 +29,12 @@ const groupDebtsById = (friendsToUser, userToFriends) => {
             userToFriends: [],
           };
         }
-        debts[group_id].userToFriends.push({ ...to, amount, currency_code });
+        debts[group_id].userToFriends.push({
+          ...to,
+          amount,
+          currency_code,
+          group_id,
+        });
       }
     );
 
