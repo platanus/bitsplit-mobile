@@ -84,17 +84,13 @@ function* postBudaPayment(action) {
     const {
       data: { error, payment },
     } = yield call(api.budaPaymentApi, { ...action.payload });
-    // if (payment) {
     yield put(
       budaActions.setLastPayment({
         receiver_email: action.payload.receptor,
         amount: action.payload.amountBtc,
       })
     );
-    action.callback();
-    // } else if (error) {
-    //   yield put(budaActions.syncBudaRejected(error));
-    // }
+    action.callback && action.callback();
   } catch (err) {
     yield put(budaActions.syncBudaRejected('Hubo un error en el pago'));
   }
