@@ -28,5 +28,9 @@ export default function useSplitwiseSummary() {
     toCollect: friendsToUser ? friendsToUser.reduce(sumByCurrency, {}) : {},
   };
 
+  // const toPay2 = debtsSummary.toPay.USD;
+
+  // console.log('TO PAY: ', toPay2);
+
   return { debtsSummary, loading, isSplitSync };
 }

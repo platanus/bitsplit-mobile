@@ -6,33 +6,24 @@ import useSplitwiseSummary from './hook';
 import styles from './styles';
 
 function SplitwiseSummary() {
-  const {
-    debtsSummary: { toPay, toCollect },
-  } = useSplitwiseSummary();
+  // const {
+  //   debtsSummary: { toPay, toCollect },
+  // } = useSplitwiseSummary();
+
+  const deudas = useSplitwiseSummary();
+
+  const por_pagar = Math.round(deudas.debtsSummary.toPay.USD);
+  const por_recibir = Math.round(deudas.debtsSummary.toCollect.USD);
 
   return (
     <View style={styles.componentContainer}>
       <Text style={styles.titleText}>Resumen Splitwise</Text>
       <View style={styles.rowContainer}>
         <View style={styles.less}>
-          {Object.keys(toPay)
-            .sort()
-            .map(currency => (
-              <Text key={currency} style={styles.coinText}>{`${formatCurrency(
-                toPay[currency],
-                currency
-              )}`}</Text>
-            ))}
+          <Text style={styles.coinText}>${por_pagar} CLP</Text>
         </View>
         <View style={styles.plus}>
-          {Object.keys(toCollect)
-            .sort()
-            .map(currency => (
-              <Text key={currency} style={styles.coinText}>{` ${formatCurrency(
-                toCollect[currency],
-                currency
-              )}`}</Text>
-            ))}
+          <Text style={styles.coinText}>${por_recibir} CLP</Text>
         </View>
       </View>
     </View>
