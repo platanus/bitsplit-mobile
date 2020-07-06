@@ -22,6 +22,10 @@ const authedAxios = (() => {
   }
 
   function getInstance() {
+    axiosObject
+      ? console.log(Object.keys(axiosObject))
+      : console.log('undefinde');
+
     return axiosObject;
   }
 

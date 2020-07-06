@@ -3,11 +3,7 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeProvider, Text, Avatar } from 'react-native-elements';
-import {
-  GET_WALLETS_BALANCES,
-  START_SETUP,
-  SPLITWISE_GET_DEBTS,
-} from '../../store/types';
+import { GET_WALLETS_BALANCES, SPLITWISE_GET_DEBTS } from '../../store/types';
 import styles from './styles';
 import Header from '../../components/Header';
 import Theme from '../../styles/Theme';
@@ -33,12 +29,10 @@ function useStartup() {
       dispatch({ type: SPLITWISE_GET_DEBTS });
     }
   }, [email, token]);
-
-  return () => dispatch({ type: START_SETUP });
 }
 
 function HomeScreen() {
-  const startSetup = useStartup();
+  useStartup();
   const [debts, loading] = useSplitwiseDebts();
   const { singleDebts, groupDebts } = debts;
   const { user } = useSelector(state => state.auth);
@@ -59,7 +53,7 @@ function HomeScreen() {
     <>
       <Header title='Inicio' />
 
-      <PinOverlay onSuccess={startSetup} pinLength={4} maxTries={3} />
+      <PinOverlay pinLength={4} maxTries={3} />
 
       {isSplitSync ? (
         <SplitwiseSummary />
