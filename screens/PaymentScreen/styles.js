@@ -15,7 +15,23 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
     fontFamily: 'SpaceMonoBoldItalic',
   },
+  alertButton: {
+    marginTop: 300,
+  },
 
+  hTitleStyle: {
+    color: colors.darkpurple,
+    textAlign: 'center',
+    marginBottom: '5%',
+    fontFamily: 'SpaceMonoBoldItalic',
+  },
+  hSubtitle: {
+    textAlign: 'center',
+    marginBottom: '5%',
+    fontSize: 15,
+    color: colors.black,
+    fontFamily: 'SpaceMonoBoldItalic',
+  },
   inputText: {
     color: colors.black,
     fontSize: 15,
@@ -36,7 +52,7 @@ const styles = StyleSheet.create({
   overlayContainer: {
     width: 300,
     maxWidth: '80%',
-    alignItems: 'center',
+
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
