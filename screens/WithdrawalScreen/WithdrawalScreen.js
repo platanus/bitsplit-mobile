@@ -145,13 +145,20 @@ function WithdrawalScreen() {
     state.invoiceCode = 'LN';
   };
 
-  const onWithdrawalPress = () =>
+  const clearInputs = () => {
+    state.invoiceCode = 'LN';
+    state.transferAmount = '';
+  };
+
+  const onWithdrawalPress = () => {
     handleBitSplitWithdrawal(
       state.invoiceCode.toUpperCase(),
       state.transferAmount,
       buttons[buttonState.selectedIndex].toLowerCase(),
       toggleDisplay
     );
+    clearInputs();
+  };
 
   return (
     <>

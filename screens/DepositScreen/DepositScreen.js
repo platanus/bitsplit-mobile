@@ -91,12 +91,18 @@ function DepostitScreen() {
   const isValidQuotation = transferAmount >= minTrxAmount;
   const isPayDisabled = !transferAmount || transferAmount <= minTrxAmount;
 
-  const onDepositPress = () =>
+  const clearInputs = () => {
+    state.transferAmount = '';
+  };
+
+  const onDepositPress = () => {
     handleBitSplitDeposit(
       totalBitcoins,
       buttons[buttonState.selectedIndex].toLowerCase(),
       toggleDisplay
     );
+    clearInputs();
+  };
 
   const copyToClipboard = () => {
     Clipboard.setString(lastDeposit.payreq);
