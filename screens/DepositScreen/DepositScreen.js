@@ -24,6 +24,7 @@ import QuotationComponent from '../../components/Quotation/QuotationComponent';
 import color from '../../styles/colors';
 
 const minTrxAmount = 100;
+const truncationLength = 25;
 
 function useBitSplitDeposit() {
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ function useBitSplitDeposit() {
     handleBudaQuotation,
     handleBitSplitDeposit,
   };
+}
+
+function truncate(string, n) {
+  return string.substr(0, n - 1) + (string.length > n ? '...' : '');
 }
 
 function DepostitScreen() {
@@ -106,7 +111,6 @@ function DepostitScreen() {
 
   const copyToClipboard = () => {
     Clipboard.setString(lastDeposit.payreq);
-    alert('¡Invoice copiado!');
   };
 
   const closeCreated = () => {
@@ -193,7 +197,10 @@ function DepostitScreen() {
                 <QRCode value={`${lastDeposit.payreq}`} size={250} />
                 <Text h5></Text>
 
-                <Text h5>{`Código LN:\n\n${lastDeposit.payreq}`}</Text>
+                <Text h5>{`Código LN:\n\n${truncate(
+                  lastDeposit.payreq,
+                  truncationLength
+                )}`}</Text>
 
                 {lastDeposit.expires_at === null ? (
                   <Text>Fecha de transacción: {lastDeposit.processed_at}</Text>
