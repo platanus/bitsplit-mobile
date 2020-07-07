@@ -7157,6 +7157,11 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+peerdeps@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/peerdeps/-/peerdeps-1.0.0.tgz#cfce3bf7f0d812f8ec8a154423bdd1d2e42add81"
+  integrity sha512-+AAyEwfc4pAzbfPLd+hKHu3z+rlxkxbWd+29ilWrITWriNoTVzoEHjoJUNh/2PhYjZhbTkEkIhHdtR4nsgoWIA==
+
 picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
@@ -7493,6 +7498,11 @@ q@^1.0.1, q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
+qr.js@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
+
 qrcode@^1.3.2:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.4.4.tgz#f0c43568a7e7510a55efc3b88d9602f71963ea83"
@@ -7639,6 +7649,15 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-qrcode-generator@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-qrcode-generator/-/react-native-qrcode-generator-1.2.2.tgz#5e475ba2bbe4496eb78bc37c2f5b0c1c8ff7f247"
+  integrity sha512-M75uyU3zL8yuL1ppL6OJsKBhL+VDZE3jNI5PAvDv+BCKa3MiSTTpXbGEqu7Y4xlhvFUozes/C0Ia7aS3mQ5w6Q==
+  dependencies:
+    create-react-class "^15.6.3"
+    prop-types "^15.5.10"
+    qr.js "^0.0.0"
 
 react-native-qrcode-svg@^6.0.6:
   version "6.0.6"
