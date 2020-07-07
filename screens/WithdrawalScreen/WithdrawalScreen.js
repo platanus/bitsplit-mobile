@@ -256,14 +256,14 @@ function WithdrawalScreen() {
               onBackdropPress={toggleDisplay}
             >
               <View style={styles.screen}>
-                <Text h4>Retiro en proceso</Text>
+                <Text h4>Retiro ingresado</Text>
                 <Text h5>
-                  Tu retiro se procesó el {lastWithdrawal.processed_at}
+                  Tu retiro se ingresó el {lastWithdrawal.processed_at}
                 </Text>
                 <Text h5></Text>
                 <Text
                   h5
-                >{`Monto retirado en BTC: ${lastWithdrawal.amount}`}</Text>
+                >{`Monto a retirar en BTC: ${lastWithdrawal.amount}`}</Text>
                 <Text h5></Text>
                 <Button title='Listo' type='solid' onPress={toggleDisplay} />
               </View>
