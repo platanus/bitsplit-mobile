@@ -23,6 +23,10 @@ function* paySplitwiseDebt({ payload }) {
   const { debt, callback } = payload;
   yield put(splitwiseActions.start());
   try {
+    yield call(api.paySplitwiseDebt, debt);
+    if (callback) {
+      callback();
+    }
   } catch (err) {
     yield put(splitwiseActions.setError(err));
   }

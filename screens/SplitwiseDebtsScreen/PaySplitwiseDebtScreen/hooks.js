@@ -7,6 +7,7 @@ import {
   SPLITWISE_PAY_DEBT,
   BUDA_CLEAN_ERROR,
   SPLITWISE_CLEAN_ERROR,
+  SPLITWISE_GET_DEBTS,
 } from '../../../store/types';
 
 const useSplitwisePayments = ({
@@ -51,7 +52,10 @@ const useSplitwisePayments = ({
           amount,
           currency_code,
         },
-        callback: navigation.goBack,
+        callback: () => {
+          dispatch({ type: SPLITWISE_GET_DEBTS });
+          navigation.goBack();
+        },
       },
     });
   }
@@ -60,7 +64,7 @@ const useSplitwisePayments = ({
     dispatch({
       type: BUDA_PAYMENT,
       payload: { amountBtc, receptor: email, wallet },
-      markAsPaid,
+      callback: markAsPaid,
     });
   }
 

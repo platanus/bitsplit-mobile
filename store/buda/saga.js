@@ -90,7 +90,9 @@ function* postBudaPayment(action) {
         amount: action.payload.amountBtc,
       })
     );
-    action.callback && action.callback();
+    if (action.callback) {
+      action.callback();
+    }
   } catch (err) {
     yield put(budaActions.syncBudaRejected('Hubo un error en el pago'));
   }
