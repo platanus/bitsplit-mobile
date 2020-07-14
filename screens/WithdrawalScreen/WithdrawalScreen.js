@@ -241,7 +241,7 @@ function WithdrawalScreen() {
             titleStyle={styles.textButton}
           />
 
-          {lastWithdrawal && (
+          {!!lastWithdrawal && (
             <Overlay
               isVisible={isDisplayVisible}
               overlayStyle={styles.overlayContainer}

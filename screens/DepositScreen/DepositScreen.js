@@ -124,7 +124,7 @@ function DepostitScreen() {
             <View style={styles.screen}>
               <Text style={styles.errorText}>
                 Houston tenemos un problema, mensaje de error:{' '}
-                {(error && error.message) || JSON.stringify(error)}
+                {(!!error && error.message) || JSON.stringify(error)}
               </Text>
             </View>
           </Overlay>
@@ -171,7 +171,7 @@ function DepostitScreen() {
             titleStyle={styles.textButton}
           />
 
-          {lastDeposit && (
+          {!!lastDeposit && (
             <Overlay
               isVisible={isDisplayVisible}
               overlayStyle={styles.overlayContainer}

@@ -48,7 +48,7 @@ function NotificationScreen() {
       <ThemeProvider theme={Theme}>
         <ScrollView>
           {!loading &&
-            notifications &&
+            !!notifications &&
             notifications.map(({ seen, data, token }) => (
               <ListItem
                 key={token}
