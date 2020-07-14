@@ -32,7 +32,7 @@ function PaySplitwiseDebt() {
         </Text>
         <Text style={styles.user1}>{name}</Text>
         <Text style={styles.user2}>{email}</Text>
-        {error && <Text style={styles.error}>{error.message}</Text>}
+        {!!error && <Text style={styles.error}>{error.message}</Text>}
 
         <Button
           onPress={transfer}

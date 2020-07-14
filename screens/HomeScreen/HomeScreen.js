@@ -24,7 +24,7 @@ function HomeScreen() {
     buda: { balance: budaBalance, apiKey },
     bitsplitWallet: { balance: bitsplitBalance },
   } = useSelector(state => state);
-
+  console.log(user, budaBalance);
   const navegation = useNavigation();
   const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
@@ -51,13 +51,13 @@ function HomeScreen() {
       )}
 
       <ThemeProvider theme={Theme}>
-        {defaultWallet === 'bitsplit' && bitsplitBalance && (
+        {defaultWallet === 'bitsplit' && !!bitsplitBalance && (
           <Text style={styles.walletText}>
             Bitsplit Wallet: ${bitsplitBalance.BTC.amount} BTC
           </Text>
         )}
 
-        {defaultWallet === 'buda' && apiKey && (
+        {defaultWallet === 'buda' && !!apiKey && (
           <Text style={styles.walletText}>
             Buda Wallet: ${budaBalance.BTC.amount} BTC
           </Text>
@@ -72,7 +72,7 @@ function HomeScreen() {
           {!loading && (
             <>
               <DebtList debts={singleDebts} />
-              {groupDebts &&
+              {!!groupDebts &&
                 groupDebts.map(group => (
                   <DebtList key={group.group_id} debts={group} />
                 ))}
@@ -89,7 +89,7 @@ const DebtList = ({ debts }) => {
 
   return (
     <>
-      {userToFriends &&
+      {!!userToFriends &&
         userToFriends.map(debt => <Debt key={debt.id} {...debt} />)}
     </>
   );

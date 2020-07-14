@@ -17,7 +17,7 @@ function SplitwiseDebtsScreen() {
         {!loading && (
           <>
             <DebtList title='Deudas individuales' debts={singleDebts} />
-            {groupDebts &&
+            {!!groupDebts &&
               groupDebts.map(group => (
                 <DebtList
                   key={group.group_id}
@@ -39,11 +39,11 @@ const DebtList = ({ title, debts }) => {
     <>
       <Text style={styles.titleText}>{title}</Text>
 
-      {friendsToUser &&
+      {!!friendsToUser &&
         friendsToUser.map(debt => (
           <Debt key={`${debt.group_id}-${debt.id}`} {...debt} from />
         ))}
-      {userToFriends &&
+      {!!userToFriends &&
         userToFriends.map(debt => (
           <Debt key={`${debt.group_id}-${debt.id}`} {...debt} />
         ))}

@@ -16,7 +16,7 @@ function PaymentHistoryScreen() {
       <Header title='Historial de pagos' />
       <ScrollView>
         {!loading &&
-          payments &&
+          !!payments &&
           payments.map(
             ({ id, amount_btc, received, created_at, sender, receiver }) => (
               <ListItem

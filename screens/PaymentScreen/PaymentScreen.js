@@ -192,7 +192,7 @@ function PaymentScreen() {
           buttonStyle={styles.button}
           titleStyle={styles.textButton}
         />
-        {lastPayment && (
+        {!!lastPayment && (
           <Overlay
             isVisible={isDisplayVisible}
             overlayStyle={styles.overlayContainer}
@@ -228,7 +228,7 @@ function PaymentScreen() {
           <View style={styles.screen}>
             <Text style={styles.errorText}>
               Houston tenemos un problema, mensaje de error:{' '}
-              {(error && error.message) || JSON.stringify(error)}
+              {(!!error && error.message) || JSON.stringify(error)}
             </Text>
           </View>
         </Overlay>

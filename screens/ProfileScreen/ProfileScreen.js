@@ -86,7 +86,7 @@ function ProfileScreen() {
             user.wallet || 'Define una Wallet'
           }`}</Text>
 
-          {defaultWallet === 'bitsplit' && bitsplitBalance && (
+          {defaultWallet === 'bitsplit' && !!bitsplitBalance && (
             <Wallet
               name={'Bitsplit'}
               isDefault={defaultWallet === 'bitsplit'}
@@ -94,7 +94,7 @@ function ProfileScreen() {
             />
           )}
 
-          {defaultWallet === 'buda' && apiKey && (
+          {defaultWallet === 'buda' && !!apiKey && (
             <Wallet name={'Buda'} balance={budaBalance} isDefault={true} />
           )}
 
