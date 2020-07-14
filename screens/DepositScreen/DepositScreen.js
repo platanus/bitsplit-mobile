@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
-import { View, ScrollView, Clipboard } from 'react-native';
+import { View, ScrollView, Clipboard, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Input,
@@ -10,7 +10,6 @@ import {
   ButtonGroup,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import QRCode from 'react-native-qrcode-svg';
 import {
   BUDA_QUOTATION,
   BITSPLIT_DEPOSIT,
@@ -24,6 +23,7 @@ import QuotationComponent from '../../components/Quotation/QuotationComponent';
 import color from '../../styles/colors';
 
 const minTrxAmount = 100;
+const truncationLength = 25;
 
 function useBitSplitDeposit() {
   const dispatch = useDispatch();
@@ -55,6 +55,10 @@ function useBitSplitDeposit() {
     handleBudaQuotation,
     handleBitSplitDeposit,
   };
+}
+
+function truncate(string, n) {
+  return string.substr(0, n - 1) + (string.length > n ? '...' : '');
 }
 
 function DepostitScreen() {
@@ -91,16 +95,21 @@ function DepostitScreen() {
   const isValidQuotation = transferAmount >= minTrxAmount;
   const isPayDisabled = !transferAmount || transferAmount <= minTrxAmount;
 
-  const onDepositPress = () =>
+  const clearInputs = () => {
+    state.transferAmount = '';
+  };
+
+  const onDepositPress = () => {
     handleBitSplitDeposit(
       totalBitcoins,
       buttons[buttonState.selectedIndex].toLowerCase(),
       toggleDisplay
     );
+    clearInputs();
+  };
 
   const copyToClipboard = () => {
     Clipboard.setString(lastDeposit.payreq);
-    alert('¡Invoice copiado!');
   };
 
   const closeCreated = () => {
@@ -184,10 +193,18 @@ function DepostitScreen() {
 
                 {/* give padding to QR as the prop does not accept a padding */}
                 <Text h5></Text>
-                <QRCode value={`${lastDeposit.payreq}`} size={250} />
+                <Image
+                  source={{
+                    uri: `http://api.qrserver.com/v1/create-qr-code/?data=${lastDeposit.payreq}&size=250x250`,
+                  }}
+                  style={{ height: 250 }}
+                />
                 <Text h5></Text>
 
-                <Text h5>{`Código LN:\n\n${lastDeposit.payreq}`}</Text>
+                <Text h5>{`Código LN:\n\n${truncate(
+                  lastDeposit.payreq,
+                  truncationLength
+                )}`}</Text>
 
                 {lastDeposit.expires_at === null ? (
                   <Text>Fecha de transacción: {lastDeposit.processed_at}</Text>
