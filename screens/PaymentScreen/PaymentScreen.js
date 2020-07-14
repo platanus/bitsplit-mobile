@@ -124,8 +124,13 @@ function PaymentScreen() {
   const isPayDisabled =
     !transferAmount || transferAmount <= minTrxAmount || isOverBudget;
 
+  const clearInputs = () => {
+    state.receptor = '';
+    state.transferAmount = '';
+  };
+
   const dispatch = useDispatch();
-  const onPayPress = () =>
+  const onPayPress = () => {
     handleBudaPayment(
       state.receptor,
       totalBitcoins,
@@ -135,6 +140,8 @@ function PaymentScreen() {
         dispatch({ type: GET_WALLETS_BALANCES });
       }
     );
+    clearInputs();
+  };
 
   return (
     <>
