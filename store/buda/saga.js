@@ -82,7 +82,9 @@ function* postBudaPayment(action) {
   yield put(budaActions.start());
   try {
     const {
-      data: { error, payment },
+      data: {
+        data: { error, payment },
+      },
     } = yield call(api.budaPaymentApi, { ...action.payload });
     yield put(
       budaActions.setLastPayment({
@@ -90,7 +92,9 @@ function* postBudaPayment(action) {
         amount: action.payload.amountBtc,
       })
     );
-    if (action.callback) {
+    if (error) {
+      yield put(budaActions.syncBudaRejected(error));
+    } else if (action.callback) {
       action.callback();
     }
   } catch (err) {
