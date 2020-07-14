@@ -2,7 +2,11 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { actions as transactionsActions } from './slice';
 import { actions as budaActions } from '../buda/slice';
 import { actions as bitsplitWalletActions } from '../bitsplitWallet/slice';
-import { GET_WALLETS_BALANCES, GET_TRANSACTIONS_HISTORY } from '../types';
+import {
+  GET_WALLETS_BALANCES,
+  GET_TRANSACTIONS_HISTORY,
+  CHECK_USER_EXIST,
+} from '../types';
 
 import api from '../../utils/api';
 
@@ -56,7 +60,29 @@ function* getTransactionHistory() {
   yield put(transactionsActions.finish());
 }
 
+function* checkUserExistance({
+  payload: { email, onSuccess = () => {}, onFailure = () => {} },
+}) {
+  yield put(transactionsActions.start());
+  try {
+    const {
+      data: {
+        data: {
+          attributes: { user_exists: userExists },
+        },
+      },
+    } = yield call(api.userExists, email);
+    if (userExists) {
+      onSuccess();
+    } else onFailure();
+  } catch (err) {
+    console.error(err);
+    yield put(transactionsActions.setError('Error en el historial'));
+  }
+  yield put(transactionsActions.finish());
+}
 export default function* budaSaga() {
   yield takeLatest(GET_WALLETS_BALANCES, getBalance);
   yield takeLatest(GET_TRANSACTIONS_HISTORY, getTransactionHistory);
+  yield takeLatest(CHECK_USER_EXIST, checkUserExistance);
 }
