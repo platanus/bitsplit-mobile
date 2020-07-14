@@ -24,7 +24,6 @@ function HomeScreen() {
     buda: { balance: budaBalance, apiKey },
     bitsplitWallet: { balance: bitsplitBalance },
   } = useSelector(state => state);
-  console.log(user, budaBalance);
   const navegation = useNavigation();
   const goSplitwiseSync = () => navegation.navigate('SplitwiseAuth');
 
