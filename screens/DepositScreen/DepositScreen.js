@@ -182,7 +182,7 @@ function DepostitScreen() {
 
           {lastDeposit && (
             <Overlay
-              // isVisible={isDisplayVisible}
+              isVisible={isDisplayVisible}
               overlayStyle={styles.overlayContainer}
               windowBackgroundColor='rgba(255, 255, 255, .5)'
               onBackdropPress={toggleDisplay}
