@@ -40,9 +40,13 @@ const DebtList = ({ title, debts }) => {
       <Text style={styles.titleText}>{title}</Text>
 
       {friendsToUser &&
-        friendsToUser.map(debt => <Debt key={debt.id} {...debt} from />)}
+        friendsToUser.map(debt => (
+          <Debt key={`${debt.group_id}-${debt.id}`} {...debt} from />
+        ))}
       {userToFriends &&
-        userToFriends.map(debt => <Debt key={debt.id} {...debt} />)}
+        userToFriends.map(debt => (
+          <Debt key={`${debt.group_id}-${debt.id}`} {...debt} />
+        ))}
     </>
   );
 };
