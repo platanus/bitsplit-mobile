@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useState } from 'react';
-import { View, ScrollView, Clipboard } from 'react-native';
+import { View, ScrollView, Clipboard, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Input,
@@ -10,7 +10,6 @@ import {
   ButtonGroup,
 } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import QRCode from 'react-native-qrcode-svg';
 import {
   BUDA_QUOTATION,
   BITSPLIT_DEPOSIT,
@@ -183,7 +182,7 @@ function DepostitScreen() {
 
           {lastDeposit && (
             <Overlay
-              isVisible={isDisplayVisible}
+              // isVisible={isDisplayVisible}
               overlayStyle={styles.overlayContainer}
               windowBackgroundColor='rgba(255, 255, 255, .5)'
               onBackdropPress={toggleDisplay}
@@ -194,7 +193,12 @@ function DepostitScreen() {
 
                 {/* give padding to QR as the prop does not accept a padding */}
                 <Text h5></Text>
-                <QRCode value={`${lastDeposit.payreq}`} size={250} />
+                <Image
+                  source={{
+                    uri: `http://api.qrserver.com/v1/create-qr-code/?data=${lastDeposit.payreq}&size=250x250`,
+                  }}
+                  style={{ height: 250 }}
+                />
                 <Text h5></Text>
 
                 <Text h5>{`Código LN:\n\n${truncate(
