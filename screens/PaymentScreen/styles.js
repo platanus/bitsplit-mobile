@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceMonoBoldItalic',
   },
   alertButton: {
-    marginTop: 300,
+    marginTop: '70%',
   },
 
   hTitleStyle: {

@@ -14,14 +14,16 @@ import {
   BUDA_PAYMENT,
   BUDA_CLEAN_ERROR,
   GET_WALLETS_BALANCES,
+  CHECK_USER_EXIST,
 } from '../../store/types';
 import styles from './styles';
+import NewUserOverlay from './NewUserOverlay';
 import useForm from '../../utils/hooks/useForm';
 import useToggle from '../../utils/hooks/useToggle';
 import Header from '../../components/Header';
 import QuotationComponent from '../../components/Quotation/QuotationComponent';
 
-const minTrxAmount = 100;
+const minTrxAmount = 149;
 
 function useBudaPayments() {
   const dispatch = useDispatch();
@@ -115,6 +117,7 @@ function PaymentScreen() {
     ),
   });
   const [isDisplayVisible, toggleDisplay] = useToggle();
+  const [displayNewUser, toggleNewUser] = useToggle();
   const transferAmount = parseInt(state.transferAmount);
   const evalFee = totalClp - transferAmount;
   const fee = evalFee && evalFee > 0 ? evalFee : '0';
@@ -130,7 +133,7 @@ function PaymentScreen() {
   };
 
   const dispatch = useDispatch();
-  const onPayPress = () => {
+  const executePayment = () => {
     handleBudaPayment(
       state.receptor,
       totalBitcoins,
@@ -141,6 +144,16 @@ function PaymentScreen() {
       }
     );
     clearInputs();
+  };
+  const onPayPress = () => {
+    dispatch({
+      type: CHECK_USER_EXIST,
+      payload: {
+        email: state.receptor,
+        onSuccess: executePayment,
+        onFailure: toggleNewUser,
+      },
+    });
   };
 
   return (
@@ -220,6 +233,12 @@ function PaymentScreen() {
             </View>
           </Overlay>
         )}
+        <NewUserOverlay
+          isVisible={displayNewUser}
+          newUser={state.receptor}
+          hide={toggleNewUser}
+          onSuccess={executePayment}
+        />
         <Overlay
           isVisible={!!error}
           overlayStyle={styles.overlayError}
