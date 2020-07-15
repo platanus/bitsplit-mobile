@@ -24,7 +24,7 @@ const QuotationComponent = ({
       </View>
     ) : (
       <Text style={styles.textQuotation}>
-        Para poder hacer una conversión, lo mínimo es $100 CLP
+        Para poder hacer una conversión, lo mínimo es $150 CLP
       </Text>
     )}
   </View>
